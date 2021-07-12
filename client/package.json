@@ -38,7 +38,7 @@
     "check-types": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --mode development",
-    "start": "nodemon -exec ts-node src/app.ts",
+    "start": "nodemon --exec ts-node src/app.ts",
     "build": "babel src/js -w -d dist/js"
   },
   "repository": {

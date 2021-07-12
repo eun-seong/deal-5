@@ -22,7 +22,7 @@
     "check-types": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app",
-    "start": "nodemon -exec ts-node src/app.ts"
+    "start": "nodemon --exec ts-node app.ts"
   },
   "repository": {
     "type": "git",
