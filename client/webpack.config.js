@@ -2,6 +2,7 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: './src/index.ts',
@@ -10,7 +11,12 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   target: 'node',
-  resolve: { extensions: ['.tsx', '.ts', '.js'] },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.css', '.scss'],
+    alias: {
+      '@': path.resolve(__dirname, ''),
+    },
+  },
   externals: [nodeExternals()],
   module: {
     rules: [
@@ -21,12 +27,13 @@ module.exports = {
       },
       {
         test: /\.(scss|css)$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       { test: /\.html$/, loader: 'html-loader' },
     ],
   },
   plugins: [
+    new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: './index.html',
