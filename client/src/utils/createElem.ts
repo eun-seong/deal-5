@@ -1,11 +1,11 @@
 export interface HTMLElementAttrs {
-  class: string;
-  id: string;
-  placeholder: string;
-  disabled: boolean;
-  style: string;
-  width: string;
-  height: string;
+  class?: string;
+  id?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  style?: string;
+  width?: string;
+  height?: string;
 }
 
 export const createElem = (tag: string, attrs: HTMLElementAttrs, ...children: HTMLElement[]) => {
