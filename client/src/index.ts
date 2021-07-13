@@ -1,5 +1,5 @@
-import './scss/root.scss';
-import MainHeader from './pages/components/MainHeader';
+import './scss/index.scss';
+import MainHeader from './pages/main/MainHeader';
 
 function app() {
   const element = document.createElement('div');
