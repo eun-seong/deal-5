@@ -41,10 +41,10 @@ function Category() {
   <path d="M19.3333 14H14.6667C14.2985 14 14 14.2985 14 14.6667V19.3333C14 19.7015 14.2985 20 14.6667 20H19.3333C19.7015 20 20 19.7015 20 19.3333V14.6667C20 14.2985 19.7015 14 19.3333 14Z" stroke="#222222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
-  const _edAside = createElem('aside', {
+  const _elLeftAside = createElem('aside', {
     class: 'category-aside',
   });
-  const _catergoryArr = [
+  const _categoryArr = [
     '디지털기기',
     '생활가전',
     '가구/인테리어',
@@ -60,7 +60,7 @@ function Category() {
     '식물',
     '기타 중고물품',
   ];
-  _edAside.innerHTML = _catergoryArr
+  _elLeftAside.innerHTML = _categoryArr
     .map(
       a => `<div>
     <div class='category-icon'>I</div>
@@ -75,7 +75,7 @@ function Category() {
       id: 'category',
     },
     _elButton,
-    _edAside
+    _elLeftAside
   );
   return _el;
 }

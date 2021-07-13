@@ -1,7 +1,10 @@
+@import './root.scss';
+
 .main-header .category-aside {
+  color: $primary1;
   width: 100vw;
   position: absolute;
-  left: -100vw;
+  left: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
