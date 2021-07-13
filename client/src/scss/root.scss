@@ -1,24 +1,26 @@
-@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
-$title-active : #222222; //각종 타이틀 || 링크
-$primary1: #2AC1BC; // service main color
-$primary2: #A0E1E0; // service main color (light)
-$primary3: #219A95; // service main color (dark)
-$error: #F45452; // service main color (dark)
-$gray1 : #888888; // 본문 및 라벨
-$gray2 : #BBBBBB; // placeholder
-$gray3 : #D7D7D7; // line으
-$off-white : #F6F6F6; //  서브 배경색 
-$white : #fff; // 기본 배경색으로
+$title-active: #222222; //각종 타이틀 || 링크
+$primary1: #2ac1bc; // service main color
+$primary2: #a0e1e0; // service main color (light)
+$primary3: #219a95; // service main color (dark)
+$error: #f45452; // service main color (dark)
+$gray1: #888888; // 본문 및 라벨
+$gray2: #bbbbbb; // placeholder
+$gray3: #d7d7d7; // line으
+$off-white: #f6f6f6; //  서브 배경색
+$white: #fff; // 기본 배경색으로
 
-$border-radius : 8px;
+$border-radius: 8px;
+$border-small-radius: 6px;
+$header-max-height: 56px;
 
 .body {
-  font-family: Noto Sans KR;
+  font-family: 'Noto Sans KR';
 }
 
 .typo {
-  font-family: Noto Sans KR;
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: normal;
 
@@ -44,21 +46,21 @@ $border-radius : 8px;
 }
 
 .type-link {
-  font-family: Noto Sans KR;
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 500;
 
-  .medium {
+  &.medium {
     font-size: 16px;
     line-height: 22px;
   }
 
-  .small {
+  &.small {
     font-size: 14px;
     line-height: 20px;
   }
 
-  .xsmall {
+  &.xsmall {
     font-size: 12px;
     line-height: 16px;
   }
@@ -77,6 +79,7 @@ $border-radius : 8px;
   &:focus {
     background-color: $primary1;
     border: 2px solid $primary2;
+    outline: none;
   }
 
   &:disabled {
@@ -92,5 +95,33 @@ input {
 
   &:focus {
     border: 1px solid $gray3;
+  }
+}
+
+.common-header {
+  display: grid;
+  background-color: $off-white;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid $gray3;
+  height: $header-max-height;
+
+  button {
+    background-color: transparent;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    width: fit-content;
+    cursor: pointer;
+    margin: 6px;
+    padding: 0;
+
+    &:focus {
+      outline: none;
+    }
+  }
+  .header-title {
+    justify-self: center;
+    align-self: center;
   }
 }
