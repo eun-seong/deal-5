@@ -15,6 +15,31 @@ $border-radius: 8px;
 $border-small-radius: 6px;
 $header-max-height: 56px;
 
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+svg {
+  stroke: $title-active;
+}
+
 .body {
   font-family: 'Noto Sans KR';
 }
@@ -30,6 +55,7 @@ $header-max-height: 56px;
   }
 
   &.medium {
+    padding-top: 3px;
     font-size: 16px;
     line-height: 22px;
   }
@@ -70,6 +96,9 @@ $header-max-height: 56px;
   background-color: $primary1;
   border: 1px solid $primary1;
   border-radius: $border-radius;
+  color: $white;
+  width: 100%;
+  padding: 0.8rem;
 
   &:hover {
     background-color: $primary3;
@@ -92,36 +121,45 @@ input {
   border: 1px solid $gray3;
   border-radius: $border-radius;
   height: 40px;
+  width: 100%;
+  margin: 0.8rem 0;
+  padding-left: 0.8rem;
 
   &:focus {
     border: 1px solid $gray3;
+    outline-style: none;
   }
 }
 
-.common-header {
-  display: grid;
-  background-color: $off-white;
-  grid-template-columns: repeat(3, 1fr);
-  border-bottom: 1px solid $gray3;
-  height: $header-max-height;
-
-  button {
-    background-color: transparent;
-    display : flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    width: fit-content;
-    cursor: pointer;
-    margin: 6px;
-    padding: 0;
-
-    &:focus {
-      outline: none;
-    }
+button {
+  &:focus {
+    outline: none;
   }
-  .header-title {
-    justify-self: center;
-    align-self: center;
+}
+
+.content {
+  padding: 1.5rem;
+}
+
+.common-header {
+  ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
+    height: $header-max-height;
+    background-color: $off-white;
+
+    li {
+      margin: 0.5rem;
+      display: flex;
+      align-items: center;
+
+      &:first-child {
+        cursor: pointer;
+        justify-self: flex-start;
+        margin-left: 1rem;
+      }
+    }
   }
 }
