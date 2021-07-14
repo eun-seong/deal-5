@@ -1,13 +1,9 @@
 import './scss/index.scss';
-import MainHeader from './pages/main/MainHeader';
+// import MainContainer from './components/main';
 
-function app() {
-  fetch('/', { method: 'get' }).then(res => console.log(res));
-  const a = new (MainHeader as any)();
-  a.render();
+//라우팅 처리
+export default function App(this: any, $target: HTMLElement) {
+  // new (MainContainer as any)($target);
 }
 
-const $root = document.querySelector('#root');
-console.log($root);
-
-app();
+new (App as any)(document.querySelector('#root'));
