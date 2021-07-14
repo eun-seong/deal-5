@@ -1,10 +1,46 @@
 @import './root.scss';
 
-.main-header .category-aside {
-  color: $primary1;
-  width: 100vw;
+.main-header {
+}
+.category {
   position: absolute;
-  left: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  left: -100%;
+  top: 0;
+  width: 100%;
+  transition: left 0.8s ease-in-out;
+
+  &.show {
+    left: 0;
+  }
+
+  .category-aside {
+    width: 100%;
+    background-color: $white;
+    position: absolute;
+    display: grid;
+    margin-top: 1rem;
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+
+    & .category-icon {
+      max-width: 40px;
+      width: 40px;
+      max-height: 40px;
+      height: 40px;
+      border: 1px solid $gray3;
+      border-radius: $border-small-radius;
+      background-color: $off-white;
+    }
+    & .category-title {
+      margin-top: 1rem;
+    }
+    & .category-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+  }
 }
