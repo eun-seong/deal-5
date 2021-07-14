@@ -118,17 +118,18 @@ svg {
 }
 
 input {
+  display: block;
   border: 1px solid $gray3;
   border-radius: $border-radius;
   height: 40px;
   width: 100%;
   margin: 0.8rem 0;
-  padding-left: 0.8rem;
+  padding: 0 0.8rem;
+  box-sizing : border-box;
 
   &:focus {
-    border: 1px solid $gray3;
-    outline-style: none;
-
+    border: 1px solid $primary1;
+    outline: none;
   }
 }
 
@@ -163,11 +164,6 @@ button {
       }
     }
   }
-}
-
-
-.content {
-  padding: 1.5rem;
 }
 
 .link-btn {
