@@ -38,6 +38,10 @@ ul {
 
 svg {
   stroke: $title-active;
+  width: 24px;
+  height: 24px;
+  stroke-width: 1px;
+  fill: none;
 }
 
 .body {
@@ -128,6 +132,7 @@ input {
   &:focus {
     border: 1px solid $gray3;
     outline-style: none;
+
   }
 }
 
@@ -162,4 +167,16 @@ button {
       }
     }
   }
+}
+
+.content {
+  padding: 1.5rem;
+}
+
+.link-btn {
+  display: block;
+  text-align: center;
+  padding: 0.8rem;
+  color: #000;
+  text-decoration: none;
 }
