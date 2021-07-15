@@ -11,7 +11,7 @@ export default class LocationButton extends Component {
     const { locationType, locationText }: LocationButtonProps = this.$props;
 
     return `
-    <div class="location-btn" data-type="${locationType}">
+    <div class="location-btn" data-type="${locationType}" data-location="${locationText}">
       ${locationType === 'add' ? svgIcons.add : `<div class="location-text">${locationText}</div>` + svgIcons.close}
     </div>
     `;

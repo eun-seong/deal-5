@@ -19,9 +19,17 @@
         background-color: $primary1;
         color: $white;
     }
+
+    &[data-type="add"] {
+        display: flex;
+        justify-content: center;
+        svg {
+            width: 1em;
+        }
+    }
 }
 
-[data-component="location-list"] {
+[data-component="location-buttons"] {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1em;
