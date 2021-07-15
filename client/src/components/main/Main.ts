@@ -1,12 +1,11 @@
 import Component from '@/src/interfaces/Component';
 import MainHeader from './MainHeader';
 import CategoryContainer from './Category';
+import MenuContainer from './Menu';
+import MainBody from './MainBody';
 
-
-export default function (this: Component, $target: HTMLElement, props: Object) {
-  const setup = () => {
-    this.$target = $target;
-    this.$props = props;
+export default class MainContainer extends Component {
+  setup() {
     this.$state = {
       categoryToggle: false,
       items: [
@@ -22,52 +21,33 @@ export default function (this: Component, $target: HTMLElement, props: Object) {
         },
       ],
     };
-    this.render();
-    console.log(this.$state);
-  };
-
-  this.template = () => {
+  }
+  template() {
     return `
         <header class='main-header' data-component='main-header'></header>
-        <section class='main-body' data-component></section>
-        <footer class='main-footer' data-component></footer>
-        ${this.$state.categoryToggle ? `<aside class='category-container' data-component='category'></aside>` : ''}
+        <section class='main-body' data-component='main-body'></section>
+        <footer class='main-footer' data-component='main-footer'></footer>
+        <aside class='category-container' data-component='category'></aside>
+        <aside class='menu-container' data-component='menu'></aside>
       `;
-  };
-
-  this.render = () => {
-    this.$target.innerHTML = this.template();
-    this.mounted();
-  };
-
-  this.mounted = () => {
-    const $header = this.$target.querySelector('header[data-component="main-header"]');
-    const $categoryContainer = this.$target.querySelector('[data-component="category"]');
-
-    new MainHeader($header, { title: '현재위치', toggleCategory: toggleCategory.bind(this) });
-    if (this.$state.categoryToggle)
-      new CategoryContainer($categoryContainer, { title: '카테고리', toggleCategory: toggleCategory.bind(this) });
-  };
-
-  //!-카테고리 트랜지션
-  function toggleCategory(this: any) {
-    if (this.$state.categoryToggle) {
-      this.$target.querySelector('[data-component="category"]').style.left = '-100%';
-      setTimeout(() => {
-        this.setState({ categoryToggle: !this.$state.categoryToggle });
-      }, 900);
-    } else {
-      this.setState({ categoryToggle: !this.$state.categoryToggle });
-      setTimeout(() => {
-        this.$target.querySelector('[data-component="category"]').style.left = '0%';
-      }, 1);
-    }
+  }
+  mounted() {
+    const $header = this.$target.querySelector('header[data-component="main-header"]') as HTMLElement;
+    const $body = this.$target.querySelector('section[data-component="main-body"]') as HTMLElement;
+    const $categoryContainer = this.$target.querySelector('[data-component="category"]') as HTMLElement;
+    const $menuContainer = this.$target.querySelector('[data-component="menu"]') as HTMLElement;
+    const [toggleCategory, toggleMenu] = [this.toggleCategory.bind(this), this.toggleMenu.bind(this)];
+    new MainHeader($header, { title: '현재위치', toggleCategory, toggleMenu });
+    new MainBody($body);
+    new CategoryContainer($categoryContainer, { title: '카테고리', toggleCategory });
+    new MenuContainer($menuContainer, { title: '메뉴', toggleMenu });
   }
 
-  this.setState = (nextState: object) => {
-    this.$state = { ...this.$state, ...nextState };
-    this.render();
-  };
+  toggleCategory(this: any) {
+    this.$target.querySelector('[data-component="category"]').classList.toggle('show');
+  }
 
-  setup();
+  toggleMenu(this: any) {
+    this.$target.querySelector('[data-component="menu"]').classList.toggle('show');
+  }
 }
