@@ -18,7 +18,7 @@ import tempMain from './components/tempMain';
  */
 const routes = [
   // { path: '/', component: Main },
-  // { path: '/', redirect: '/' },
+  { path: '/', redirect: '/' },
   { path: '/', component: tempMain },
   { path: '/register', component: Register },
   { path: '/signin', component: SignIn },
