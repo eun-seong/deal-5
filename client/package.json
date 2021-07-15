@@ -40,8 +40,8 @@
     "check-types": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --mode development",
-    "start": "webpack serve --mode development",
-    "build": "webpack --mode production;"
+    "start": "webpack serve --mode development --open",
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
