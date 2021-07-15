@@ -1,6 +1,7 @@
 import Component from '@/src/interfaces/Component';
 import CommonHeader from '../Share/CommonHeader';
 import LocationList from './LocationList';
+import LocationButton from './LocationButton';
 
 class Location extends Component {
   setup() {
@@ -30,11 +31,11 @@ class Location extends Component {
       locations: this.$state.locations,
       removeLocation: this.removeLocation.bind(this),
       addLocation: this.addLocation.bind(this),
+      appendAddButton: this.appendAddButton.bind(this),
     });
   }
 
   removeLocation(location: string) {
-    console.log(location);
     const { locations } = this.$state;
     const idx = locations.indexOf(location);
     locations.splice(idx, 1);
@@ -44,11 +45,17 @@ class Location extends Component {
   }
 
   addLocation(location: string) {
-    console.log('addLocation');
     const { locations } = this.$state;
     this.setState({
       locations: [...locations, '짜잔'],
     });
+  }
+
+  appendAddButton() {
+    const $LocationButtons = this.$target.querySelector('[data-component="location-buttons"]');
+    const $div = document.createElement('div');
+    $LocationButtons?.appendChild($div);
+    new LocationButton($div, { locationType: 'add' });
   }
 }
 

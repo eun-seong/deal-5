@@ -3,14 +3,15 @@ import LocationButton from './LocationButton';
 
 class LocationList extends Component {
   mounted() {
-    this.$props.locations.forEach((location: string) => {
+    const { locations, appendAddButton } = this.$props;
+    locations.forEach((location: string) => {
       const $div = document.createElement('div');
       this.$target.appendChild($div);
       new LocationButton($div, { locationType: 'active', locationText: location });
     });
-    const $div = document.createElement('div');
-    this.$target.appendChild($div);
-    new LocationButton($div, { locationType: 'add' });
+
+    // 지역이 2개일 경우 +버튼 추가 안함
+    if (locations.length < 2) appendAddButton();
   }
 
   setEvent() {
