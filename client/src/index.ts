@@ -3,6 +3,8 @@ import { initRouter } from './components/core/Router';
 import Register from './components/Register';
 import Main from './components/Main';
 import SignIn from './components/SignIn';
+import Location from './components/Location';
+import tmpMain from './components/tmpMain';
 /**
  * route
  * - path: string
@@ -16,9 +18,11 @@ import SignIn from './components/SignIn';
  *   - redirect로 바로 이동합니다.
  */
 const routes = [
-  { path: '/', component: Main },
+  { path: '/', component: tmpMain },
+  // { path: '/', redirect: '/' },
   { path: '/register', component: Register },
   { path: '/signin', component: SignIn },
+  { path: '/location', component: Location },
 ];
 const $app = document.querySelector('#root') as HTMLElement;
 
