@@ -4,7 +4,7 @@ import Register from './components/Register';
 import Main from './components/Main';
 import SignIn from './components/SignIn';
 import Location from './components/Location';
-import tmpMain from './components/tmpMain';
+import ChatDetail from './components/ChatDetail';
 /**
  * route
  * - path: string
@@ -18,11 +18,12 @@ import tmpMain from './components/tmpMain';
  *   - redirect로 바로 이동합니다.
  */
 const routes = [
-  { path: '/', component: tmpMain },
+  { path: '/', component: Main },
   // { path: '/', redirect: '/' },
   { path: '/register', component: Register },
   { path: '/signin', component: SignIn },
   { path: '/location', component: Location },
+  { path: '/chat/:id', component: ChatDetail },
 ];
 const $app = document.querySelector('#root') as HTMLElement;
 
