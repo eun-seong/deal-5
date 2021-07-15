@@ -3,6 +3,7 @@ import MainHeader from './MainHeader';
 import CategoryContainer from './Category';
 import MenuContainer from './Menu';
 import MainBody from './MainBody';
+import { svgIcons } from '@/src/assets/svgIcons';
 
 export default class MainContainer extends Component {
   setup() {
@@ -26,9 +27,9 @@ export default class MainContainer extends Component {
     return `
         <header class='main-header' data-component='main-header'></header>
         <section class='main-body' data-component='main-body'></section>
-        <footer class='main-footer' data-component='main-footer'></footer>
         <aside class='category-container' data-component='category'></aside>
         <aside class='menu-container' data-component='menu'></aside>
+        <div class='new-item'><a href="#" class='new-item-sale'>${svgIcons.add}</a></div>
       `;
   }
   mounted() {
