@@ -3,7 +3,7 @@ import LocationButton from './LocationButton';
 
 class LocationList extends Component {
   mounted() {
-    const { locations, appendAddButton } = this.$props;
+    const { locations } = this.$props;
     locations.forEach((location: string) => {
       const $div = document.createElement('div');
       this.$target.appendChild($div);
@@ -11,17 +11,22 @@ class LocationList extends Component {
     });
 
     // 지역이 2개일 경우 +버튼 추가 안함
-    if (locations.length < 2) appendAddButton();
+    if (locations.length < 2) {
+      const $div = document.createElement('div');
+      this.$target?.appendChild($div);
+      new LocationButton($div, { locationType: 'add' });
+    }
   }
 
   setEvent() {
-    const { removeLocation, addLocation } = this.$props;
+    const { removeLocation, clickAddLocation } = this.$props;
     this.addEvent('click', '.location-btn>svg', (e: any) => {
-      removeLocation(e.target.parentNode.dataset.location);
+      const location: string = e.target.closest('svg').parentNode.dataset.location;
+      removeLocation(location);
     });
 
     this.addEvent('click', '.location-btn[data-type="add"]', (e: any) => {
-      addLocation();
+      clickAddLocation();
     });
   }
 }
