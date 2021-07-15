@@ -20,19 +20,22 @@ $header-max-height: 56px;
   @-webkit-keyframes #{$animationName} {
     @content;
   }
+
   @-moz-keyframes #{$animationName} {
     @content;
   }
+
   @-o-keyframes #{$animationName} {
     @content;
   }
+
   @keyframes #{$animationName} {
     @content;
   }
 }
 
 * {
-  -webkit-tap-highlight-color : rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 ul {
@@ -188,6 +191,7 @@ button {
   text-decoration: none;
 }
 
+/* input popup */
 .modal {
   position: absolute;
   display: flex;
@@ -232,12 +236,14 @@ button {
   }
 }
 
+/* chatting */
 .chats-list {
   .chat-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
+
     .chat-info-wrap {
       width: calc(100% - 105px - 1rem);
       padding-right: 1rem;
@@ -260,6 +266,7 @@ button {
         padding: 0 10px;
         min-width: calc(1.8em - 20px);
         height: 1.8em;
+
         div {
           padding-top: 4px;
         }
@@ -286,6 +293,7 @@ button {
       max-height: 105px;
       min-height: 105px;
       min-height: 105px;
+
       img {
         max-width: 105px;
         max-height: 105px;
@@ -302,4 +310,76 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+/* dropdown */
+
+@keyframes growOut {
+  0% {
+    transform: scale(0)
+  }
+
+  80% {
+    transform: scale(1.1)
+  }
+
+  100% {
+    transform: scale(1)
+  }
+}
+
+@keyframes growIn {
+  0% {
+    transform: scale(1)
+  }
+
+  20% {
+    transform: scale(1.1)
+  }
+
+  100% {
+    transform: scale(0)
+  }
+}
+
+.dropdown-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  .dropdown {
+    display: block;
+    flex-direction: column;
+    position: absolute;
+    top: 3rem;
+    left: 43%;
+    background-color: $off-white;
+    border-radius: 10px;
+    z-index: 1;
+    width: auto;
+    min-width: auto;
+    box-shadow: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0, 0.25);
+
+    /* dropdown 클릭시 */
+    animation: growOut 200ms ease-in-out forwards;
+    transform-origin: top center;
+
+    &[clicked]{
+      /* dropdown 제거 시 */
+      animation: growIn 200ms ease-in-out forwards;
+      transform-origin: top center;
+    }
+
+    .dropdown-item {
+      color: black;
+      border-bottom: 1px solid $gray3;
+      padding: 1rem;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
 }

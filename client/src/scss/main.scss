@@ -9,6 +9,7 @@ $pc-max-width: 1050px;
   position: sticky;
   top: 0;
   z-index: 1;
+  
   ul {
     height: $header-max-height;
     display: grid;
@@ -31,6 +32,10 @@ $pc-max-width: 1050px;
       width: fit-content;
       justify-self: center;
       align-self: center;
+
+      &[data-btn="user-set-location"]{
+        position: relative;
+      }
 
       .type-link.medium {
         padding-top: 2px;
