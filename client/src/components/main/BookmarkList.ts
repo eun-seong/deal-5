@@ -1,8 +1,8 @@
 import Component from '@/src/interfaces/Component';
 import ItemComponent from './Item';
 
-export default class MainBody extends Component {
-  items: Array<Object> = [];
+export default class BookmarksList extends Component {
+  items: any;
   setup() {
     this.items = [
       {
@@ -23,6 +23,7 @@ export default class MainBody extends Component {
         comments: 4,
         bookmarks: 4,
       },
+      ,
       {
         name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
         location: 'ㄸㅁㄲ쏘',
@@ -32,6 +33,7 @@ export default class MainBody extends Component {
         comments: 4,
         bookmarks: 4,
       },
+      ,
       {
         name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
         location: 'ㄸㅁㄲ쏘',
@@ -41,6 +43,7 @@ export default class MainBody extends Component {
         comments: 4,
         bookmarks: 4,
       },
+      ,
       {
         name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
         location: 'ㄸㅁㄲ쏘',
@@ -50,10 +53,42 @@ export default class MainBody extends Component {
         comments: 4,
         bookmarks: 4,
       },
+      ,
       {
         name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
         location: 'ㄸㅁㄲ쏘',
         createtime: '1시간전',
+        bookmarked: true,
+        price: '0원',
+        comments: 4,
+        bookmarks: 4,
+      },
+      ,
+      {
+        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
+        location: 'ㄸㅁㄲ쏘',
+        createtime: '1시간전',
+        bookmarked: false,
+        price: '0원',
+        comments: 4,
+        bookmarks: 4,
+      },
+      ,
+      {
+        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
+        location: 'ㄸㅁㄲ쏘',
+        createtime: '1시간전',
+        bookmarked: false,
+        price: '0원',
+        comments: 4,
+        bookmarks: 4,
+      },
+      ,
+      {
+        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
+        location: 'ㄸㅁㄲ쏘',
+        createtime: '1시간전',
+        bookmarked: false,
         price: '0원',
         comments: 4,
         bookmarks: 4,
@@ -61,19 +96,19 @@ export default class MainBody extends Component {
     ];
   }
   template() {
-    return `<ul data-component="items-wrap" class="items-wrap"></ul>`;
+    return `<ul data-component="bookmarks-wrap" class="sales-list items-wrap"></ul>`;
   }
 
   setEvent() {
-    this.addEvent('click', '[data-component=items-wrap]', this.bookmarkToggle);
+    this.addEvent('click', '[data-component=bookmarks-wrap]', this.bookmarkToggle);
   }
 
   mounted() {
-    const $ul = this.$target.querySelector('[data-component=items-wrap]') as HTMLElement;
+    const $ul = this.$target.querySelector('[data-component=bookmarks-wrap]') as HTMLElement;
 
-    this.items.forEach(state => {
+    this.items.forEach((state: any) => {
       const li = document.createElement('li');
-      li.className = 'body-item content';
+      li.className = 'sales-item content';
       new ItemComponent(li, { state });
       $ul.appendChild(li);
     });
