@@ -177,3 +177,26 @@ button {
   color: #000;
   text-decoration: none;
 }
+
+.location-btn{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid $primary1;
+  border-radius: 8px;
+  background-color: $white;
+  box-sizing: border-box;
+  padding: 6px 16px;
+  color: $primary3;
+  font-weight: 500;
+  height: 40px;
+
+  & svg {
+    stroke: $primary2;
+  }
+
+  &[data-type="active"] {
+    background-color: $primary1;
+    color: $white;
+  }
+}

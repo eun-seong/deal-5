@@ -3,6 +3,7 @@ import { initRouter } from './components/core/Router';
 import Register from './components/Register';
 import Main from './components/Main';
 import SignIn from './components/SignIn';
+import tempMain from './components/tempMain';
 /**
  * route
  * - path: string
@@ -16,7 +17,9 @@ import SignIn from './components/SignIn';
  *   - redirect로 바로 이동합니다.
  */
 const routes = [
-  { path: '/', component: Main },
+  // { path: '/', component: Main },
+  // { path: '/', redirect: '/' },
+  { path: '/', component: tempMain },
   { path: '/register', component: Register },
   { path: '/signin', component: SignIn },
 ];
