@@ -135,6 +135,7 @@ ul.items-wrap {
           width: 30px;
           height: 30px;
           transition: all 0.3s;
+          stroke: $gray1;
         }
         &.check {
           svg {
@@ -148,12 +149,14 @@ ul.items-wrap {
         display: flex;
         bottom: 0;
         right: 0;
+        color: $gray1;
         div {
           display: flex;
           margin-left: 0.5rem;
         }
         svg {
           stroke-width: 1px;
+          stroke: $gray1;
           width: 1rem;
           height: 1rem;
         }
