@@ -31,6 +31,10 @@ $header-max-height: 56px;
   }
 }
 
+* {
+  -webkit-tap-highlight-color : rgba(0, 0, 0, 0);
+}
+
 ul {
   margin: 0;
   padding: 0;
@@ -47,7 +51,6 @@ svg {
 
 a {
   text-decoration: none;
-  -webkit-tap-highlight-color : rgba(0, 0, 0, 0);
 }
 
 .body {
