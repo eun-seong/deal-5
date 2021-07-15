@@ -38,6 +38,10 @@ ul {
 
 svg {
   stroke: $title-active;
+  width: 24px;
+  height: 24px;
+  stroke-width: 1px;
+  fill: none;
 }
 
 .body {
