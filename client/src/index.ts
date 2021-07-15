@@ -4,7 +4,7 @@ import Register from './components/Register';
 import Main from './components/Main';
 import SignIn from './components/SignIn';
 import Location from './components/Location';
-import tmpMain from './components/tmpMain';
+// import tmpMain from './components/tmpMain';
 /**
  * route
  * - path: string
@@ -18,7 +18,7 @@ import tmpMain from './components/tmpMain';
  *   - redirect로 바로 이동합니다.
  */
 const routes = [
-  { path: '/', component: tmpMain },
+  { path: '/', component: Main },
   // { path: '/', redirect: '/' },
   { path: '/register', component: Register },
   { path: '/signin', component: SignIn },
