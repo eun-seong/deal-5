@@ -45,6 +45,12 @@ class Register extends Component {
 
     new (Button as any)($registerButton, { text: '회원가입' });
   }
+
+  setEvent() {
+    this.addEvent('click', '.btn', () => {
+      location.href = '/';
+    });
+  }
 }
 
 export default Register;

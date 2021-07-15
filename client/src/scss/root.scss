@@ -8,6 +8,7 @@ $error: #f45452; // service main color (dark)
 $gray1: #888888; // 본문 및 라벨
 $gray2: #bbbbbb; // placeholder
 $gray3: #d7d7d7; // line으
+$gray4: #828282; // text 지정에서 gray3이라고 되어 있음
 $off-white: #f6f6f6; //  서브 배경색
 $white: #fff; // 기본 배경색으로
 
@@ -122,17 +123,18 @@ svg {
 }
 
 input {
+  display: block;
   border: 1px solid $gray3;
   border-radius: $border-radius;
   height: 40px;
   width: 100%;
   margin: 0.8rem 0;
-  padding-left: 0.8rem;
+  padding: 0 0.8rem;
+  box-sizing : border-box;
 
   &:focus {
-    border: 1px solid $gray3;
-    outline-style: none;
-
+    border: 1px solid $primary1;
+    outline: none;
   }
 }
 
@@ -169,14 +171,54 @@ button {
   }
 }
 
-.content {
-  padding: 1.5rem;
-}
-
 .link-btn {
   display: block;
   text-align: center;
   padding: 0.8rem;
   color: #000;
   text-decoration: none;
+}
+
+.modal {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(141, 145, 144, 0.5);
+
+  .inputpopup {
+    background-color: $white;
+    border-radius: 10px;
+    padding: 1.5em 1.3em 1.3em 1.3em;
+    width: 70%;
+    box-shadow: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
+
+    .inputpopup-input {
+      box-sizing: border-box;
+      width: 100%;
+      margin: 1em 0 1.3em 0;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+
+      .cancel {
+        color: black;
+      }
+
+      .okay {
+        color: $primary1;
+
+        &[disabled] {
+          color: $gray1;
+        }
+      }
+    }
+  }
 }

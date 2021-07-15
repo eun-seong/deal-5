@@ -32,10 +32,11 @@ export const svgIcons = {
   <path d="M18 6L6 18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M6 6L18 18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>`,
-  add: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-  <path d="M18 6L6 18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M6 6L18 18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>`,
+  add: `<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8 1V15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1 8H15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  `,
   check: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path d="M21 6L8.625 18L3 12.5455" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>`,
