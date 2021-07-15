@@ -362,13 +362,14 @@ button {
     min-width: auto;
     box-shadow: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0, 0.25);
 
+    $growTime: 150ms;
     /* dropdown 클릭시 */
-    animation: growOut 200ms ease-in-out forwards;
+    animation: growOut $growTime ease-in-out forwards;
     transform-origin: top center;
 
     &[clicked]{
       /* dropdown 제거 시 */
-      animation: growIn 200ms ease-in-out forwards;
+      animation: growIn $growTime ease-in-out forwards;
       transform-origin: top center;
     }
 
