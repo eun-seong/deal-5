@@ -1,4 +1,4 @@
-import gopher from './item.jpeg';
+import testimg from '@/src/assets/imgs/item.jpeg';
 import { svgIcons } from '@/src/assets/svgIcons';
 import Component from '@/src/interfaces/Component';
 
@@ -8,13 +8,13 @@ export default class MainBody extends Component {
     this.items = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   }
   template() {
-    return `<ul data-component=items-wrap>
+    return `<ul data-component="items-wrap" class="items-wrap">
     ${this.items
       .map(
         _ =>
-          `<li class='body-item content'>
+      `<li class='body-item content'>
         <div class='item-img-wrap'>
-          <img src='${gopher}'/>
+          <img src='${testimg}'/>
         </div>
         <div class='item-info'>
           <div class='type-link medium item-name'>에잇모르겟다에잇모르겟다에잇모르겟다에잇모르겟다에잇모르겟다에잇모르겟다에잇모르겟다에잇모르겟다에잇모르겟다에잇모르겟다에잇모르겟다</div>
