@@ -1,5 +1,6 @@
 @import './root.scss';
 $max-common-container-width: 500px;
+$pc-max-width: 1050px;
 
 .main-header {
   background-color: $primary1;
@@ -11,7 +12,9 @@ $max-common-container-width: 500px;
   ul {
     height: $header-max-height;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    max-width: $pc-max-width;
+    margin: auto;
+    grid-template-columns: 0.7fr 1.6fr 0.7fr;
     justify-content: center;
     align-items: center;
     color: $white;
@@ -49,6 +52,8 @@ $max-common-container-width: 500px;
 
 ul.items-wrap {
   overflow: scroll;
+  max-width: $pc-max-width;
+  margin: auto;
   li {
     display: flex;
     justify-content: space-between;
@@ -73,7 +78,11 @@ ul.items-wrap {
           min-height: 105px;
         }
       }
+      .item-info {
+        max-width: calc(90% - 145px);
+      }
     }
+
     &.sales-item {
       .item-img-wrap {
         border-radius: 10px;
@@ -92,11 +101,14 @@ ul.items-wrap {
           min-height: 105px;
         }
       }
+
+      .item-info {
+        max-width: calc(80% - 105px);
+      }
     }
 
     .item-info {
       padding-left: 1em;
-      max-width: calc(80vw - 145px);
       width: 100%;
       .item-name {
         text-overflow: ellipsis;
@@ -117,10 +129,12 @@ ul.items-wrap {
       justify-content: space-between;
 
       .bookmark {
+        cursor: pointer;
         svg {
           stroke-width: 2px;
           width: 30px;
           height: 30px;
+          transition: all 0.3s;
         }
         &.check {
           svg {
@@ -219,10 +233,12 @@ ul.items-wrap {
     overflow: scroll;
     min-height: calc(100vh - 56px);
     max-height: calc(100vh - 56px);
+    max-width: 1050px;
 
     ul.menu-tabs-list {
       position: sticky;
       top: 0;
+      z-index: 9;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       justify-content: center;
@@ -249,7 +265,7 @@ ul.items-wrap {
         max-width: 60px;
         margin: 0;
         bottom: 1px;
-        border: 1px solid #2ac1bc;
+        border: 1px solid $primary1;
         min-width: 50px;
         transform: translateX(-50%);
         transition: left 0.5s;
@@ -268,3 +284,28 @@ ul.items-wrap {
   }
 }
 
+.new-item {
+  position: sticky;
+  max-width: 1050px;
+  bottom: 0;
+  width: 100%;
+  margin: 0 auto;
+  .new-item-sale {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background-color: $primary1;
+    border: none;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    border-radius: 100%;
+    justify-content: center;
+    align-items: center;
+    svg {
+      width: 16px;
+      height: 16px;
+      stroke: $white;
+    }
+  }
+}
