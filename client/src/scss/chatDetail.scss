@@ -1,0 +1,140 @@
+.chat {
+    display: flex;
+    flex-direction: column;
+
+    [data-component="chatting"] {
+        flex: 1;
+    }
+}
+
+.chat-top-fixed {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    .infoProduct {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid $gray3;
+        align-items: center;
+        padding: 1em 1em;
+        background-color: white;
+
+        .product {
+            display: flex;
+            align-items: center;
+            height: 100%;
+
+            .img {
+                background: $off-white;
+                border: 1px solid $gray3;
+                box-sizing: border-box;
+                border-radius: 6px;
+                width: 50px; // 임시로 설정
+                height: 50px; // 임시로 설정
+                margin-right: 0.8em;
+                ;
+            }
+
+            .product-desc {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                #title {
+                    color: black;
+                    font-size: 1em;
+                }
+
+                #price {
+                    color: $gray4;
+                    font-size: 0.9em;
+                }
+            }
+        }
+
+        .product-status {
+            text-align: center;
+            border: 1px solid $gray3;
+            border-radius: 8px;
+            padding: 1em;
+        }
+    }
+}
+
+[data-component="chatbar"] {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid $gray3;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: $off-white;
+    padding-left: 1em;
+
+    textarea {
+        box-sizing: border-box;
+        flex: 1;
+        border: 1px solid $gray3;
+        border-radius: $border-radius;
+        outline-style: none;
+        resize: none;
+        overflow-y: hidden;
+        height: 2.3rem;
+        padding: 0.5em;
+        margin: 0.8rem 0;
+    }
+
+    svg {
+        stroke: $gray1;
+        margin: 1.3rem;
+        width: 2em;
+
+        [active] {
+            stroke: $primary2;
+        }
+    }
+}
+
+
+[data-component="chatting"] {
+    padding: 0 1rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .chatBubbleBox {
+        display: flex;
+        width: 100%;
+        margin-top: 0.6rem;
+        
+        &:last-child {
+            margin-bottom: 0.6rem;
+        }    
+
+        .chatBubble {
+            border: 1px solid $primary1;
+            padding: 0.5em 0.7em;
+            max-width: 80%;
+        }
+
+        &[data-type="B"] {
+            justify-content: flex-end;
+
+            .chatBubble {
+                border-radius: 8px 0 8px 8px;
+                background-color: $primary1;
+                color: white;
+            }
+        }
+
+        &[data-type="A"] {
+            justify-content: flex-start;
+
+            .chatBubble {
+                border-radius: 0 8px 8px 8px;
+            }
+        }
+    }
+}
