@@ -8,6 +8,7 @@ $error: #f45452; // service main color (dark)
 $gray1: #888888; // 본문 및 라벨
 $gray2: #bbbbbb; // placeholder
 $gray3: #d7d7d7; // line으
+$gray4: #828282; // text 지정에서 gray3이라고 되어 있음
 $off-white: #f6f6f6; //  서브 배경색
 $white: #fff; // 기본 배경색으로
 
@@ -176,27 +177,4 @@ button {
   padding: 0.8rem;
   color: #000;
   text-decoration: none;
-}
-
-.location-btn{
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  border: 1px solid $primary1;
-  border-radius: 8px;
-  background-color: $white;
-  box-sizing: border-box;
-  padding: 6px 16px;
-  color: $primary3;
-  font-weight: 500;
-  height: 40px;
-
-  & svg {
-    stroke: $primary2;
-  }
-
-  &[data-type="active"] {
-    background-color: $primary1;
-    color: $white;
-  }
 }

@@ -1,6 +1,6 @@
 import Component from '@/src/interfaces/Component';
 import CommonHeader from '../Share/CommonHeader';
-import Location from '../Share/Location';
+import LocationButton from '../Share/LocationButton';
 
 class tempMain extends Component {
   template() {
@@ -18,7 +18,7 @@ class tempMain extends Component {
 
     new CommonHeader($header as HTMLElement, { title: '임시 메인' });
 
-    new (Location as any)($tmpBtn, { locationType: 'active', locationText: 'hihi' });
+    new (LocationButton as any)($tmpBtn, { locationType: 'active', locationText: 'hihi' });
   }
 
   setEvent() {
