@@ -1,6 +1,4 @@
 @import './root.scss';
-$max-common-container-width: 500px;
-$pc-max-width: 1050px;
 
 .main-header {
   background-color: $primary1;
@@ -175,15 +173,15 @@ ul.items-wrap {
 
 .category-container {
   position: fixed;
-  left: -$max-common-container-width;
+  right: -$max-common-container-width;
   top: 0;
   width: 100%;
   max-width: $max-common-container-width;
-  transition: left 0.8s ease-in-out;
+  transition: right 0.8s ease-in-out;
   z-index: 2;
 
   &.show {
-    left: 0;
+    right: 0;
   }
 
   .category-body {
@@ -234,7 +232,7 @@ ul.items-wrap {
   max-width: $max-common-container-width;
   transition: right 0.8s ease-in-out;
   z-index: 3;
-
+  
   &.show {
     right: 0;
   }
@@ -244,7 +242,7 @@ ul.items-wrap {
     overflow: scroll;
     min-height: calc(100vh - 56px);
     max-height: calc(100vh - 56px);
-    max-width: 1050px;
+    max-width: $pc-max-width;
 
     ul.menu-tabs-list {
       position: sticky;
@@ -297,7 +295,7 @@ ul.items-wrap {
 
 .new-item {
   position: sticky;
-  max-width: 1050px;
+  max-width: $pc-max-width;
   bottom: 0;
   width: 100%;
   margin: 0 auto;
