@@ -17,6 +17,8 @@ $border-small-radius: 6px;
 $header-max-height: 56px;
 
 $shadow-default: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0, 0.25);
+$max-common-container-width: 500px;
+$pc-max-width: 1050px;
 
 @mixin keyframes($animationName) {
   @-webkit-keyframes #{$animationName} {
@@ -56,6 +58,7 @@ svg {
 
 a {
   text-decoration: none;
+  color: inherit;
 }
 
 .body {
@@ -246,6 +249,13 @@ button {
     align-items: center;
     padding: 1rem;
 
+    a {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      display: flex;
+    }
+
     .chat-info-wrap {
       width: calc(100% - 105px - 1rem);
       padding-right: 1rem;
@@ -318,29 +328,29 @@ button {
 
 @keyframes growOut {
   0% {
-    transform: scale(0)
+    transform: scale(0);
   }
 
   80% {
-    transform: scale(1.1)
+    transform: scale(1.1);
   }
 
   100% {
-    transform: scale(1)
+    transform: scale(1);
   }
 }
 
 @keyframes growIn {
   0% {
-    transform: scale(1)
+    transform: scale(1);
   }
 
   20% {
-    transform: scale(1.1)
+    transform: scale(1.1);
   }
 
   100% {
-    transform: scale(0)
+    transform: scale(0);
   }
 }
 
@@ -369,7 +379,7 @@ button {
     animation: growOut $growTime ease-in-out forwards;
     transform-origin: top center;
 
-    &[clicked]{
+    &[clicked] {
       /* dropdown 제거 시 */
       animation: growIn $growTime ease-in-out forwards;
       transform-origin: top center;
