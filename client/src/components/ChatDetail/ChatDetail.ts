@@ -3,6 +3,7 @@ import InfoProduct from './InfoProduct';
 import CommonHeader from '../Share/CommonHeader';
 import ChatBar from './ChatBar';
 import Chatting from './Chatting';
+import historyBack from '@/src/assets/utils/historyBack';
 
 class SignIn extends Component {
   template() {
@@ -24,7 +25,7 @@ class SignIn extends Component {
     const $chatting = this.$target.querySelector('[data-component="chatting"]');
     const $chatbar = this.$target.querySelector('[data-component="chatbar"]');
 
-    new CommonHeader($header as HTMLElement, { title: 'UserID' });
+    new CommonHeader($header as HTMLElement, { title: 'UserID', leftArrowEvent: historyBack });
     new InfoProduct($infoProduct as HTMLElement, {
       title: '타이틀',
       price: 16000,
