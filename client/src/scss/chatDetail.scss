@@ -72,24 +72,43 @@
     width: 100%;
     box-sizing: border-box;
     background-color: $off-white;
-    padding-left: 1em;
+    padding: 0.5rem 1rem;
 
-    textarea {
-        box-sizing: border-box;
-        flex: 1;
+    .chat-inner {
+        display: block;
+        width: 100%;
+        height: 100%;
         border: 1px solid $gray3;
-        border-radius: $border-radius;
+        border-radius: 18px;
         outline-style: none;
-        resize: none;
-        overflow-y: hidden;
-        height: 2.3rem;
-        padding: 0.5em;
-        margin: 0.8rem 0;
+        box-sizing: border-box;
+        padding: 0.5rem 1rem;
+        background-color: white;
+        
+        textarea {
+            display: inline-block;
+            box-sizing: border-box;
+            outline: none;
+            border: 0 none;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            max-height: 57px;
+            font-size: 1em;
+            line-height: 1.33em;        // 줄 간격
+            vertical-align: top;        // 텍스트를 가운데 두기 위해
+            overflow-wrap: break-word;  // 단어 단위 줄바꿈
+            white-space: pre-wrap;      // 스페이스, 탭, 개행 문자 보존 & 자동줄바꿈
+            cursor: text;               // 커서 형태
+            color: #000;
+            resize: none;
+            overflow-y: auto;
+        }
     }
 
     svg {
         stroke: $gray1;
-        margin: 1.3rem;
+        margin-left: 0.7rem;
         width: 2em;
 
         [active] {
@@ -108,10 +127,10 @@
         display: flex;
         width: 100%;
         margin-top: 0.6rem;
-        
+
         &:last-child {
             margin-bottom: 0.6rem;
-        }    
+        }
 
         .chatBubble {
             border: 1px solid $primary1;

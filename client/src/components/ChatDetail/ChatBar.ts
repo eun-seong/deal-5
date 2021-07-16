@@ -6,7 +6,9 @@ interface ChatBarProps {}
 export default class ChatBar extends Component {
   template() {
     return `
-      <textarea id="chatBar-input" placeholder="메세지를 입력하세요." name="chatting"></textarea>
+    <div class="chat-inner">
+      <textarea id="chatBar-input" rows="1" placeholder="메세지를 입력하세요"></textarea>
+    </div>
       ${svgIcons.send}
     `;
   }
@@ -14,9 +16,7 @@ export default class ChatBar extends Component {
   setEvent() {
     this.addEvent('keydown', '#chatBar-input', (e: any) => {
       const $chatBar = this.$target.querySelector('#chatBar-input') as HTMLElement;
-      if (e.target.scrollHeight !== 52) {
-        console.log('hi');
-
+      if (e.target.scrollHeight <= 70) {
         $chatBar.style.height = 'auto';
         $chatBar.style.height = e.target.scrollHeight + 'px';
       }
