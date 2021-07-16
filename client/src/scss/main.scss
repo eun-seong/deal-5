@@ -1,0 +1,321 @@
+@import './root.scss';
+
+.main-header {
+  background-color: $primary1;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  box-shadow: $shadow-default;
+  
+  ul {
+    height: $header-max-height;
+    display: grid;
+    max-width: $pc-max-width;
+    margin: auto;
+    grid-template-columns: 0.7fr 1.6fr 0.7fr;
+    justify-content: center;
+    align-items: center;
+    color: $white;
+
+    svg {
+      stroke: $white;
+      cursor: pointer;
+    }
+
+    li {
+      margin: 0 1rem;
+      cursor: pointer;
+      display: flex;
+      width: fit-content;
+      justify-self: center;
+      align-self: center;
+
+      &[data-btn="user-set-location"]{
+        position: relative;
+      }
+
+      .type-link.medium {
+        padding-top: 2px;
+      }
+
+      &:first-child {
+        justify-self: flex-start;
+      }
+
+      &:last-child {
+        justify-self: flex-end;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 1em;
+      }
+    }
+  }
+}
+
+ul.items-wrap {
+  overflow: scroll;
+  max-width: $pc-max-width;
+  margin: auto;
+  li {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid $gray3;
+
+    &.body-item {
+      padding: 1rem;
+      .item-img-wrap {
+        border-radius: 10px;
+        overflow: hidden;
+        width: 20vw;
+        height: 20vw;
+        min-width: 105px;
+        min-height: 105px;
+
+        max-width: 180px;
+        max-height: 180px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          min-width: 105px;
+          min-height: 105px;
+        }
+      }
+      .item-info {
+        max-width: calc(90% - 145px);
+      }
+    }
+
+    &.sales-item {
+      padding: 1rem;
+      .item-img-wrap {
+        border-radius: 10px;
+        overflow: hidden;
+        min-width: 105px;
+        min-height: 105px;
+        width: 100vw;
+        height: 100vw;
+        max-width: calc(400px / 3);
+        max-height: calc(400px / 3);
+
+        img {
+          width: 100%;
+          height: 100%;
+          min-width: 105px;
+          min-height: 105px;
+        }
+      }
+
+      .item-info {
+        max-width: calc(80% - 105px);
+      }
+    }
+
+    .item-info {
+      padding-left: 1em;
+      width: 100%;
+      .item-name {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        padding-right: 3rem;
+      }
+      .item-location {
+        color: $gray1;
+      }
+    }
+    .item-icons {
+      width: 40px;
+      text-align: end;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .bookmark {
+        cursor: pointer;
+        svg {
+          stroke-width: 2px;
+          width: 30px;
+          height: 30px;
+          transition: all 0.3s;
+          stroke: $gray1;
+        }
+        &.check {
+          svg {
+            fill: $primary1;
+            stroke: $primary1;
+          }
+        }
+      }
+      .item-status {
+        position: absolute;
+        display: flex;
+        bottom: 0;
+        right: 0;
+        color: $gray1;
+        div {
+          display: flex;
+          margin-left: 0.5rem;
+        }
+        svg {
+          stroke-width: 1px;
+          stroke: $gray1;
+          width: 1rem;
+          height: 1rem;
+        }
+      }
+    }
+  }
+}
+
+.category-container {
+  position: fixed;
+  right: -$max-common-container-width;
+  top: 0;
+  width: 100%;
+  max-width: $max-common-container-width;
+  transition: right 0.8s ease-in-out;
+  z-index: 2;
+
+  &.show {
+    right: 0;
+  }
+
+  .category-body {
+    height: 100vh;
+    background: #fff;
+    overflow: hidden;
+    z-index: 4;
+
+    .category-body-wrap {
+      width: 100%;
+      background-color: $white;
+      position: absolute;
+      padding-top: 1rem;
+      display: grid;
+      grid-column-gap: 1rem;
+      grid-row-gap: 1rem;
+      grid-template-columns: repeat(3, 1fr);
+
+      .category-item {
+        display: flex;
+        padding-bottom: 1rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        .category-icon {
+          max-width: 40px;
+          width: 40px;
+          max-height: 40px;
+          height: 40px;
+          border: 1px solid $gray3;
+          border-radius: $border-small-radius;
+          background-color: $off-white;
+        }
+        .category-title {
+          margin-top: 1rem;
+        }
+      }
+    }
+  }
+}
+
+.menu-container {
+  position: fixed;
+  right: -$max-common-container-width;
+  top: 0;
+  width: 100%;
+  max-width: $max-common-container-width;
+  transition: right 0.8s ease-in-out;
+  z-index: 3;
+  
+  &.show {
+    right: 0;
+  }
+
+  .menu-body {
+    background-color: $white;
+    overflow: scroll;
+    min-height: calc(100vh - 56px);
+    max-height: calc(100vh - 56px);
+    max-width: $pc-max-width;
+
+    ul.menu-tabs-list {
+      position: sticky;
+      top: 0;
+      z-index: 9;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      justify-content: center;
+      align-items: center;
+      height: $header-max-height;
+      cursor: pointer;
+      background-color: $off-white;
+      color: $gray1;
+      border-bottom: 1px solid $gray3;
+
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+
+        &.active {
+          color: $primary1;
+        }
+      }
+      & .underline {
+        position: absolute;
+        width: 10%;
+        max-width: 60px;
+        margin: 0;
+        bottom: 1px;
+        border: 1px solid $primary1;
+        min-width: 50px;
+        transform: translateX(-50%);
+        transition: left 0.5s;
+
+        &.sales-tab {
+          left: 16.65%;
+        }
+        &.chats-tab {
+          left: 50%;
+        }
+        &.bookmarks-tab {
+          left: 83.35%;
+        }
+      }
+    }
+  }
+}
+
+.new-item {
+  position: sticky;
+  max-width: $pc-max-width;
+  bottom: 0;
+  width: 100%;
+  margin: 0 auto;
+  .new-item-sale {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background-color: $primary1;
+    border: none;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    border-radius: 100%;
+    justify-content: center;
+    align-items: center;
+    box-shadow: $shadow-default;
+    svg {
+      width: 16px;
+      height: 16px;
+      stroke: $white;
+    }
+  }
+}
