@@ -9,6 +9,8 @@ $pc-max-width: 1050px;
   position: sticky;
   top: 0;
   z-index: 1;
+  box-shadow: $shadow-default;
+  
   ul {
     height: $header-max-height;
     display: grid;
@@ -31,6 +33,10 @@ $pc-max-width: 1050px;
       width: fit-content;
       justify-self: center;
       align-self: center;
+
+      &[data-btn="user-set-location"]{
+        position: relative;
+      }
 
       .type-link.medium {
         padding-top: 2px;
@@ -60,6 +66,7 @@ ul.items-wrap {
     border-bottom: 1px solid $gray3;
 
     &.body-item {
+      padding: 1rem;
       .item-img-wrap {
         border-radius: 10px;
         overflow: hidden;
@@ -84,6 +91,7 @@ ul.items-wrap {
     }
 
     &.sales-item {
+      padding: 1rem;
       .item-img-wrap {
         border-radius: 10px;
         overflow: hidden;
@@ -135,6 +143,7 @@ ul.items-wrap {
           width: 30px;
           height: 30px;
           transition: all 0.3s;
+          stroke: $gray1;
         }
         &.check {
           svg {
@@ -148,12 +157,14 @@ ul.items-wrap {
         display: flex;
         bottom: 0;
         right: 0;
+        color: $gray1;
         div {
           display: flex;
           margin-left: 0.5rem;
         }
         svg {
           stroke-width: 1px;
+          stroke: $gray1;
           width: 1rem;
           height: 1rem;
         }
@@ -302,6 +313,7 @@ ul.items-wrap {
     border-radius: 100%;
     justify-content: center;
     align-items: center;
+    box-shadow: $shadow-default;
     svg {
       width: 16px;
       height: 16px;
