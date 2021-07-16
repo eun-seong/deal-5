@@ -37,8 +37,17 @@ export default class MainContainer extends Component {
     const $body = this.$target.querySelector('section[data-component="main-body"]') as HTMLElement;
     const $categoryContainer = this.$target.querySelector('[data-component="category"]') as HTMLElement;
     const $menuContainer = this.$target.querySelector('[data-component="menu"]') as HTMLElement;
-    const [toggleCategory, toggleMenu] = [this.toggleCategory.bind(this), this.toggleMenu.bind(this)];
-    new MainHeader($header, { title: '현재위치', toggleCategory, toggleMenu });
+    const [toggleCategory, toggleMenu, clickUserLocation] = [
+      this.toggleCategory.bind(this),
+      this.toggleMenu.bind(this),
+      this.clickUserLocation.bind(this),
+    ];
+    new MainHeader($header, {
+      title: '현재위치',
+      toggleCategory,
+      toggleMenu,
+      onClickItem: clickUserLocation,
+    });
     new MainBody($body);
     new CategoryContainer($categoryContainer, { title: '카테고리', toggleCategory });
     new MenuContainer($menuContainer, { title: '메뉴', toggleMenu });
@@ -50,5 +59,12 @@ export default class MainContainer extends Component {
 
   toggleMenu(this: any) {
     this.$target.querySelector('[data-component="menu"]').classList.toggle('show');
+  }
+
+  clickUserLocation(e: any) {
+    const clickedItem = e.target.closest('.dropdown-item');
+    const type = clickedItem.getAttribute('type');
+    if (type === 'setting-location') location.href = '/#/location';
+    else console.log(clickedItem.innerText);
   }
 }
