@@ -8,6 +8,7 @@ export default class ChatsListItem extends Component {
 
   template() {
     return `
+    <a href='#/chat/${this.$state.chatId || ':id'}'>
     <div class="chat-info-wrap">
       <div class="chat-last-check">
         <div class="type-link medium">${this.$state.user}</div>
@@ -20,6 +21,8 @@ export default class ChatsListItem extends Component {
     </div>
     <div class="chat-item-img">
       <img src="${testimg}" style="width: 100%;" />
-    </div>`;
+    </div>
+    </a>`
+    ;
   }
 }

@@ -4,6 +4,7 @@ import CategoryContainer from './Category';
 import MenuContainer from './Menu';
 import MainBody from './MainBody';
 import { svgIcons } from '@/src/assets/svgIcons';
+import sibling from '@/src/assets/utils/sibling';
 
 export default class MainContainer extends Component {
   setup() {
@@ -54,10 +55,12 @@ export default class MainContainer extends Component {
   }
 
   toggleCategory(this: any) {
+    sibling(this.$target.querySelector('[data-component="category"]')).forEach(a => a.classList.remove('show'));
     this.$target.querySelector('[data-component="category"]').classList.toggle('show');
   }
 
   toggleMenu(this: any) {
+    sibling(this.$target.querySelector('[data-component="menu"]')).forEach(a => a.classList.remove('show'));
     this.$target.querySelector('[data-component="menu"]').classList.toggle('show');
   }
 

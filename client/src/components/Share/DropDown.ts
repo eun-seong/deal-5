@@ -46,7 +46,7 @@ export default class DropDown extends Component {
     this.addEvent('click', '.dropdown', onClickItem);
     this.addEvent('click', '.dropdown-background', (e: any) => {
       const $dropdown = this.$target.querySelector('.dropdown');
-      console.log(this.$target);
+      
       $dropdown?.setAttribute('clicked', '');
       setTimeout(() => {
         this.$target.outerHTML = '';
