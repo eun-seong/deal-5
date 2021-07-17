@@ -63,11 +63,35 @@ svg {
   &[color="error"] {
     stroke: $error;
   }
+
+  &[color="gray1"]{
+    stroke: $gray1;
+  }
 }
 
 a {
   text-decoration: none;
   color: inherit;
+}
+
+textarea {
+  display:inline-block;
+  box-sizing: border-box;
+  outline: none;
+  border: 0 none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  max-height: 57px;
+  font-size: 1em;
+  line-height: 1.33em;
+  vertical-align: top;
+  overflow-wrap: break-word; // 단어 단위 줄바꿈
+  white-space: pre-wrap; // 스페이스, 탭, 개행 문자 보존 & 자동줄바꿈
+  cursor: text; // 커서 형태
+  color: #000;
+  resize: none;
+  overflow-y: auto;
 }
 
 .body {
@@ -180,6 +204,8 @@ button {
 }
 
 .common-header {
+  position: sticky;
+  
   ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -425,4 +451,10 @@ button {
       border-bottom: 0;
     }
   }
+}
+
+.line {
+  margin: 1.5rem 0;
+  height: 1px;
+  background-color: $gray3;
 }

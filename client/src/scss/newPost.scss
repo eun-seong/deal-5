@@ -35,20 +35,6 @@
                 border: 1px solid $gray3;
                 box-sizing: border-box;
                 border-radius: $border-radius;
-                overflow: hidden;
-                color: $gray1;
-                margin: auto;
-                font-size: 0.9rem;
-
-                svg {
-                    stroke: $gray1;
-                }
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }
             }
         }
     }
