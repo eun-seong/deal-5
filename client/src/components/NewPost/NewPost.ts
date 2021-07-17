@@ -14,9 +14,13 @@ export default class NewPost extends Component {
     <header data-component="header"></header>
     <div class="content">
       <div data-component="images-holder"></div>
+      <div class="line"></div>
       <div data-component="post-title"></div>
+      <div class="line"></div>
       <div data-component="item-price"></div>
+      <div class="line"></div>
       <div data-component="post-content"></div>
+      <div class="line"></div>
       <div data-component="sale-location"></div>
     </div>
     `;
