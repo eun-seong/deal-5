@@ -1,5 +1,4 @@
 import Component from '@/src/interfaces/Component';
-import textImg1 from '@/src/assets/imgs/test_img_1.png';
 import { svgIcons } from '@/src/assets/svgIcons';
 
 export default class ImageButton extends Component {
@@ -8,7 +7,7 @@ export default class ImageButton extends Component {
 
     return `
     <div class="image-button">
-      <img src=${img_src || textImg1}></img>
+      <img src=${img_src}></img>
     </div>
     `;
   }
