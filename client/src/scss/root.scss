@@ -20,6 +20,11 @@ $shadow-default: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0,
 $max-common-container-width: 500px;
 $pc-max-width: 1050px;
 
+#root {
+  max-width: $pc-max-width;
+  margin: 0 auto;
+}
+
 @mixin keyframes($animationName) {
   @-webkit-keyframes #{$animationName} {
     @content;
@@ -54,6 +59,10 @@ svg {
   height: 24px;
   stroke-width: 1px;
   fill: none;
+
+  &[color="error"] {
+    stroke: $error;
+  }
 }
 
 a {
@@ -62,6 +71,10 @@ a {
 }
 
 .body {
+  font-family: 'Noto Sans KR';
+}
+
+pre {
   font-family: 'Noto Sans KR';
 }
 
@@ -114,6 +127,8 @@ a {
 }
 
 .btn {
+  display: block;
+  text-align: center;
   background-color: $primary1;
   border: 1px solid $primary1;
   border-radius: $border-radius;
@@ -184,6 +199,12 @@ button {
         justify-self: flex-start;
         margin-left: 1rem;
       }
+
+      &:last-child {
+        cursor: pointer;
+        justify-self: flex-end;
+        margin-right: 1rem;
+      }
     }
   }
 }
@@ -207,8 +228,7 @@ button {
   width: 100vw;
   height: 100vh;
   background-color: rgba(141, 145, 144, 0.5);
-
-  .inputpopup {
+  .popup {
     background-color: $white;
     border-radius: 10px;
     padding: 1.5em 1.3em 1.3em 1.3em;
@@ -216,10 +236,14 @@ button {
     box-shadow: $shadow-default;
     backdrop-filter: blur(4px);
 
+    [data-text] {
+      margin-bottom: 20px;
+    }
+
     .inputpopup-input {
       box-sizing: border-box;
       width: 100%;
-      margin: 1em 0 1.3em 0;
+      margin-bottom: 1.3em;
     }
 
     .buttons {
@@ -236,6 +260,10 @@ button {
         &[disabled] {
           color: $gray1;
         }
+      }
+      
+      .leave {
+        color: $error;
       }
     }
   }
@@ -328,71 +356,73 @@ button {
 
 @keyframes growOut {
   0% {
-    transform: scale(0);
+    transform: scale(0) translateX(-50%);
   }
 
   80% {
-    transform: scale(1.1);
+    transform: scale(1.1) translateX(-50%);
   }
 
   100% {
-    transform: scale(1);
+    transform: scale(1) translateX(-50%);
   }
 }
 
 @keyframes growIn {
   0% {
-    transform: scale(1);
+    transform: scale(1) translateX(-50%);
   }
 
   20% {
-    transform: scale(1.1);
+    transform: scale(1.1) translateX(-50%);
   }
 
   100% {
-    transform: scale(0);
+    transform: scale(0) translateX(-50%);
   }
 }
 
 .dropdown-background {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
+  z-index: 100;
   width: 100vw;
   height: 100vh;
+}
 
-  .dropdown {
-    display: block;
-    flex-direction: column;
-    position: absolute;
-    top: 3rem;
-    left: 43%;
-    background-color: $off-white;
-    border-radius: 10px;
-    z-index: 1;
-    width: auto;
-    min-width: auto;
-    box-shadow: $shadow-default;
+.dropdown {
+  display: block;
+  z-index: 101;
+  flex-direction: column;
+  position: absolute;
+  top: 3rem;
+  left: 50%;
+  background-color: $off-white;
+  border-radius: 10px;
+  width: auto;
+  min-width: auto;
+  box-shadow: $shadow-default;
 
-    $growTime: 150ms;
-    /* dropdown 클릭시 */
-    animation: growOut $growTime ease-in-out forwards;
+  $growTime: 150ms;
+  /* dropdown 클릭시 */
+  animation: growOut $growTime ease-in-out forwards;
+  transform-origin: top center;
+
+  &[clicked] {
+    /* dropdown 제거 시 */
+    animation: growIn $growTime ease-in-out forwards;
     transform-origin: top center;
+  }
 
-    &[clicked] {
-      /* dropdown 제거 시 */
-      animation: growIn $growTime ease-in-out forwards;
-      transform-origin: top center;
-    }
+  .dropdown-item {
+    white-space: nowrap;
+    color: black;
+    border-bottom: 1px solid $gray3;
+    padding: 1rem;
 
-    .dropdown-item {
-      color: black;
-      border-bottom: 1px solid $gray3;
-      padding: 1rem;
-
-      &:last-child {
-        border-bottom: 0;
-      }
+    &:last-child {
+      border-bottom: 0;
     }
   }
 }

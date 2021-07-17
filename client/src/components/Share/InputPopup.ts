@@ -10,7 +10,7 @@ export default class InputPopup extends Component {
 
     return `
       <div class="modal">
-        <div class="inputpopup">
+        <div class="popup">
           <div data-text="">${text}</div>
           <input class="inputpopup-input">
           <div class="buttons">
