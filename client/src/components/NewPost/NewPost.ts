@@ -12,7 +12,7 @@ export default class NewPost extends Component {
   template() {
     return `
     <header data-component="header"></header>
-    <div class="content">
+    <div class="content" id="new-post">
       <div data-component="images-holder"></div>
       <div class="line"></div>
       <div data-component="post-title"></div>
@@ -20,7 +20,6 @@ export default class NewPost extends Component {
       <div data-component="item-price"></div>
       <div class="line"></div>
       <div data-component="post-content"></div>
-      <div class="line"></div>
       <div data-component="sale-location"></div>
     </div>
     `;
