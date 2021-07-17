@@ -58,6 +58,10 @@ svg {
   &[color="error"] {
     stroke: $error;
   }
+
+  &[color="gray1"]{
+    stroke: $gray1;
+  }
 }
 
 a {
@@ -169,6 +173,8 @@ button {
 }
 
 .common-header {
+  position: sticky;
+  
   ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
