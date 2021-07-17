@@ -101,9 +101,25 @@
     line-height: 1.33em;
     vertical-align: top;
 
+    input {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        line-height: 1.33rem;
+        height: auto;
+        border-radius: 0;
+        
+        &:focus {
+            border: 0;
+        }
+    }
+
     span {
         margin-right: 5px;
         color: $gray1;
+        &[active] {
+            color: black;
+        }
     }
 }
 
