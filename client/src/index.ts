@@ -5,6 +5,7 @@ import Main from './components/Main';
 import SignIn from './components/SignIn';
 import Location from './components/Location';
 import ChatDetail from './components/ChatDetail';
+import NewPost from './components/NewPost';
 import ItemDetail from './components/ItemDetail';
 
 /**
@@ -26,6 +27,7 @@ const routes = [
   { path: '/signin', component: SignIn },
   { path: '/location', component: Location },
   { path: '/chat/:id', component: ChatDetail },
+  { path: '/newpost', component: NewPost },
 ];
 const $app = document.querySelector('#root') as HTMLElement;
 

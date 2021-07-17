@@ -38,7 +38,7 @@ export const svgIcons = {
   </svg>
   `,
   check: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-  <path d="M21 6L8.625 18L3 12.5455" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M21 6L8.625 18L3 12.5455" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>`,
   moreVertical: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
