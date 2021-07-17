@@ -6,10 +6,16 @@ export default class ImageButton extends Component {
     const { img_src } = this.$props;
 
     return `
+    <div class="image-remove-button">${svgIcons.close}</div>
     <div class="image-button">
       <img src=${img_src}></img>
     </div>
     `;
+  }
+
+  setEvent() {
+    const { removeImage } = this.$props;
+    this.addEvent('click', '.image-remove-button', removeImage);
   }
 }
 
@@ -30,7 +36,6 @@ export class ImageAddButton extends Component {
 
   setEvent() {
     const { selectedImage } = this.$props;
-
     this.addEvent('input', '#img-select', selectedImage);
   }
 }

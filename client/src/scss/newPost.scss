@@ -3,6 +3,7 @@
 #new-post {
     display: flex;
     flex-direction: column;
+    padding-top: 0;
 }
 
 [data-component="header"] {
@@ -19,7 +20,8 @@
         display: flex;
         overflow-x: auto;
         gap: 15px;
-        padding: 0 15px;
+        padding: 1.5rem 15px 0 15px;
+        z-index: 100;
 
         &::-webkit-scrollbar {
             display: none;
@@ -29,6 +31,7 @@
             display: inline-block;
             color: $gray1;
             font-size: 0.85rem;
+            position: relative;
 
             .image-button {
                 width: 80px;
@@ -47,6 +50,23 @@
 
                 svg {
                     stroke: $gray1;
+                }
+            }
+
+            .image-remove-button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                transform: translate(235%, -30%);
+                width: 27px;
+                height: 27px;
+                background-color: black;
+                border-radius: 100px;
+
+                svg {
+                    stroke: white;
+                    width: 70%;
                 }
             }
         }
@@ -108,7 +128,7 @@
         line-height: 1.33rem;
         height: auto;
         border-radius: 0;
-        
+
         &:focus {
             border: 0;
         }
@@ -117,6 +137,7 @@
     span {
         margin-right: 5px;
         color: $gray1;
+
         &[active] {
             color: black;
         }

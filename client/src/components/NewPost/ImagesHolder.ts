@@ -1,10 +1,11 @@
 import Component from '@/src/interfaces/Component';
 import ImageButton, { ImageAddButton } from './ImageButton';
+import testimg from '@/src/assets/tmpimgs/test_img_8.png';
 
 export default class ImagesHolder extends Component {
   setup() {
     this.$state = {
-      images: [],
+      images: [testimg, testimg, testimg, testimg, testimg, testimg, testimg, testimg],
     };
   }
 
@@ -37,17 +38,29 @@ export default class ImagesHolder extends Component {
       if (selectedFiles) [].forEach.call(selectedFiles, readFile);
     };
 
+    const removeImage = (e: any) => {
+      const imgId = parseInt(e.target.closest('li').getAttribute('img-id'));
+      const { images } = this.$state;
+      this.setState({
+        images: [...images.slice(0, imgId), ...images.slice(imgId + 1)],
+      });
+    };
+
     const $images = this.$target.querySelector('[data-component="images"]');
 
     /* 사진 추가 버튼 */
     const $li = document.createElement('li');
-    new ImageAddButton($li, { imageNum: this.$state.images.length, selectedImage: selectImage });
+    new ImageAddButton($li, {
+      imageNum: this.$state.images.length,
+      selectedImage: selectImage,
+    });
     $images?.appendChild($li);
 
     const { images } = this.$state;
-    images.forEach((img: string) => {
+    images.forEach((img: string, i: number) => {
       const $li = document.createElement('li');
-      new ImageButton($li, { img_src: img });
+      $li.setAttribute('img-id', String(i));
+      new ImageButton($li, { img_src: img, removeImage: removeImage });
       $images?.appendChild($li);
     });
   }
