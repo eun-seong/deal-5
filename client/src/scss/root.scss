@@ -54,6 +54,10 @@ svg {
   height: 24px;
   stroke-width: 1px;
   fill: none;
+
+  &[color="error"] {
+    stroke: $error;
+  }
 }
 
 a {
@@ -184,6 +188,12 @@ button {
         justify-self: flex-start;
         margin-left: 1rem;
       }
+
+      &:last-child {
+        cursor: pointer;
+        justify-self: flex-end;
+        margin-right: 1rem;
+      }
     }
   }
 }
@@ -207,8 +217,7 @@ button {
   width: 100vw;
   height: 100vh;
   background-color: rgba(141, 145, 144, 0.5);
-
-  .inputpopup {
+  .popup {
     background-color: $white;
     border-radius: 10px;
     padding: 1.5em 1.3em 1.3em 1.3em;
@@ -216,10 +225,14 @@ button {
     box-shadow: $shadow-default;
     backdrop-filter: blur(4px);
 
+    [data-text] {
+      margin-bottom: 20px;
+    }
+
     .inputpopup-input {
       box-sizing: border-box;
       width: 100%;
-      margin: 1em 0 1.3em 0;
+      margin-bottom: 1.3em;
     }
 
     .buttons {
@@ -236,6 +249,10 @@ button {
         &[disabled] {
           color: $gray1;
         }
+      }
+      
+      .leave {
+        color: $error;
       }
     }
   }
