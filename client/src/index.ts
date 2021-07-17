@@ -6,7 +6,7 @@ import SignIn from './components/SignIn';
 import Location from './components/Location';
 import ChatDetail from './components/ChatDetail';
 import NewPost from './components/NewPost';
-// import ItemDetail from './components/ItemDetail';
+import ItemDetail from './components/ItemDetail';
 
 /**
  * route
