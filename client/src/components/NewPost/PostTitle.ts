@@ -20,6 +20,7 @@ export default class PostTitle extends Component {
     this.clickedCategories = new Array();
     const categoryList = ['여성패션/잡화', '기타 중고물품', '가구/인테리어', '가전', '노트북/컴퓨터', 'TV/모니터'];
     const $categoryUl = this.$target.querySelector('.category>ul');
+    categoryList.sort(_ => Math.random() - 0.5); // shuffle
     categoryList.forEach((category: string, i) => {
       const $li = document.createElement('li');
       $li.innerText = category;
