@@ -4,6 +4,11 @@ export interface DropDownProps {
   labels: string[];
   onClickItem: () => {};
   specialItems?: specialItem[];
+  //pos추가 position fix는 relative 되어있는 element에 영향을 받음.
+  pos: {
+    left: number;
+    top: number;
+  };
 }
 
 interface specialItem {
@@ -17,7 +22,7 @@ export default class DropDown extends Component {
   }
 
   mounted() {
-    const { labels, specialItems } = this.$props;
+    const { labels, specialItems, pos } = this.$props;
     const $dropdownBackground = document.createElement('div');
     const $dropdown = document.createElement('div');
     $dropdownBackground.className = 'dropdown-background';
@@ -25,14 +30,19 @@ export default class DropDown extends Component {
     $dropdownBackground.appendChild($dropdown);
     this.$target.appendChild($dropdownBackground);
 
-    labels.forEach((label: string) => {
+    //마우스 클릭한 위치에 Dropdown이 생성되도록 추가 pos가 없으면 가운데 고정(root.scss)
+    if (pos) {
+      $dropdown.setAttribute('style', `left: ${pos.left - 40}px; top: ${pos.top + 15}px;`);
+    }
+
+    labels?.forEach((label: string) => {
       const $div = document.createElement('div');
       $div.innerText = label;
       $div.className = 'dropdown-item';
       $dropdown?.appendChild($div);
     });
 
-    specialItems.forEach((item: specialItem) => {
+    specialItems?.forEach((item: specialItem) => {
       const $div = document.createElement('div');
       $div.innerText = item.name;
       $div.className = 'dropdown-item';
@@ -46,7 +56,7 @@ export default class DropDown extends Component {
     this.addEvent('click', '.dropdown', onClickItem);
     this.addEvent('click', '.dropdown-background', (e: any) => {
       const $dropdown = this.$target.querySelector('.dropdown');
-      
+
       $dropdown?.setAttribute('clicked', '');
       setTimeout(() => {
         this.$target.outerHTML = '';

@@ -1,0 +1,198 @@
+@import './root.scss';
+
+.icons-wrap {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  max-width: $pc-max-width - 50px;
+  width: 95%;
+  margin: 0 auto;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+
+  svg {
+    width: 30px;
+    height: 30px;
+    stroke: $white;
+  }
+  .setting-wrap {
+    cursor: pointer;
+    .dropdown {
+      right: -30px;
+      left: auto;
+
+      div[type='delete'] {
+        color: $error;
+      }
+    }
+  }
+}
+
+.slider-wrap {
+  .slider-wrapper {
+    overflow: hidden;
+    position: relative;
+    max-width: $pc-max-width;
+    width: 100%;
+    margin: 0 auto;
+    height: auto;
+    cursor: pointer;
+    z-index: 1;
+
+    .slides {
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      top: 0;
+      &.shifting {
+        transition: left 0.2s ease-out;
+      }
+      .slide {
+        height: fit-content;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.24) 0%,
+          rgba(0, 0, 0, 0) 16.52%,
+          rgba(0, 0, 0, 0) 87.36%,
+          rgba(0, 0, 0, 0.24) 100%
+        );
+        //? img { vertical-align : top 이유
+        /*
+          이미지태그는 기본적으로 inline-block 속성으로
+          vertical-align : baseline 기본값으로 가지고있다.
+          이미지 태그를 텍스트로 인식하여
+          폰트에 나타나는 아래 여백(폰트를 드래그했을때 보이는 여백) 
+          인식하고 있기 때문에 
+          img를 감싸고 있는 div태그가 img보다 height가 조금 더 크게나온다.
+          따라서
+          vertical-align의 기준을 상단으로 맞춰주면 된다.
+
+          또는 img를 display: block으로 설정해
+          vertical-align을 인식하지 못하게 하면 된다.
+          https://mygumi.tistory.com/368
+
+          object-fit: 이미지 크기 조절용
+        */
+        img {
+          z-index: -1;
+          position: relative;
+          vertical-align: top;
+          object-fit: cover;
+        }
+      }
+    }
+    .pagenation {
+      display: flex;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      .page {
+        width: 10px;
+        height: 10px;
+        border-radius: 100%;
+        background-color: $gray2;
+        margin: 0 2px;
+
+        &.active {
+          background-color: white;
+        }
+      }
+    }
+  }
+}
+
+.item-detail-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid $gray3;
+  padding: 1rem;
+
+  .itemprice-wrap {
+    display: flex;
+
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    & div:first-child {
+      min-width: 40px;
+      min-height: 40px;
+      padding-right: 1rem;
+      margin-right: 1rem;
+      border-right: 1px solid $gray3;
+    }
+
+    .item-price {
+      @media (min-width: 500px) {
+        margin: 0 auto;
+      }
+    }
+  }
+}
+.item-detail-body {
+  padding: 1.5rem 1rem 0;
+
+  .item-description {
+    padding-top: 1.3rem;
+    .item-detail-name {
+      font-size: 24px;
+    }
+    .item-detail-category {
+      margin: 0.5rem 0 1rem;
+      color: $gray2;
+    }
+    .item-detail-counts {
+      color: $gray1;
+      padding-top: 1rem;
+    }
+    .item-detail-seller {
+      display: flex;
+      margin: 2rem 0;
+      padding: 1.5rem 1rem;
+      justify-content: space-between;
+      background-color: $off-white;
+
+      .location {
+        color: $gray3;
+      }
+    }
+  }
+}
+
+.selectbox-wrapper {
+  position: relative;
+  display: inline-block;
+  .selectbox {
+    padding: 0.9em 1.8em 0.6em 0.8em;
+    border-radius: $border-radius;
+    border-color: $gray3;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    &::-ms-expand {
+      display: none;
+    }
+  }
+  .selectbox-icon {
+    position: absolute;
+    display: flex;
+    right: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    svg {
+      width: 0.8rem;
+      height: 0.8rem;
+      path {
+        stroke-width: 4px !important;
+        stroke: $gray1;
+      }
+    }
+  }
+}

@@ -5,7 +5,7 @@ import Main from './components/Main';
 import SignIn from './components/SignIn';
 import Location from './components/Location';
 import ChatDetail from './components/ChatDetail';
-// import ItemDetail from './components/ItemDetail';
+import ItemDetail from './components/ItemDetail';
 
 /**
  * route
