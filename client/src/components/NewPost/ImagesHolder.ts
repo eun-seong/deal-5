@@ -1,12 +1,14 @@
 import Component from '@/src/interfaces/Component';
 import ImageButton, { ImageAddButton } from './ImageButton';
-import testimg from '@/src/assets/tmpimgs/test_img_8.png';
+// import testimg from '@/src/assets/tmpimgs/test_img_8.png';
 
 export default class ImagesHolder extends Component {
+  // images: Array<string> = [];
   setup() {
     this.$state = {
-      images: [testimg, testimg, testimg, testimg, testimg, testimg, testimg, testimg],
+      images: [],
     };
+    // this.images = new Array();
   }
 
   template() {
@@ -19,6 +21,13 @@ export default class ImagesHolder extends Component {
     const readFile = (file: File) => {
       const reader = new FileReader();
       reader.addEventListener('load', (e: any) => {
+        /*
+        this.images = [...this.images, e.target.result];
+        const $li = document.createElement('li');
+        $li.setAttribute('img-id', String(this.images.length));
+        new ImageButton($li, { img_src: e.target.result, removeImage: removeImage });
+        $images?.appendChild($li);
+        */
         this.setState({
           images: [...this.$state.images, e.target.result],
         });
@@ -40,6 +49,10 @@ export default class ImagesHolder extends Component {
 
     const removeImage = (e: any) => {
       const imgId = parseInt(e.target.closest('li').getAttribute('img-id'));
+      /*
+      this.images = [...this.images.slice(0, imgId), ...this.images.slice(imgId + 1)];
+      e.target.closest('li').remove();
+      */
       const { images } = this.$state;
       this.setState({
         images: [...images.slice(0, imgId), ...images.slice(imgId + 1)],
@@ -47,7 +60,6 @@ export default class ImagesHolder extends Component {
     };
 
     const $images = this.$target.querySelector('[data-component="images"]');
-
     /* 사진 추가 버튼 */
     const $li = document.createElement('li');
     new ImageAddButton($li, {
