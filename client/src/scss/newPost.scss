@@ -1,0 +1,128 @@
+@import './root.scss';
+
+#new-post {
+    display: flex;
+    flex-direction: column;
+}
+
+[data-component="header"] {
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+[data-component="images-holder"] {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+
+    ul {
+        display: flex;
+        overflow-x: auto;
+        gap: 15px;
+        padding: 0 15px;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        li {
+            display: inline-block;
+
+            .image-button {
+                width: 80px;
+                height: 80px;
+                background-color: $off-white;
+                border: 1px solid $gray3;
+                box-sizing: border-box;
+                border-radius: $border-radius;
+                overflow: hidden;
+                color: $gray1;
+                margin: auto;
+                font-size: 0.9rem;
+
+                svg {
+                    stroke: $gray1;
+                }
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+}
+
+[data-component="post-title"] {
+    .category {
+        margin-top: 1rem;
+        font-size: 0.875rem;
+
+        div {
+            color: $gray4;
+        }
+
+        ul {
+            display: flex;
+            color: $gray1;
+            gap: 5px;
+            overflow-x: scroll;
+            margin-top: 8px;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            li {
+                border: 1px solid $gray3;
+                border-radius: 18px;
+                padding: 0.33em 1em;
+                white-space: nowrap;
+                line-height: 1.33em; // 줄 간격
+                vertical-align: top; // 텍스트를 가운데 두기 위해
+                font-weight: 500;
+            }
+        }
+
+        [hidden] {
+            visibility: none;
+        }
+    }
+}
+
+[data-component="item-price"] {
+    display: flex;
+    line-height: 1.33em;
+    vertical-align: top;
+
+    span {
+        margin-right: 5px;
+        color: $gray1;
+    }
+}
+
+[data-component="post-content"] {
+    textarea {
+        max-height: 1000px;
+        overflow-x: hidden;
+    }
+}
+
+[data-component="sale-location"] {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    margin: 0 calc(-50vw + 50%);
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid $gray3;
+    background-color: white;
+
+    svg {
+        margin-right: 5px;
+        width: 1.2rem;
+    }
+}
