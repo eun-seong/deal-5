@@ -28,6 +28,7 @@
         li {
             display: inline-block;
             color: $gray1;
+            font-size: 0.85rem;
 
             .image-button {
                 width: 80px;
@@ -44,7 +45,9 @@
                     object-fit: cover;
                 }
 
-                svg{stroke: $gray1;}
+                svg {
+                    stroke: $gray1;
+                }
             }
         }
     }
@@ -78,6 +81,12 @@
                 line-height: 1.33em; // 줄 간격
                 vertical-align: top; // 텍스트를 가운데 두기 위해
                 font-weight: 500;
+
+                &[active] {
+                    background-color: $primary1;
+                    border: 1px solid $primary1;
+                    color: white;
+                }
             }
         }
 
