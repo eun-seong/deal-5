@@ -103,6 +103,8 @@ export default class NewPost extends Component {
   }
 
   handlePostingButton() {
-    console.log('post');
+    if (!this.isAbleToButtonActive()) return;
+
+    location.href = '/#/itemdetail';
   }
 }
