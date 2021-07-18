@@ -55,28 +55,39 @@ export default class MainContainer extends Component {
   }
 
   toggleCategory(this: any) {
+    const target = this.$target.querySelector('[data-component="category"]')!;
     this.backgroundClick(this);
-    this.$target.querySelector('[data-component="category"]').classList.toggle('show');
+    target.classList.toggle('show');
+
+    if (!target.classList.contains('show')) {
+      document.querySelector('.container-background')?.remove();
+    }
   }
 
   toggleMenu(this: any) {
+    const target = this.$target.querySelector('[data-component="menu"]')!;
     this.backgroundClick(this);
-    this.$target.querySelector('[data-component="menu"]').classList.toggle('show');
+    target.classList.toggle('show');
+
+    if (!target.classList.contains('show')) {
+      document.querySelector('.container-background')?.remove();
+    }
   }
 
   backgroundClick(this: any) {
-    const background = document.createElement('div');
-    background.classList.add('dropdown-background');
-    document.getElementById('root')!.appendChild(background);
+    let background = document.querySelector('.container-background') as HTMLElement;
+    if (!background) {
+      background = document.createElement('div');
+      background.classList.add('dropdown-background', 'container-background');
+      document.getElementById('root')!.appendChild(background);
+    }
 
     const sideContainers = [...this.$target.querySelectorAll('.side-container')];
 
-    background.addEventListener('click', () => {
+    background.addEventListener('click', (e: any) => {
       sideContainers.forEach((a: any) => a.classList.remove('show'));
       background.remove();
     });
-
-    sideContainers.forEach((a: any) => a.classList.remove('show'));
   }
 
   clickUserLocation(e: any) {
