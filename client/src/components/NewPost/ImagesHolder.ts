@@ -45,7 +45,7 @@ export default class ImagesHolder extends Component {
       const lastID = this.images.length === 0 ? 0 : this.images[this.images.length - 1].id + 1;
       this.images = [...this.images, { id: lastID, path: e.target.result }];
       const $li = document.createElement('li');
-      $li.setAttribute('img-id', String(this.images.length));
+      $li.setAttribute('img-id', String(lastID));
       new ImageButton($li, { img_src: e.target.result, removeImage: this.removeImage.bind(this) });
       $images?.appendChild($li);
 
