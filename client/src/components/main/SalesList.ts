@@ -152,14 +152,13 @@ export default class SalesList extends Component {
     </ul>`;
   }
   setEvent() {
-    const dropdownTarget = document.querySelector('body') as HTMLElement;
     const dropdown = this.$target.querySelector('[data-component="sales-wrap"]') as HTMLElement;
-    
+
     dropdown.addEventListener('click', (e: any) => {
       if (e.target.closest('.more-item-info')) {
         const $dropDownDiv = document.createElement('div');
         $dropDownDiv.className = 'dropdown-container';
-        dropdownTarget.appendChild($dropDownDiv);
+        this.$target.appendChild($dropDownDiv);
         new DropDown($dropDownDiv, {
           onClickItem: this.dropdownClickEvent,
           specialItems: [
@@ -179,7 +178,7 @@ export default class SalesList extends Component {
         });
       } else {
         const closest = e.target.closest('.sales-item');
-        const href = closest.getAttribute('data-href')
+        const href = closest.getAttribute('data-href');
         location.href = href;
       }
     });
