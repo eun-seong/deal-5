@@ -2,13 +2,15 @@ import Component from '@/src/interfaces/Component';
 import ImageButton, { ImageAddButton } from './ImageButton';
 // import testimg from '@/src/assets/tmpimgs/test_img_8.png';
 
+interface Image {
+  id: number;
+  path: string;
+}
+
 export default class ImagesHolder extends Component {
-  // images: Array<string> = [];
+  images: Array<Image> = [];
   setup() {
-    this.$state = {
-      images: [],
-    };
-    // this.images = new Array();
+    this.images = new Array();
   }
 
   template() {
@@ -21,22 +23,22 @@ export default class ImagesHolder extends Component {
     const readFile = (file: File) => {
       const reader = new FileReader();
       reader.addEventListener('load', (e: any) => {
-        /*
-        this.images = [...this.images, e.target.result];
+        // 사진 추가
+        const lastID = this.images.length === 0 ? 0 : this.images[this.images.length - 1].id + 1;
+        this.images = [...this.images, { id: lastID, path: e.target.result }];
         const $li = document.createElement('li');
         $li.setAttribute('img-id', String(this.images.length));
         new ImageButton($li, { img_src: e.target.result, removeImage: removeImage });
         $images?.appendChild($li);
-        */
-        this.setState({
-          images: [...this.$state.images, e.target.result],
-        });
+
+        // 사진 개수 update
+        this.updateNumOfImages();
       });
       reader.readAsDataURL(file);
     };
 
     const selectImage = () => {
-      if (this.$state.images.length > 10) {
+      if (this.images.length > 10) {
         // TODO Alert 처리
         return;
       }
@@ -48,32 +50,34 @@ export default class ImagesHolder extends Component {
     };
 
     const removeImage = (e: any) => {
+      // 사진 삭제
       const imgId = parseInt(e.target.closest('li').getAttribute('img-id'));
-      /*
-      this.images = [...this.images.slice(0, imgId), ...this.images.slice(imgId + 1)];
+      this.images = this.images.filter(img => img.id !== imgId);
       e.target.closest('li').remove();
-      */
-      const { images } = this.$state;
-      this.setState({
-        images: [...images.slice(0, imgId), ...images.slice(imgId + 1)],
-      });
+
+      // 사진 개수 update
+      this.updateNumOfImages();
     };
 
     const $images = this.$target.querySelector('[data-component="images"]');
     /* 사진 추가 버튼 */
     const $li = document.createElement('li');
     new ImageAddButton($li, {
-      imageNum: this.$state.images.length,
+      imageNum: this.images.length,
       selectedImage: selectImage,
     });
     $images?.appendChild($li);
 
-    const { images } = this.$state;
-    images.forEach((img: string, i: number) => {
+    this.images.forEach((img: Image, i: number) => {
       const $li = document.createElement('li');
       $li.setAttribute('img-id', String(i));
       new ImageButton($li, { img_src: img, removeImage: removeImage });
       $images?.appendChild($li);
     });
+  }
+
+  updateNumOfImages() {
+    const $numOfImages = this.$target.querySelector('ul>li:first-child #images-num') as HTMLElement;
+    $numOfImages.innerText = String(this.images.length);
   }
 }
