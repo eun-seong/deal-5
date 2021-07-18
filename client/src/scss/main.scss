@@ -137,23 +137,6 @@ ul.items-wrap {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-
-      .bookmark {
-        cursor: pointer;
-        svg {
-          stroke-width: 2px;
-          width: 30px;
-          height: 30px;
-          transition: all 0.3s;
-          stroke: $gray1;
-        }
-        &.check {
-          svg {
-            fill: $primary1;
-            stroke: $primary1;
-          }
-        }
-      }
       .item-status {
         position: absolute;
         display: flex;
