@@ -31,7 +31,7 @@ export default class PostTitle extends Component {
 
   setEvent() {
     this.addEvent('input', 'textarea', (e: any) => {
-      autoHeightTextarea(e, this.$target, 'textarea');
+      autoHeightTextarea(this.$target, 'textarea');
       if (e.target.value.length > 2) {
         // 카테고리 생성
         const $category = this.$target.querySelector('.category');

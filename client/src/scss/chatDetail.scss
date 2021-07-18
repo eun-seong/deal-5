@@ -93,14 +93,6 @@
             margin-left: 0.7rem;
             width: 2em;
         }
-
-        &[active]>svg {
-            stroke: $primary2;
-        }
-
-        &:not([active])>svg {
-            stroke: $gray1;
-        }
     }
 }
 
