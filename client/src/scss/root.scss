@@ -67,6 +67,10 @@ svg {
   &[color="gray1"]{
     stroke: $gray1;
   }
+
+  &[color="primary1"]{
+    stroke: $primary1;
+  }
 }
 
 [type='delete'] {

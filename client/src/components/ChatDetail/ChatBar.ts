@@ -1,5 +1,6 @@
 import Component from '@/src/interfaces/Component';
 import ChatSendButton from './ChatSendButton';
+import autoHeightTextarea from '@/src/assets/utils/autoHeightTextarea';
 
 export default class ChatBar extends Component {
   setup() {
@@ -24,11 +25,7 @@ export default class ChatBar extends Component {
 
   setEvent() {
     this.addEvent('input', '#chatBar-input', (e: any) => {
-      const $chatBar = this.$target.querySelector('#chatBar-input') as HTMLElement;
-      if (e.target.scrollHeight <= 70) {
-        $chatBar.style.height = 'auto';
-        $chatBar.style.height = e.target.scrollHeight + 'px';
-      }
+      autoHeightTextarea(e, this.$target, '#chatBar-input');
     });
   }
 }
