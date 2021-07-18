@@ -99,24 +99,23 @@ export default class BookmarksList extends Component {
     return `<ul data-component="bookmarks-wrap" class="sales-list items-wrap"></ul>`;
   }
 
-  setEvent() {
-    this.addEvent('click', '[data-component=bookmarks-wrap]', this.itemEvent);
-  }
-
   mounted() {
     const $ul = this.$target.querySelector('[data-component=bookmarks-wrap]') as HTMLElement;
+
+    $ul.addEventListener('click', this.itemEvent);
 
     this.items.forEach((state: any) => {
       const li = document.createElement('li');
       li.className = 'sales-item content';
       li.setAttribute('data-href', '#/item-detail');
-      
+
       new ItemComponent(li, { state });
       $ul.appendChild(li);
     });
   }
 
   itemEvent(e: any) {
+    console.log('doit!');
     const bookmark = e.target.closest('.bookmark');
     if (!!bookmark) {
       bookmark.classList.toggle('check');
