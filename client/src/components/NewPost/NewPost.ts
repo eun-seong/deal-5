@@ -8,14 +8,14 @@ import ItemPrice from './ItemPrice';
 import PostConent from './PostContent';
 import SaleLocation from './SaleLocation';
 
-interface IpostStandardStatus {
+interface IstatusOfPostingStandard {
   image: boolean;
   title: boolean;
   content: boolean;
 }
 
 export default class NewPost extends Component {
-  postStandardStatus: IpostStandardStatus = {
+  statusOfPostingStandard: IstatusOfPostingStandard = {
     image: false,
     title: false,
     content: false,
@@ -63,33 +63,35 @@ export default class NewPost extends Component {
 
   setEvent() {
     this.addEvent('ableImage', '#new-post', (e: any) => {
-      this.postStandardStatus.image = true;
+      this.statusOfPostingStandard.image = true;
       if (this.isAbleToButtonActive()) this.ableToButton();
     });
     this.addEvent('disableImage', '#new-post', (e: any) => {
-      this.postStandardStatus.image = false;
+      this.statusOfPostingStandard.image = false;
       this.disableToButton();
     });
     this.addEvent('ableContent', '#new-post', (e: any) => {
-      this.postStandardStatus.content = true;
+      this.statusOfPostingStandard.content = true;
       if (this.isAbleToButtonActive()) this.ableToButton();
     });
     this.addEvent('disableContent', '#new-post', (e: any) => {
-      this.postStandardStatus.content = false;
+      this.statusOfPostingStandard.content = false;
       this.disableToButton();
     });
     this.addEvent('ableTitle', '#new-post', (e: any) => {
-      this.postStandardStatus.title = true;
+      this.statusOfPostingStandard.title = true;
       if (this.isAbleToButtonActive()) this.ableToButton();
     });
     this.addEvent('disableTitle', '#new-post', (e: any) => {
-      this.postStandardStatus.title = false;
+      this.statusOfPostingStandard.title = false;
       this.disableToButton();
     });
   }
 
   isAbleToButtonActive() {
-    return this.postStandardStatus.image && this.postStandardStatus.title && this.postStandardStatus.content;
+    return (
+      this.statusOfPostingStandard.image && this.statusOfPostingStandard.title && this.statusOfPostingStandard.content
+    );
   }
 
   ableToButton() {
