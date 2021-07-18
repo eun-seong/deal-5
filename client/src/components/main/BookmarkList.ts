@@ -100,7 +100,7 @@ export default class BookmarksList extends Component {
   }
 
   setEvent() {
-    this.addEvent('click', '[data-component=bookmarks-wrap]', this.bookmarkToggle);
+    this.addEvent('click', '[data-component=bookmarks-wrap]', this.itemEvent);
   }
 
   mounted() {
@@ -109,12 +109,20 @@ export default class BookmarksList extends Component {
     this.items.forEach((state: any) => {
       const li = document.createElement('li');
       li.className = 'sales-item content';
+      li.setAttribute('data-href', '#/item-detail');
+      
       new ItemComponent(li, { state });
       $ul.appendChild(li);
     });
   }
 
-  bookmarkToggle(e: any) {
-    e.target.closest('.bookmark')?.classList.toggle('check');
+  itemEvent(e: any) {
+    const bookmark = e.target.closest('.bookmark');
+    if (!!bookmark) {
+      bookmark.classList.toggle('check');
+    } else {
+      const item = e.target.closest('li.sales-item');
+      location.href = item.getAttribute('data-href');
+    }
   }
 }

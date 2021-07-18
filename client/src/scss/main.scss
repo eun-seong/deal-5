@@ -62,7 +62,10 @@ ul.items-wrap {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid $gray3;
-
+    a {
+      display: flex;
+      width: 100%;
+    }
     &.body-item {
       padding: 1rem;
       .item-img-wrap {
@@ -89,6 +92,7 @@ ul.items-wrap {
     }
 
     &.sales-item {
+      cursor: pointer;
       padding: 1rem;
       .item-img-wrap {
         border-radius: 10px;
