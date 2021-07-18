@@ -44,6 +44,8 @@ export default class ChatDetail extends Component {
     });
     new Chatting($chatting as HTMLElement);
     new ChatBar($chatbar as HTMLElement);
+
+    window.scrollTo(0, document.body.scrollHeight);
   }
 
   handleLeaveRoomButton(e: any) {
