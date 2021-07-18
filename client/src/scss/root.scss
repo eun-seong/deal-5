@@ -73,6 +73,10 @@ svg {
   }
 }
 
+[type='delete'] {
+  color: $error !important;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -161,7 +165,7 @@ pre {
   border: 1px solid $primary1;
   border-radius: $border-radius;
   color: $white;
-  width: 100%;
+  width: auto;
   padding: 0.8rem;
 
   &:hover {
@@ -461,4 +465,21 @@ button {
   margin: 1.5rem 0;
   height: 1px;
   background-color: $gray3;
+}
+
+.bookmark {
+  cursor: pointer;
+  svg {
+    stroke-width: 2px;
+    width: 30px;
+    height: 30px;
+    transition: all 0.3s;
+    stroke: $gray1;
+  }
+  &.check {
+    svg {
+      fill: $primary1;
+      stroke: $primary1;
+    }
+  }
 }

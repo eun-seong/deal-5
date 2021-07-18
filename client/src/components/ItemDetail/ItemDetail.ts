@@ -14,6 +14,7 @@ export default class ItemDetail extends Component {
   //상태 변경시 변경된 ui 적용
   setup() {
     this.$state = {
+      sellType: '판매중',
       sellerName: '골목대장퉁퉁이',
       itemName: '골목대장퉁퉁이의 500년된 마이크',
       category: '기타 레전드 등급 중고물품',

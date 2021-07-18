@@ -28,8 +28,8 @@ export default class MainContainer extends Component {
     return `
         <header class='main-header' data-component='main-header'></header>
         <section class='main-body' data-component='main-body'></section>
-        <aside class='category-container' data-component='category'></aside>
-        <aside class='menu-container' data-component='menu'></aside>
+        <aside class='category-container side-container' data-component='category'></aside>
+        <aside class='menu-container side-container' data-component='menu'></aside>
         <div class='new-item'><a href="#" class='new-item-sale'>${svgIcons.add}</a></div>
       `;
   }
@@ -55,13 +55,39 @@ export default class MainContainer extends Component {
   }
 
   toggleCategory(this: any) {
-    sibling(this.$target.querySelector('[data-component="category"]')).forEach(a => a.classList.remove('show'));
-    this.$target.querySelector('[data-component="category"]').classList.toggle('show');
+    const target = this.$target.querySelector('[data-component="category"]')!;
+    this.backgroundClick(this);
+    target.classList.toggle('show');
+
+    if (!target.classList.contains('show')) {
+      document.querySelector('.container-background')?.remove();
+    }
   }
 
   toggleMenu(this: any) {
-    sibling(this.$target.querySelector('[data-component="menu"]')).forEach(a => a.classList.remove('show'));
-    this.$target.querySelector('[data-component="menu"]').classList.toggle('show');
+    const target = this.$target.querySelector('[data-component="menu"]')!;
+    this.backgroundClick(this);
+    target.classList.toggle('show');
+
+    if (!target.classList.contains('show')) {
+      document.querySelector('.container-background')?.remove();
+    }
+  }
+
+  backgroundClick(this: any) {
+    let background = document.querySelector('.container-background') as HTMLElement;
+    if (!background) {
+      background = document.createElement('div');
+      background.classList.add('dropdown-background', 'container-background');
+      document.getElementById('root')!.appendChild(background);
+    }
+
+    const sideContainers = [...this.$target.querySelectorAll('.side-container')];
+
+    background.addEventListener('click', (e: any) => {
+      sideContainers.forEach((a: any) => a.classList.remove('show'));
+      background.remove();
+    });
   }
 
   clickUserLocation(e: any) {
