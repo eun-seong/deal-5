@@ -171,14 +171,7 @@
   .selectbox {
     padding: 0.9em 1.8em 0.6em 0.8em;
     border-radius: $border-radius;
-    border-color: $gray3;
-
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    &::-ms-expand {
-      display: none;
-    }
+    border:1px solid $gray3;
   }
   .selectbox-icon {
     position: absolute;

@@ -1,5 +1,6 @@
 import { svgIcons } from '@/src/assets/svgIcons';
 import Component from '@/src/interfaces/Component';
+import DropDown from '../Share/DropDown';
 
 export default class ItemDetail extends Component {
   setup() {
@@ -7,17 +8,17 @@ export default class ItemDetail extends Component {
   }
 
   template() {
-    const { discription, itemName, category, counts, location, createtime, sellerName, isSeller } = this.$state;
+    const { sellType, discription, itemName, category, counts, location, createtime, sellerName, isSeller } =
+      this.$state;
 
     return `<div>
     ${
       isSeller
         ? `<div class="selectbox-wrapper">
-        <select class="selectbox">
-        <option value='saleNow' selected>판매중</option>
-        <option value='reserve'>예약중</option>
-        <option value='soldout'>판매완료</option>
-      </select> <span class="selectbox-icon">${svgIcons.chevronDown}</span>
+        <div class="current-selected">
+          <div class="selectbox">${sellType}</div> 
+          <span class="selectbox-icon">${svgIcons.chevronDown}</span>
+        </div>
       </div>`
         : ``
     }
@@ -36,5 +37,47 @@ export default class ItemDetail extends Component {
     
     
     </div>`;
+  }
+
+  mounted() {
+    if (this.$state.isSeller) {
+      const dropdownTarget = document.querySelector('body') as HTMLElement;
+      const selectBox = dropdownTarget.querySelector('.selectbox-wrapper') as HTMLElement;
+
+      selectBox.addEventListener('click', (e: any) => {
+        const $dropDownDiv = document.createElement('div');
+        $dropDownDiv.className = 'dropdown-container';
+        this.$target.appendChild($dropDownDiv);
+
+        const currentState = this.$target.querySelector('.current-selected .selectbox') as HTMLElement;
+        const type = currentState.innerText;
+
+        const itemsType = ['예약중', '판매중', '판매완료'];
+        const specialItems = itemsType
+          .filter(a => type !== a)
+          .map(type => {
+            return {
+              name: type.length == 3 ? type + '으로 변경' : type + '로 변경',
+              type,
+            };
+          });
+
+        new DropDown($dropDownDiv, {
+          onClickItem: this.dropdownClickEvent.bind(this),
+          specialItems,
+          pos: {
+            left: e.clientX,
+            top: e.clientY,
+          },
+        });
+      });
+    }
+  }
+
+  dropdownClickEvent(e: any) {
+    const currentState = this.$target.querySelector('.current-selected .selectbox') as HTMLElement;
+    const type = e.target!.getAttribute('type');
+
+    currentState.innerText = type;
   }
 }
