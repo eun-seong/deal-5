@@ -55,7 +55,13 @@ export default class PostTitle extends Component {
         this.clickedCategories.push(categoryId);
         e.target.setAttribute('active', '');
       }
-      console.log(this.clickedCategories);
+
+      // 제목 입력 기준 충족 event
+      if (this.clickedCategories.length === 0) {
+        this.$target.dispatchEvent(new Event('disableTitle', { bubbles: true }));
+      } else if (this.clickedCategories.length === 1) {
+        this.$target.dispatchEvent(new Event('ableTitle', { bubbles: true }));
+      }
     });
   }
 }

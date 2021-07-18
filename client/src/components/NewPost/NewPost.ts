@@ -8,7 +8,19 @@ import ItemPrice from './ItemPrice';
 import PostConent from './PostContent';
 import SaleLocation from './SaleLocation';
 
+interface IpostStandardStatus {
+  image: boolean;
+  title: boolean;
+  content: boolean;
+}
+
 export default class NewPost extends Component {
+  postStandardStatus: IpostStandardStatus = {
+    image: false,
+    title: false,
+    content: false,
+  };
+
   template() {
     return `
     <header data-component="header"></header>
@@ -47,6 +59,47 @@ export default class NewPost extends Component {
     new ItemPrice($itemPrice as HTMLElement);
     new PostConent($postContent as HTMLElement);
     new SaleLocation($saleLocation as HTMLElement);
+  }
+
+  setEvent() {
+    this.addEvent('ableImage', '#new-post', (e: any) => {
+      this.postStandardStatus.image = true;
+      if (this.isAbleToButtonActive()) this.ableToButton();
+    });
+    this.addEvent('disableImage', '#new-post', (e: any) => {
+      this.postStandardStatus.image = false;
+      this.disableToButton();
+    });
+    this.addEvent('ableContent', '#new-post', (e: any) => {
+      this.postStandardStatus.content = true;
+      if (this.isAbleToButtonActive()) this.ableToButton();
+    });
+    this.addEvent('disableContent', '#new-post', (e: any) => {
+      this.postStandardStatus.content = false;
+      this.disableToButton();
+    });
+    this.addEvent('ableTitle', '#new-post', (e: any) => {
+      this.postStandardStatus.title = true;
+      if (this.isAbleToButtonActive()) this.ableToButton();
+    });
+    this.addEvent('disableTitle', '#new-post', (e: any) => {
+      this.postStandardStatus.title = false;
+      this.disableToButton();
+    });
+  }
+
+  isAbleToButtonActive() {
+    return this.postStandardStatus.image && this.postStandardStatus.title && this.postStandardStatus.content;
+  }
+
+  ableToButton() {
+    const $postButton = this.$target.querySelector('[data-btn="right-btn"]>svg');
+    $postButton?.setAttribute('color', 'primary1');
+  }
+
+  disableToButton() {
+    const $postButton = this.$target.querySelector('[data-btn="right-btn"]>svg');
+    $postButton?.setAttribute('color', 'gray1');
   }
 
   handlePostingButton() {

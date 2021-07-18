@@ -80,5 +80,12 @@ export default class ImagesHolder extends Component {
   updateNumOfImages() {
     const $numOfImages = this.$target.querySelector('ul>li:first-child #images-num') as HTMLElement;
     $numOfImages.innerText = String(this.images.length);
+
+    // 이미지 최소 1개 기준 충족 event
+    if (this.images.length === 0) {
+      this.$target.dispatchEvent(new Event('disableImage', { bubbles: true }));
+    } else if (this.images.length === 1) {
+      this.$target.dispatchEvent(new Event('ableImage', { bubbles: true }));
+    }
   }
 }

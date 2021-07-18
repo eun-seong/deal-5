@@ -11,6 +11,13 @@ export default class PostContent extends Component {
   setEvent() {
     this.addEvent('input', '#post-content', (e: any) => {
       autoHeightTextarea(e, this.$target, '#post-content');
+
+      // 컨텐츠 내용 기준 충족 event
+      if (e.target.value.length === 0) {
+        this.$target.dispatchEvent(new Event('disableContent', { bubbles: true }));
+      } else if (e.target.value.length === 1) {
+        this.$target.dispatchEvent(new Event('ableContent', { bubbles: true }));
+      }
     });
   }
 }
