@@ -22,14 +22,28 @@ export default class Alert extends Component {
     `;
   }
 
+  mounted() {
+    this.disableScrolling();
+  }
+
   setEvent() {
     const { handleOkay } = this.$props;
     this.addEvent('click', '.cancel', () => {
-      this.$target.remove();
+      this.$target.remove(); //현재 스크롤된 위치 고정 해제
+      window.onscroll = function () {};
     });
     this.addEvent('click', '.leave', (e: any) => {
       this.$target.remove();
+      window.onscroll = function () {};
       handleOkay(e);
     });
+  }
+
+  disableScrolling() {
+    const x = window.scrollX;
+    const y = window.scrollY;
+    window.onscroll = function () {
+      window.scrollTo(x, y);
+    };
   }
 }

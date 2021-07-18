@@ -249,7 +249,7 @@ button {
 
 /* input popup */
 .modal {
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -259,6 +259,10 @@ button {
   height: 100vh;
   background-color: rgba(141, 145, 144, 0.5);
   .popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
     background-color: $white;
     border-radius: 10px;
     padding: 1.5em 1.3em 1.3em 1.3em;
