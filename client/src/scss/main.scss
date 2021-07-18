@@ -182,7 +182,7 @@ ul.items-wrap {
   width: 100%;
   max-width: $max-common-container-width;
   transition: right 0.8s ease-in-out;
-  z-index: 2;
+  z-index: 101;
 
   &.show {
     right: 0;
@@ -235,7 +235,7 @@ ul.items-wrap {
   width: 100%;
   max-width: $max-common-container-width;
   transition: right 0.8s ease-in-out;
-  z-index: 3;
+  z-index: 101;
   
   &.show {
     right: 0;
