@@ -22,7 +22,7 @@ import ItemDetail from './components/ItemDetail';
  */
 const routes = [
   { path: '/', component: Main },
-  // { path: '/', redirect: '/' },
+  { path: '/item-detail', component: ItemDetail },
   { path: '/register', component: Register },
   { path: '/signin', component: SignIn },
   { path: '/location', component: Location },

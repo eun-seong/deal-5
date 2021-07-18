@@ -31,5 +31,9 @@ export default class ItemDetailFooterComponent extends Component {
     } else {
       new Button(btn, { text: `문의하기`, href: '#/chat' });
     }
+
+    this.$target.querySelector('.bookmark')?.addEventListener('click', function (this: any, e: any) {
+      this.classList.toggle('check');
+    });
   }
 }

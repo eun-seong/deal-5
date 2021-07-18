@@ -62,7 +62,10 @@ ul.items-wrap {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid $gray3;
-
+    a {
+      display: flex;
+      width: 100%;
+    }
     &.body-item {
       padding: 1rem;
       .item-img-wrap {
@@ -89,6 +92,7 @@ ul.items-wrap {
     }
 
     &.sales-item {
+      cursor: pointer;
       padding: 1rem;
       .item-img-wrap {
         border-radius: 10px;
@@ -133,23 +137,6 @@ ul.items-wrap {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-
-      .bookmark {
-        cursor: pointer;
-        svg {
-          stroke-width: 2px;
-          width: 30px;
-          height: 30px;
-          transition: all 0.3s;
-          stroke: $gray1;
-        }
-        &.check {
-          svg {
-            fill: $primary1;
-            stroke: $primary1;
-          }
-        }
-      }
       .item-status {
         position: absolute;
         display: flex;
@@ -178,7 +165,7 @@ ul.items-wrap {
   width: 100%;
   max-width: $max-common-container-width;
   transition: right 0.8s ease-in-out;
-  z-index: 2;
+  z-index: 101;
 
   &.show {
     right: 0;
@@ -231,7 +218,7 @@ ul.items-wrap {
   width: 100%;
   max-width: $max-common-container-width;
   transition: right 0.8s ease-in-out;
-  z-index: 3;
+  z-index: 101;
   
   &.show {
     right: 0;
