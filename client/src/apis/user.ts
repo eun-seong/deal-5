@@ -2,22 +2,19 @@ const baseURL = 'https://ec2-13-125-215-98.ap-northeast-2.compute.amazonaws.com:
 const dev_baseURL = 'http://localhost:81/api/user';
 
 const urls: { [key: string]: string } = {
-  login: '/login',
   register: '/register',
+  login: '/login',
 };
 
 const getURL = (url: string) => dev_baseURL + urls[url];
-
-export const api_register = ({ user_id, pw, nickname, location }: { [key: string]: string }) =>
-  fetch(getURL('register'), {
+const fetcthTemplate = (url: string, args: { [key: string]: string }) =>
+  fetch(getURL(url), {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      user_id: user_id,
-      pw: pw,
-      nickname: nickname,
-      location: location,
-    }),
+    body: JSON.stringify(args),
   }).then(res => res.json());
+
+export const api_register = (args: { [key: string]: string }) => fetcthTemplate('register', args);
+export const api_login = (args: { [key: string]: string }) => fetcthTemplate('login', args);

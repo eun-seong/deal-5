@@ -29,12 +29,10 @@ const actionRegister = async (req: Request, res: Response) => {
       return;
     } else {
       const data = await execQuery(USER_QUERY.queryRegister({ user_id, pw, nickname, location }));
-      const affectedRows = JSON.parse(data).affectedRows;
-      if (!affectedRows) res.send(JSON.stringify({ message: '회원가입에 실패하였습니다.', code: 3 }));
-      else res.send(JSON.stringify({ message: '성공적으로 회원가입 되었습니다.', code: 1 }));
+      res.send(JSON.stringify({ message: '성공적으로 회원가입 되었습니다.', code: 1 }));
     }
   } catch (err) {
-    await console.error(err);
+    res.send(JSON.stringify({ message: '회원가입에 실패하였습니다.', code: 3 }));
   }
 };
 

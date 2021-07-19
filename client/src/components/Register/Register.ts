@@ -68,7 +68,7 @@ class Register extends Component {
       const location: string = (this.$target.querySelector('input[name="location"]') as HTMLInputElement).value;
       api_register({ user_id, pw, nickname, location })
         .then((res: any) => {
-          console.log(res);
+          console.log('register');
           if (res.code === 1) $router.push('/signin');
           else console.log('회원가입에 실패했습니다.');
         })
