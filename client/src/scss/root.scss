@@ -60,15 +60,15 @@ svg {
   stroke-width: 1px;
   fill: none;
 
-  &[color="error"] {
+  &[color='error'] {
     stroke: $error;
   }
 
-  &[color="gray1"]{
+  &[color='gray1'] {
     stroke: $gray1;
   }
 
-  &[color="primary1"]{
+  &[color='primary1'] {
     stroke: $primary1;
   }
 }
@@ -83,7 +83,7 @@ a {
 }
 
 textarea {
-  display:inline-block;
+  display: inline-block;
   box-sizing: border-box;
   outline: none;
   border: 0 none;
@@ -213,7 +213,7 @@ button {
 
 .common-header {
   position: sticky;
-  
+
   ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -266,7 +266,7 @@ button {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform:translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     background-color: $white;
     border-radius: 10px;
     padding: 1.5em 1.3em 1.3em 1.3em;
@@ -299,7 +299,7 @@ button {
           color: $gray1;
         }
       }
-      
+
       .leave {
         color: $error;
       }
@@ -485,5 +485,25 @@ button {
       fill: $primary1;
       stroke: $primary1;
     }
+  }
+}
+
+.snackbar {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: bottom 0.5s ease-in-out;
+  background: $primary1;
+  color: $white;
+  padding: 0.8rem 1rem 0.6rem;
+  width: 50%;
+  min-width: 160px;
+  max-width: 500px;
+  text-align: center;
+  border-radius: $border-radius;
+
+  &.show {
+    bottom: 30px;
   }
 }
