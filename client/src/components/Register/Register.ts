@@ -2,7 +2,8 @@ import Component from '@/src/interfaces/Component';
 import CommonHeader from '../Share/CommonHeader';
 import UserInput, { UserInputProps } from '../Share/UserInput';
 import Button from '../Share/Button';
-import SignIn from '../SignIn';
+import { api_register } from '@/src/apis/user';
+import { $router } from '../core/Router';
 
 const inputList: UserInputProps[] = [
   {
@@ -55,12 +56,23 @@ class Register extends Component {
       new UserInput($input, input);
     });
 
-    new (Button as any)($registerButton, { text: '회원가입' });
+    new (Button as any)($registerButton, { text: '회원가입', href: '/#/signin' });
   }
 
   setEvent() {
-    this.addEvent('click', '.btn', () => {
-      location.href = '/';
+    this.addEvent('click', '.btn', (e: any) => {
+      e.preventDefault();
+      const user_id: string = (this.$target.querySelector('input[name="id"]') as HTMLInputElement).value;
+      const pw: string = (this.$target.querySelector('input[name="password"]') as HTMLInputElement).value;
+      const nickname: string = (this.$target.querySelector('input[name="nickname"]') as HTMLInputElement).value;
+      const location: string = (this.$target.querySelector('input[name="location"]') as HTMLInputElement).value;
+      api_register({ user_id, pw, nickname, location })
+        .then((res: any) => {
+          console.log(res);
+          if (res.code === 1) $router.push('/signin');
+          else console.log('회원가입에 실패했습니다.');
+        })
+        .catch(err => console.log('error: ', err));
     });
   }
 }
