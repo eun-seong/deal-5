@@ -1,19 +1,16 @@
 import mysql from 'mysql2/promise';
 
-const conn = async () => {
-  const connection = await mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    port: 3306,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-  });
-
-  return await connection.getConnection();
-};
+const conn = mysql.createPool({
+  connectionLimit: 10,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  port: 3306,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+});
 
 export const selectQuery = async (query: string) => {
-  const _conn = await conn();
+  const _conn = await conn.getConnection();
   try {
     const [row, _] = await _conn.query(query);
     return JSON.stringify(row);
@@ -25,7 +22,7 @@ export const selectQuery = async (query: string) => {
 };
 
 export const execQuery = async (query: string) => {
-  const _conn = await conn();
+  const _conn = await conn.getConnection();
   try {
     await _conn.beginTransaction();
     const [row, _] = await _conn.query(query);
@@ -39,4 +36,4 @@ export const execQuery = async (query: string) => {
   }
 };
 
-export default conn();
+export default conn.getConnection();
