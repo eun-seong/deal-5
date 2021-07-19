@@ -12,10 +12,22 @@ const inputList: UserInputProps[] = [
     name: 'id',
   },
   {
+    type: 'password',
+    placeholder: '영문, 숫자 조합 10자 이상',
+    label: '비밀번호',
+    name: 'password',
+  },
+  {
+    type: 'text',
+    placeholder: '닉네임',
+    label: '닉네임',
+    name: 'nickname',
+  },
+  {
     type: 'text',
     placeholder: '시∙구 제외, 동만 입력',
     label: '우리 동네',
-    name: 'myTown',
+    name: 'location',
   },
 ];
 
