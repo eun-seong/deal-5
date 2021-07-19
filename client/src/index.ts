@@ -21,12 +21,13 @@ import ItemDetail from './components/ItemDetail';
  *   - redirect로 바로 이동합니다.
  */
 const routes = [
+  { path: '/', redirect: '/' },
   { path: '/', component: Main },
   { path: '/item-detail', component: ItemDetail },
   { path: '/register', component: Register },
   { path: '/signin', component: SignIn },
   { path: '/location', component: Location },
-  { path: '/chat/:id', component: ChatDetail },
+  { path: '/chat', component: ChatDetail },
   { path: '/newpost', component: NewPost },
 ];
 const $app = document.querySelector('#root') as HTMLElement;
