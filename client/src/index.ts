@@ -25,7 +25,7 @@ const routes = [
   { path: '/', component: Main },
   { path: '/item-detail', component: ItemDetail },
   { path: '/register', component: Register },
-  { path: '/signin', component: SignIn },
+  { path: '/login', component: SignIn },
   { path: '/location', component: Location },
   { path: '/chat', component: ChatDetail },
   { path: '/newpost', component: NewPost },
