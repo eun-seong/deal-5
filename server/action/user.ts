@@ -5,11 +5,13 @@ import USER_QUERY from '../query/user';
 const actionLogin = async (req: Request, res: Response) => {
   try {
     const { user_id, pw } = req.body;
-    console.log(user_id, pw);
-    const data = await selectQuery(USER_QUERY.queryLogin({ user_id, pw }));
-    res.send(data);
+    const result = await selectQuery(USER_QUERY.queryLogin({ user_id, pw }));
+    const data = JSON.parse(result)[0];
+    data.code = 1;
+    data.message = '성공적으로 로그인 되었습니다.';
+    res.send(JSON.stringify(data));
   } catch (err) {
-    await console.error(err);
+    res.send(JSON.stringify({ messagke: '로그인에 실패하였습니다.', code: 2 }));
   }
 };
 

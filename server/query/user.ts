@@ -1,5 +1,5 @@
 const queryLogin = ({ user_id, pw }: { user_id: string; pw: string }) =>
-  `select * from user where user_id='${user_id}' and password=SHA2('${pw}', 224)`;
+  `select id, user_id, nick_name, location_1 from user where user_id='${user_id}' and password=SHA2('${pw}', 224)`;
 
 const queryCheckUser = ({ user_id }: { user_id: string }) =>
   `select count(*) as count from user where user_id='${user_id}'`;

@@ -69,7 +69,7 @@ class Register extends Component {
       api_register({ user_id, pw, nickname, location })
         .then((res: any) => {
           console.log('register');
-          if (res.code === 1) $router.push('/signin');
+          if (res.code === 1) $router.push('/login');
           else console.log('회원가입에 실패했습니다.');
         })
         .catch(err => console.log('error: ', err));
