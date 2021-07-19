@@ -1,65 +1,10 @@
 import Component from '@/src/interfaces/Component';
 import ItemComponent from './Item';
+import { getItemList, changeBookmark } from '@/src/apis/main';
+import Snackbar from '../Share/Snackbar';
 
 export default class MainBody extends Component {
-  items: Array<Object> = [];
-  setup() {
-    this.items = [
-      {
-        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
-        location: 'ㄸㅁㄲ쏘',
-        createtime: '1시간전',
-        bookmarked: true,
-        price: '0원',
-        comments: 4,
-        bookmarks: 4,
-      },
-      {
-        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
-        location: 'ㄸㅁㄲ쏘',
-        createtime: '1시간전',
-        bookmarked: true,
-        price: '0원',
-        comments: 4,
-        bookmarks: 4,
-      },
-      {
-        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
-        location: 'ㄸㅁㄲ쏘',
-        createtime: '1시간전',
-        bookmarked: true,
-        price: '0원',
-        comments: 4,
-        bookmarks: 4,
-      },
-      {
-        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
-        location: 'ㄸㅁㄲ쏘',
-        createtime: '1시간전',
-        bookmarked: true,
-        price: '0원',
-        comments: 4,
-        bookmarks: 4,
-      },
-      {
-        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
-        location: 'ㄸㅁㄲ쏘',
-        createtime: '1시간전',
-        bookmarked: true,
-        price: '0원',
-        comments: 4,
-        bookmarks: 4,
-      },
-      {
-        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
-        location: 'ㄸㅁㄲ쏘',
-        createtime: '1시간전',
-        price: '0원',
-        comments: 4,
-        bookmarks: 4,
-      },
-    ];
-  }
+  setup() {}
   template() {
     return `<ul data-component="items-wrap" class="items-wrap"></ul>`;
   }
@@ -71,22 +16,36 @@ export default class MainBody extends Component {
   mounted() {
     const $ul = this.$target.querySelector('[data-component=items-wrap]') as HTMLElement;
 
-    this.items.forEach(state => {
-      const li = document.createElement('li');
-      li.className = 'body-item content';
-      li.setAttribute('data-href', '#/item-detail');
+    getItemList({ location: '쥄실', uid: 4, limit: 0 })
+      .catch(error => console.error('Error:', error))
+      .then(response => {
+        response.forEach((state: any) => {
+          const li = document.createElement('li');
+          li.className = 'body-item content';
+          li.setAttribute('data-href', '#/item-detail');
+          li.setAttribute('data-item_id', state.id);
 
-      new ItemComponent(li, { state });
-      $ul.appendChild(li);
-    });
+          new ItemComponent(li, { state });
+          $ul.appendChild(li);
+        });
+      });
   }
 
   itemEvent(e: any) {
     const bookmark = e.target.closest('.bookmark');
+    const item = e.target.closest('li.body-item');
     if (!!bookmark) {
-      bookmark.classList.toggle('check');
+      changeBookmark({
+        uid: 4,
+        bookmarked: !!bookmark.classList.contains('check'),
+        item_id: item.getAttribute('data-item_id'),
+      }).then(response => {
+        const snackbar_wrap = document.createElement('div');
+        snackbar_wrap.classList.add('snackbar_wrap');
+        new Snackbar(snackbar_wrap, { text: response.message });
+        bookmark.classList.toggle('check');
+      });
     } else {
-      const item = e.target.closest('li.body-item');
       location.href = item.getAttribute('data-href');
     }
   }

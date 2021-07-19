@@ -13,12 +13,14 @@ export default class ItemComponent extends Component {
       <img src='${testimg}'/>
     </div>
     <div class='item-info'>
-      <div class='type-link medium item-name'>${this.$state.name}</div>
-      <div class='typo small item-location'>${this.$state.location} • ${this.$state.createtime}</div>
+      <div class='type-link medium item-name'>${this.$state.title}</div>
+      <div class='typo small item-location'>${this.$state.location_1} • ${this.$state.created}</div>
       <div class='type-link small item-price'>${this.$state.price}</div>
     </div>
   <div class='item-icons'>
-    <div class='bookmark ${this.$state.bookmarked ? 'check' : ''}'>${svgIcons.heart}</div>
+    <div class='bookmark ${this.$state.bookmarked ? 'check' : ''}' data-item="${this.$state.item_id}">${
+      svgIcons.heart
+    }</div>
     <div class='item-status'>
       ${
         this.$state.comments
