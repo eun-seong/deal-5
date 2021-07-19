@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import express, { Application, Request, Response, NextFunction } from 'express';
 import path from 'path';
+import cors from 'cors';
 import router from './routers';
 
 const port = process.env.PORT || 81;
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'src')));
 
+app.use(cors());
 app.use('/api', router);
 
 app.listen(port, () => {
