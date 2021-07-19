@@ -1,6 +1,7 @@
 import Component from '@/src/interfaces/Component';
 import testimg from '@/src/assets/imgs/item.jpeg';
 import { svgIcons } from '@/src/assets/svgIcons';
+import DropDown from '../Share/DropDown';
 
 interface SalesItem {
   img: string;
@@ -112,10 +113,13 @@ export default class SalesList extends Component {
   }
 
   template() {
-    return `<ul class="sales-list items-wrap">
-      ${this.$state.list2.length ? this.$state.list2.map(
-          (list: SalesItem) => `
-        <li class="sales-item content">
+    return `<ul class="sales-list items-wrap" data-component="sales-wrap">
+      ${
+        this.$state.list2.length
+          ? this.$state.list2
+              .map(
+                (list: SalesItem) => `
+        <li class="sales-item content" data-href='#/item-detail'>
           <div class="item-img-wrap">
             <img src="${testimg}" />
           </div>
@@ -141,8 +145,48 @@ export default class SalesList extends Component {
           </div>
         </li>
       `
-        )
-        .join(''): `<div class='empty-content'>상품을 등록하여 판매를시작하세요 :)</div>`}
+              )
+              .join('')
+          : `<div class='empty-content'>상품을 등록하여 판매를시작하세요 :)</div>`
+      }
     </ul>`;
+  }
+  setEvent() {
+    const dropdown = this.$target.querySelector('[data-component="sales-wrap"]') as HTMLElement;
+
+    dropdown.addEventListener('click', (e: any) => {
+      if (e.target.closest('.more-item-info')) {
+        const $dropDownDiv = document.createElement('div');
+        $dropDownDiv.className = 'dropdown-container';
+        this.$target.appendChild($dropDownDiv);
+        new DropDown($dropDownDiv, {
+          onClickItem: this.dropdownClickEvent,
+          specialItems: [
+            {
+              name: '수정하기',
+              type: 'edit',
+            },
+            {
+              name: '삭제하기',
+              type: 'delete',
+            },
+          ],
+          pos: {
+            left: e.clientX,
+            top: e.clientY,
+          },
+        });
+      } else {
+        const closest = e.target.closest('.sales-item');
+        const href = closest.getAttribute('data-href');
+        location.href = href;
+      }
+    });
+  }
+
+  dropdownClickEvent(e: any) {
+    const type = e.target!.getAttribute('type');
+
+    console.log(type);
   }
 }

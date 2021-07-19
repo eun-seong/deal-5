@@ -29,10 +29,20 @@ export default class DropDown extends Component {
     $dropdown.className = 'dropdown';
     $dropdownBackground.appendChild($dropdown);
     this.$target.appendChild($dropdownBackground);
+    this.disableScrolling()
 
     //마우스 클릭한 위치에 Dropdown이 생성되도록 추가 pos가 없으면 가운데 고정(root.scss)
     if (pos) {
-      $dropdown.setAttribute('style', `left: ${pos.left - 40}px; top: ${pos.top + 15}px;`);
+      let transformOrigin = '';
+      //왼쪽화면을 넘어가는 것 방지.
+      if (pos.left - 40 < 90) {
+        pos.left = 90;
+        transformOrigin = `transform-origin: -${pos.left}px 0;`;
+      } else {
+        pos.left -= 40;
+      }
+
+      $dropdown.setAttribute('style', `left: ${pos.left}px; top: ${pos.top + 20}px; ${transformOrigin}`);
     }
 
     labels?.forEach((label: string) => {
@@ -51,15 +61,28 @@ export default class DropDown extends Component {
     });
   }
 
+  //현재 스크롤된 위치 고정 시키기 위한 함수
+  disableScrolling() {
+    const x = window.scrollX;
+    const y = window.scrollY;
+    window.onscroll = function () {
+      window.scrollTo(x, y);
+    };
+  }
+
   setEvent() {
     const { onClickItem } = this.$props;
     this.addEvent('click', '.dropdown', onClickItem);
     this.addEvent('click', '.dropdown-background', (e: any) => {
       const $dropdown = this.$target.querySelector('.dropdown');
+      const root = document.getElementById('root') as HTMLElement;
+      root.removeAttribute('style');
 
       $dropdown?.setAttribute('clicked', '');
       setTimeout(() => {
-        this.$target.outerHTML = '';
+        this.$target.remove();
+        //현재 스크롤된 위치 고정 해제
+        window.onscroll = function () {};
       }, 200);
     });
   }

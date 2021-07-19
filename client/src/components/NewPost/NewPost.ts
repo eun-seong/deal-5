@@ -8,7 +8,19 @@ import ItemPrice from './ItemPrice';
 import PostConent from './PostContent';
 import SaleLocation from './SaleLocation';
 
+interface IstatusOfPostingStandard {
+  image: boolean;
+  title: boolean;
+  content: boolean;
+}
+
 export default class NewPost extends Component {
+  statusOfPostingStandard: IstatusOfPostingStandard = {
+    image: false,
+    title: false,
+    content: false,
+  };
+
   template() {
     return `
     <header data-component="header"></header>
@@ -49,7 +61,52 @@ export default class NewPost extends Component {
     new SaleLocation($saleLocation as HTMLElement);
   }
 
+  setEvent() {
+    this.addEvent('ableImage', '#new-post', (e: any) => {
+      this.statusOfPostingStandard.image = true;
+      if (this.isAbleToButtonActive()) this.ableToButton();
+    });
+    this.addEvent('disableImage', '#new-post', (e: any) => {
+      this.statusOfPostingStandard.image = false;
+      this.disableToButton();
+    });
+    this.addEvent('ableContent', '#new-post', (e: any) => {
+      this.statusOfPostingStandard.content = true;
+      if (this.isAbleToButtonActive()) this.ableToButton();
+    });
+    this.addEvent('disableContent', '#new-post', (e: any) => {
+      this.statusOfPostingStandard.content = false;
+      this.disableToButton();
+    });
+    this.addEvent('ableTitle', '#new-post', (e: any) => {
+      this.statusOfPostingStandard.title = true;
+      if (this.isAbleToButtonActive()) this.ableToButton();
+    });
+    this.addEvent('disableTitle', '#new-post', (e: any) => {
+      this.statusOfPostingStandard.title = false;
+      this.disableToButton();
+    });
+  }
+
+  isAbleToButtonActive() {
+    return (
+      this.statusOfPostingStandard.image && this.statusOfPostingStandard.title && this.statusOfPostingStandard.content
+    );
+  }
+
+  ableToButton() {
+    const $postButton = this.$target.querySelector('[data-btn="right-btn"]>svg');
+    $postButton?.setAttribute('color', 'primary1');
+  }
+
+  disableToButton() {
+    const $postButton = this.$target.querySelector('[data-btn="right-btn"]>svg');
+    $postButton?.setAttribute('color', 'gray1');
+  }
+
   handlePostingButton() {
-    console.log('post');
+    if (!this.isAbleToButtonActive()) return;
+
+    location.href = '/#/itemdetail';
   }
 }

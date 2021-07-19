@@ -1,7 +1,5 @@
 import { svgIcons } from '@/src/assets/svgIcons';
 import testimg from '@/src/assets/imgs/item.jpeg';
-// import testimg2 from '@/src/assets/imgs/item3.png';
-import testimg2 from '@/src/assets/imgs/item2.jpeg';
 import Component from '@/src/interfaces/Component';
 import DropDown from '../Share/DropDown';
 
@@ -28,7 +26,7 @@ export default class ItemDetailSlider extends Component {
         <div class="slider-wrapper">
           <div id="slides" class="slides">
             <div class='slide'><img src="${testimg}"></div>
-            <div class='slide'><img src="${testimg2}"></div>
+            <div class='slide'><img src="${testimg}"></div>
             <div class='slide'><img src="${testimg}"></div>
           </div>
           <div id="slider-pagenation" class="pagenation">

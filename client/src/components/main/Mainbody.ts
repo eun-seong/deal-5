@@ -65,7 +65,7 @@ export default class MainBody extends Component {
   }
 
   setEvent() {
-    this.addEvent('click', '[data-component=items-wrap]', this.bookmarkToggle);
+    this.addEvent('click', '[data-component=items-wrap]', this.itemEvent);
   }
 
   mounted() {
@@ -74,12 +74,20 @@ export default class MainBody extends Component {
     this.items.forEach(state => {
       const li = document.createElement('li');
       li.className = 'body-item content';
+      li.setAttribute('data-href', '#/item-detail');
+
       new ItemComponent(li, { state });
       $ul.appendChild(li);
     });
   }
 
-  bookmarkToggle(e: any) {
-    e.target.closest('.bookmark')?.classList.toggle('check');
+  itemEvent(e: any) {
+    const bookmark = e.target.closest('.bookmark');
+    if (!!bookmark) {
+      bookmark.classList.toggle('check');
+    } else {
+      const item = e.target.closest('li.body-item');
+      location.href = item.getAttribute('data-href');
+    }
   }
 }

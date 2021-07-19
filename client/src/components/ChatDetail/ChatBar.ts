@@ -1,5 +1,6 @@
 import Component from '@/src/interfaces/Component';
-import ChatSendButton from './ChatSendButton';
+import autoHeightTextarea from '@/src/assets/utils/autoHeightTextarea';
+import { svgIcons } from '@/src/assets/svgIcons';
 
 export default class ChatBar extends Component {
   setup() {
@@ -13,22 +14,35 @@ export default class ChatBar extends Component {
     <div class="chat-inner" deactive>
       <textarea id="chatBar-input" rows="1" placeholder="메세지를 입력하세요"></textarea>
     </div>
-      <div class="send-svg"></div>
+      <div class="send-svg">${svgIcons.send}</div>
     `;
   }
 
   mounted() {
-    const $sendBtn = this.$target.querySelector('.send-svg') as HTMLElement;
-    new ChatSendButton($sendBtn, {});
+    const $sendBtn = this.$target.querySelector('.send-svg>svg') as HTMLElement;
+    $sendBtn.setAttribute('color', 'gray1');
   }
 
   setEvent() {
     this.addEvent('input', '#chatBar-input', (e: any) => {
-      const $chatBar = this.$target.querySelector('#chatBar-input') as HTMLElement;
-      if (e.target.scrollHeight <= 70) {
-        $chatBar.style.height = 'auto';
-        $chatBar.style.height = e.target.scrollHeight + 'px';
+      if (e.target.value !== '') {
+        const $sendButton = this.$target.querySelector('.send-svg>svg');
+        $sendButton?.setAttribute('color', 'primary1');
       }
+
+      autoHeightTextarea(this.$target, '#chatBar-input');
     });
+
+    this.addEvent('click', '.send-svg>svg', (e: any) => {
+      const $sendButton = e.target.closest('svg');
+      $sendButton.setAttribute('color', 'gray1');
+      this.resetInputValue();
+    });
+  }
+
+  resetInputValue() {
+    const $messageInput = this.$target.querySelector('#chatBar-input') as HTMLTextAreaElement;
+    $messageInput.value = '';
+    autoHeightTextarea(this.$target, '#chatBar-input');
   }
 }
