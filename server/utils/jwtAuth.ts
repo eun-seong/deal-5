@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 interface IToken {
   id: number; // user pk
   user_id: string; // user ID
-  nickname: string;
+  nick_name: string;
   location_1: string;
   location_2: string;
 }
@@ -29,7 +29,7 @@ const verify = (token: string) => {
       ok: true,
       id: decoded.id,
       user_id: decoded.user_id,
-      nickname: decoded.nickname,
+      nick_name: decoded.nick_name,
       location_1: decoded.location_1,
       location_2: decoded.location_2,
     };
