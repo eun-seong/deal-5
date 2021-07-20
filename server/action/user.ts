@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { execQuery, selectQuery } from '../db';
-import { sign } from './auth';
+import { sign } from '../utils/jwtAuth';
 import USER_QUERY from '../query/user';
 
 const actionLogin = async (req: Request, res: Response) => {

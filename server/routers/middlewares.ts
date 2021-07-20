@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { verify } from '../action/auth';
+import { verify } from '../utils/jwtAuth';
 
 export const authJWT = (req: any, res: Response, next: NextFunction) => {
   if (req.headers.authorization) {
