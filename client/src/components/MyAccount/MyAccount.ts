@@ -5,10 +5,14 @@ import { $router } from '../core/Router';
 
 export default class MyAccount extends Component {
   template() {
+    const { nickname } = this.$props.parsingData;
     return `
     <header data-component="header"></header>
     <div class="content">
-      <div data-component="signout-btn"></div>
+    <div class="user-nickname" style="text-align:center; margin: 1rem 0 2rem 0;">
+      ${nickname}
+    </div>
+    <div data-component="logout-btn"></div>
     </div>
     `;
   }

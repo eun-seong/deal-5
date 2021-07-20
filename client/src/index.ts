@@ -7,6 +7,7 @@ import Location from './components/Location';
 import ChatDetail from './components/ChatDetail';
 import NewPost from './components/NewPost';
 import ItemDetail from './components/ItemDetail';
+import MyAccount from './components/MyAccount';
 
 /**
  * route
@@ -29,6 +30,7 @@ const routes = [
   { path: '/location', component: Location },
   { path: '/chat', component: ChatDetail },
   { path: '/newpost', component: NewPost },
+  { path: '/myaccount', component: MyAccount },
 ];
 const $app = document.querySelector('#root') as HTMLElement;
 
