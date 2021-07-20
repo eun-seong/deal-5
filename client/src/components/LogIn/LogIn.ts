@@ -21,7 +21,7 @@ const inputList: UserInputProps[] = [
   },
 ];
 
-class SignIn extends Component {
+export default class LogIn extends Component {
   template() {
     return `
     <header data-component="header"></header>
@@ -64,5 +64,3 @@ class SignIn extends Component {
     });
   }
 }
-
-export default SignIn;
