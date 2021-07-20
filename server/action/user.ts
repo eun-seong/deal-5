@@ -13,15 +13,16 @@ const actionLogin = async (req: Request, res: Response) => {
       nickname: string;
       location_1: string;
     } = JSON.parse(result)[0];
+    console.log(data);
 
-    const accessToken = sign(data.id, data.nickname);
+    const accessToken = sign({ id: data.id, user_id: data.user_id, nickname: data.nickname });
     res.status(200).send({
       ok: true,
       code: 1,
       message: '성공적으로 로그인 되었습니다.',
       accessToken,
       data: {
-        u_id: data.id,
+        id: data.id,
         user_id: data.user_id,
         nickname: data.nickname,
         location: data.location_1,

@@ -59,6 +59,7 @@ class SignIn extends Component {
         .then((res: any) => {
           if (res.code === 1) {
             setCookie('accessToken', res.accessToken, 1);
+            console.log(res);
             $router.push('/');
           } else console.log('로그인에 실패했습니다.');
         })

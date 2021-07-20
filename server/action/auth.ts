@@ -1,17 +1,17 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-dotenv.config();
 
 interface IToken {
-  id: number;
-  nickname: string;
+  id: number; // pk
+  user_id: string; // user ID
+  nickname?: string;
 }
 
-const sign = (id: number, nickname: string) => {
+const sign = ({ id, user_id, nickname }: IToken) => {
   // access token 발급
   const payload: IToken = {
     // access token에 들어갈 payload
     id: id,
+    user_id: user_id,
     nickname: nickname,
   };
 
