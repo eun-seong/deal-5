@@ -1,4 +1,4 @@
-const baseURL = 'https://ec2-13-125-215-98.ap-northeast-2.compute.amazonaws.com:81/api/user';
+const baseURL = 'http://ec2-13-125-215-98.ap-northeast-2.compute.amazonaws.com:81/api/user';
 const dev_baseURL = 'http://localhost:81/api/user';
 
 const urls: { [key: string]: string } = {
@@ -18,3 +18,13 @@ const fetcthTemplate = (url: string, args: { [key: string]: string }) =>
 
 export const api_register = (args: { [key: string]: string }) => fetcthTemplate('register', args);
 export const api_login = (args: { [key: string]: string }) => fetcthTemplate('login', args);
+
+export const api_test = (url: string, args: { [key: string]: string }) =>
+  fetch(getURL(url), {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: '',
+    },
+    body: JSON.stringify(args),
+  }).then(res => res.json());
