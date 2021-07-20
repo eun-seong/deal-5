@@ -12,7 +12,6 @@ const actionGetItemList = async (req: Request, res: Response) => {
       bookmarked = JSON.parse(bookmarked);
       row.bookmarked = bookmarked[0].count;
     }
-
     res.send(rows);
   } catch (error) {
     console.log(error);
@@ -38,8 +37,17 @@ const actionBookMark = async (req: Request, res: Response) => {
 
 const actionGetItemListByUser = async (req: Request, res: Response) => {
   try {
+    const { uid } = req.body;
+    let rows = JSON.parse(await selectQuery(MAIN_QUERY.queryGetItemListByUser({ uid })));
+
+    for (const row of rows) {
+      let bookmarked: any = await selectQuery(MAIN_QUERY.queryBookmarkChecked({ uid, item_id: row.id }));
+      bookmarked = JSON.parse(bookmarked);
+      row.bookmarked = bookmarked[0].count;
+    }
+    res.send(rows);
   } catch (error) {
-    res.status(500);
+    res.status(500).send({ ok: false, error: error, message: error.message });
   }
 };
 const actionGetItemListByCategory = async (req: Request, res: Response) => {
@@ -56,8 +64,10 @@ const actionGetBookMarkList = async (req: Request, res: Response) => {
 };
 const actionGetCategory = async (req: Request, res: Response) => {
   try {
+    const rows = await selectQuery(MAIN_QUERY.queryGetCategory());
+    res.send({ ok: true, data: JSON.parse(rows) });
   } catch (error) {
-    res.status(500);
+    res.status(500).send({ ok: false, error: error, message: '카테고리 받아오기 오류' });
   }
 };
 const actionGetUserLocation = async (req: Request, res: Response) => {
