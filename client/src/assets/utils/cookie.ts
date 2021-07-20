@@ -9,7 +9,7 @@ export const setCookie = (cookieName: string, value: string, days: number) => {
 };
 
 export const getCookie = (cookieName: string) => {
-  var value = document.cookie.match(`(^|;) ?'${cookieName}=([^;]*)(;|$)`);
+  var value = document.cookie.match(`(^|;)?${cookieName}=([^;]*)(;|$)`);
   return value ? value[2] : null;
 };
 
