@@ -3,10 +3,6 @@ import CommonHeader from '../Share/CommonHeader';
 import MenuBody from './MenuBody';
 
 export default class MenuContainer extends Component {
-  setup() {
-    console.log(this.$props);
-  }
-
   template() {
     return `
         <header class='menu-header' data-component='menu-header'></header>

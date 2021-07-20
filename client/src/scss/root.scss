@@ -385,6 +385,8 @@ button {
 .empty-content {
   color: $gray4;
   position: absolute;
+  width: 100%;
+  text-align: center;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -492,6 +494,7 @@ button {
   position: fixed;
   bottom: -100px;
   left: 50%;
+  z-index: 999;
   transform: translateX(-50%);
   transition: bottom 0.5s ease-in-out;
   background: $primary1;

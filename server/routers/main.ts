@@ -3,13 +3,13 @@ import MAIN from '../action/main';
 
 const mainRouter = Router();
 
-mainRouter.post('/action-get-item-list', MAIN.actionGetItemList);
-mainRouter.post('/action-bookmark', MAIN.actionBookMark);
-mainRouter.post('/actionGetItemListByUser', MAIN.actionGetItemListByUser);
-mainRouter.post('/actionGetItemListByCategory', MAIN.actionGetItemListByCategory);
-mainRouter.post('/actionGetBookMarkList', MAIN.actionGetBookMarkList);
-mainRouter.post('/actionGetCategory', MAIN.actionGetCategory);
-mainRouter.post('/actionGetUserLocation', MAIN.actionGetUserLocation);
-mainRouter.post('/actionChangeUserLocation', MAIN.actionChangeUserLocation);
+mainRouter.post('/item-list', MAIN.actionGetItemList);
+mainRouter.post('/bookmark', MAIN.actionBookMark);
+mainRouter.get('/category', MAIN.actionGetCategory);
+mainRouter.post('/item-list-user', MAIN.actionGetItemListByUser);
+mainRouter.post('/GetItemListByCategory', MAIN.actionGetItemListByCategory);
+mainRouter.post('/bookmark-list', MAIN.actionGetBookMarkList);
+mainRouter.post('/GetUserLocation', MAIN.actionGetUserLocation);
+mainRouter.post('/ChangeUserLocation', MAIN.actionChangeUserLocation);
 
 export default mainRouter;

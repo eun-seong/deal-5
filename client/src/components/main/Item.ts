@@ -18,7 +18,7 @@ export default class ItemComponent extends Component {
       <div class='type-link small item-price'>${this.$state.price}</div>
     </div>
   <div class='item-icons'>
-    <div class='bookmark ${this.$state.bookmarked ? 'check' : ''}' data-item="${this.$state.item_id}">${
+    <div class='bookmark ${this.$state.bookmarked ? 'check' : ''}'>${
       svgIcons.heart
     }</div>
     <div class='item-status'>
