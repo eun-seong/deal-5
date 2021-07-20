@@ -13,7 +13,7 @@ export default class BookmarksList extends Component {
 
     $ul.addEventListener('click', this.itemEvent);
 
-    GetBookMarkList({ uid: 4 }).then(res => {
+    GetBookMarkList({ uid: 4 }).then((res: any) => {
       const data = res.data;
       if (data?.length) {
         data.forEach((state: any) => {
@@ -39,7 +39,7 @@ export default class BookmarksList extends Component {
         uid: 4,
         bookmarked: !!bookmark.classList.contains('check'),
         item_id: item.getAttribute('data-item_id'),
-      }).then(response => {
+      }).then((response: any) => {
         const snackbar_wrap = document.createElement('div');
         snackbar_wrap.classList.add('snackbar_wrap');
         new Snackbar(snackbar_wrap, { text: response.message });

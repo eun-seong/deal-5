@@ -17,8 +17,8 @@ export default class MainBody extends Component {
     const $ul = this.$target.querySelector('[data-component=items-wrap]') as HTMLElement;
 
     GetItemList({ limit: 0 })
-      .catch(error => console.error('Error:', error))
-      .then(response => {
+      .catch((error: Error) => console.error('Error:', error))
+      .then((response: any) => {
         response.forEach((state: any) => {
           const li = document.createElement('li');
           li.className = 'body-item content';
@@ -38,7 +38,7 @@ export default class MainBody extends Component {
       ChangeBookmark({
         bookmarked: !!bookmark.classList.contains('check'),
         item_id: item.getAttribute('data-item_id'),
-      }).then(response => {
+      }).then((response: any) => {
         const snackbar_wrap = document.createElement('div');
         snackbar_wrap.classList.add('snackbar_wrap');
         new Snackbar(snackbar_wrap, { text: response.message });

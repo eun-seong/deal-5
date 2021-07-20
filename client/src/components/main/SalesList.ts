@@ -23,7 +23,7 @@ export default class SalesList extends Component {
 
   mounted() {
     const salesList = document.querySelector('[data-component="sales-wrap"]') as HTMLElement;
-    GetItemListByUser({ uid: 4 }).then(res => {
+    GetItemListByUser({ uid: 4 }).then((res: any) => {
       const data = res.data;
 
       salesList.innerHTML = !!data?.length
