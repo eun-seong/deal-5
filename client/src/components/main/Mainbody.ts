@@ -16,7 +16,7 @@ export default class MainBody extends Component {
   mounted() {
     const $ul = this.$target.querySelector('[data-component=items-wrap]') as HTMLElement;
 
-    GetItemList({ location: '쥄실', uid: 4, limit: 0 })
+    GetItemList({ limit: 0 })
       .catch(error => console.error('Error:', error))
       .then(response => {
         response.forEach((state: any) => {
@@ -36,7 +36,6 @@ export default class MainBody extends Component {
     const item = e.target.closest('li.body-item');
     if (!!bookmark) {
       ChangeBookmark({
-        uid: 4,
         bookmarked: !!bookmark.classList.contains('check'),
         item_id: item.getAttribute('data-item_id'),
       }).then(response => {

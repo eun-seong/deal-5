@@ -24,9 +24,9 @@ export default class SalesList extends Component {
   mounted() {
     const salesList = document.querySelector('[data-component="sales-wrap"]') as HTMLElement;
     GetItemListByUser({ uid: 4 }).then(res => {
-      const data = res;
+      const data = res.data;
 
-      salesList.innerHTML = data.length
+      salesList.innerHTML = !!data?.length
         ? data
             .map(
               (list: SalesItem) => `
@@ -58,7 +58,7 @@ export default class SalesList extends Component {
     `
             )
             .join('')
-        : `<div class='empty-content'>상품을 등록하여 판매를시작하세요 :)</div>`;
+        : `<div class='empty-content'>${res.message}</div>`;
     });
   }
   setEvent() {

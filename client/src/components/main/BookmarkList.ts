@@ -14,8 +14,9 @@ export default class BookmarksList extends Component {
     $ul.addEventListener('click', this.itemEvent);
 
     GetBookMarkList({ uid: 4 }).then(res => {
-      if (res.length) {
-        res.forEach((state: any) => {
+      const data = res.data;
+      if (data?.length) {
+        data.forEach((state: any) => {
           const li = document.createElement('li');
           li.className = 'sales-item content';
           li.setAttribute('data-href', '#/item-detail');
@@ -25,7 +26,7 @@ export default class BookmarksList extends Component {
           $ul.appendChild(li);
         });
       } else {
-        $ul.innerHTML = `<div class="empty-content">상품을 관심목록에 등록해보세요!</div>`;
+        $ul.innerHTML = `<div class="empty-content">${res.message}</div>`;
       }
     });
   }
