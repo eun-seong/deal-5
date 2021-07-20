@@ -8,7 +8,7 @@ mainRouter.post('/bookmark', MAIN.actionBookMark);
 mainRouter.get('/category', MAIN.actionGetCategory);
 mainRouter.post('/item-list-user', MAIN.actionGetItemListByUser);
 mainRouter.post('/GetItemListByCategory', MAIN.actionGetItemListByCategory);
-mainRouter.post('/GetBookMarkList', MAIN.actionGetBookMarkList);
+mainRouter.post('/bookmark-list', MAIN.actionGetBookMarkList);
 mainRouter.post('/GetUserLocation', MAIN.actionGetUserLocation);
 mainRouter.post('/ChangeUserLocation', MAIN.actionChangeUserLocation);
 

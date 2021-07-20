@@ -11,3 +11,6 @@ export const GetCategory = () => getFetchTemplate(url + '/api/main/category');
 
 export const GetItemListByUser = (args: { [key: string]: any }) =>
   postFetchTemplate(url + '/api/main/item-list-user', args);
+
+export const GetBookMarkList = (args: { [key: string]: any }) =>
+  postFetchTemplate(url + '/api/main/bookmark-list', args);

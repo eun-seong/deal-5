@@ -1,100 +1,9 @@
+import { ChangeBookmark, GetBookMarkList } from '@/src/apis/main';
 import Component from '@/src/interfaces/Component';
+import Snackbar from '../Share/Snackbar';
 import ItemComponent from './Item';
 
 export default class BookmarksList extends Component {
-  items: any;
-  setup() {
-    this.items = [
-      {
-        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
-        location: 'ㄸㅁㄲ쏘',
-        createtime: '1시간전',
-        bookmarked: true,
-        price: '0원',
-        comments: 4,
-        bookmarks: 4,
-      },
-      {
-        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
-        location: 'ㄸㅁㄲ쏘',
-        createtime: '1시간전',
-        bookmarked: true,
-        price: '0원',
-        comments: 4,
-        bookmarks: 4,
-      },
-      ,
-      {
-        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
-        location: 'ㄸㅁㄲ쏘',
-        createtime: '1시간전',
-        bookmarked: true,
-        price: '0원',
-        comments: 4,
-        bookmarks: 4,
-      },
-      ,
-      {
-        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
-        location: 'ㄸㅁㄲ쏘',
-        createtime: '1시간전',
-        bookmarked: true,
-        price: '0원',
-        comments: 4,
-        bookmarks: 4,
-      },
-      ,
-      {
-        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
-        location: 'ㄸㅁㄲ쏘',
-        createtime: '1시간전',
-        bookmarked: true,
-        price: '0원',
-        comments: 4,
-        bookmarks: 4,
-      },
-      ,
-      {
-        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
-        location: 'ㄸㅁㄲ쏘',
-        createtime: '1시간전',
-        bookmarked: true,
-        price: '0원',
-        comments: 4,
-        bookmarks: 4,
-      },
-      ,
-      {
-        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
-        location: 'ㄸㅁㄲ쏘',
-        createtime: '1시간전',
-        bookmarked: false,
-        price: '0원',
-        comments: 4,
-        bookmarks: 4,
-      },
-      ,
-      {
-        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
-        location: 'ㄸㅁㄲ쏘',
-        createtime: '1시간전',
-        bookmarked: false,
-        price: '0원',
-        comments: 4,
-        bookmarks: 4,
-      },
-      ,
-      {
-        name: '메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다메잇모르겟다',
-        location: 'ㄸㅁㄲ쏘',
-        createtime: '1시간전',
-        bookmarked: false,
-        price: '0원',
-        comments: 4,
-        bookmarks: 4,
-      },
-    ];
-  }
   template() {
     return `<ul data-component="bookmarks-wrap" class="sales-list items-wrap"></ul>`;
   }
@@ -104,23 +13,34 @@ export default class BookmarksList extends Component {
 
     $ul.addEventListener('click', this.itemEvent);
 
-    this.items.forEach((state: any) => {
-      const li = document.createElement('li');
-      li.className = 'sales-item content';
-      li.setAttribute('data-href', '#/item-detail');
+    GetBookMarkList({ uid: 4 }).then(res => {
+      res.forEach((state: any) => {
+        const li = document.createElement('li');
+        li.className = 'sales-item content';
+        li.setAttribute('data-href', '#/item-detail');
+        li.setAttribute('data-item_id', state.id);
 
-      new ItemComponent(li, { state });
-      $ul.appendChild(li);
+        new ItemComponent(li, { state });
+        $ul.appendChild(li);
+      });
     });
   }
 
   itemEvent(e: any) {
-    console.log('doit!');
     const bookmark = e.target.closest('.bookmark');
+    const item = e.target.closest('li.sales-item');
     if (!!bookmark) {
-      bookmark.classList.toggle('check');
+      ChangeBookmark({
+        uid: 4,
+        bookmarked: !!bookmark.classList.contains('check'),
+        item_id: item.getAttribute('data-item_id'),
+      }).then(response => {
+        const snackbar_wrap = document.createElement('div');
+        snackbar_wrap.classList.add('snackbar_wrap');
+        new Snackbar(snackbar_wrap, { text: response.message });
+        bookmark.classList.toggle('check');
+      });
     } else {
-      const item = e.target.closest('li.sales-item');
       location.href = item.getAttribute('data-href');
     }
   }
