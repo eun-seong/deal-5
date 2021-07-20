@@ -5,7 +5,6 @@ import Button from '../Share/Button';
 import LinkButton from '../Share/LinkButton';
 import { $router } from '../core/Router';
 import { api_login } from '@/src/apis/user';
-import { setCookie } from '@/src/assets/utils/cookie';
 
 const inputList: UserInputProps[] = [
   {
@@ -22,7 +21,7 @@ const inputList: UserInputProps[] = [
   },
 ];
 
-class SignIn extends Component {
+export default class LogIn extends Component {
   template() {
     return `
     <header data-component="header"></header>
@@ -57,9 +56,7 @@ class SignIn extends Component {
       const pw: string = (this.$target.querySelector('input[name="password"]') as HTMLInputElement).value;
       api_login({ user_id, pw })
         .then((res: any) => {
-          if (res.code === 1) {
-            setCookie('accessToken', res.accessToken, 1);
-            console.log(res);
+          if (res.ok) {
             $router.push('/');
           } else console.log('로그인에 실패했습니다.');
         })
@@ -67,5 +64,3 @@ class SignIn extends Component {
     });
   }
 }
-
-export default SignIn;

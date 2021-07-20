@@ -2,7 +2,7 @@ import './scss/index.scss';
 import { initRouter } from './components/core/Router';
 import Register from './components/Register';
 import Main from './components/Main';
-import SignIn from './components/SignIn';
+import LogIn from './components/LogIn';
 import Location from './components/Location';
 import ChatDetail from './components/ChatDetail';
 import NewPost from './components/NewPost';
@@ -25,7 +25,7 @@ const routes = [
   { path: '/', component: Main },
   { path: '/item-detail', component: ItemDetail },
   { path: '/register', component: Register },
-  { path: '/login', component: SignIn },
+  { path: '/login', component: LogIn },
   { path: '/location', component: Location },
   { path: '/chat', component: ChatDetail },
   { path: '/newpost', component: NewPost },
@@ -36,16 +36,3 @@ async function init() {
   initRouter({ $app, routes });
 }
 init();
-
-/*
-import './scss/index.scss';
-import Register from './components/Register';
-import SignIn from './components/SignIn';
-import { initialRoutes, historyRouterPush, Route, RouterType } from '../src/components/core/Router';
-
-const $app = document.querySelector('#root') as HTMLElement;
-const _routes: Route[] = [
-  { path: '/register', component: Register },
-  { path: '/signin', component: SignIn },
-];
-*/

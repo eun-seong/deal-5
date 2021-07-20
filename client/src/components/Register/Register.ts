@@ -56,7 +56,7 @@ class Register extends Component {
       new UserInput($input, input);
     });
 
-    new (Button as any)($registerButton, { text: '회원가입', href: '/#/signin' });
+    new (Button as any)($registerButton, { text: '회원가입' });
   }
 
   setEvent() {
@@ -69,7 +69,7 @@ class Register extends Component {
       api_register({ user_id, pw, nickname, location })
         .then((res: any) => {
           console.log('register');
-          if (res.code === 1) $router.push('/login');
+          if (res.ok) $router.push('/login');
           else console.log('회원가입에 실패했습니다.');
         })
         .catch(err => console.log('error: ', err));

@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import { execQuery, selectQuery } from '../db';
-import { sign } from './auth';
+import { sign, refresh } from '../utils/jwtAuth';
 import USER_QUERY from '../query/user';
+import AUTH_QUERY from '../query/auth';
 
 const actionLogin = async (req: Request, res: Response) => {
   try {
@@ -12,21 +13,24 @@ const actionLogin = async (req: Request, res: Response) => {
       user_id: string;
       nickname: string;
       location_1: string;
+      location_2: string;
     } = JSON.parse(result)[0];
-    console.log(data);
 
-    const accessToken = sign({ id: data.id, user_id: data.user_id, nickname: data.nickname });
-    res.status(200).send({
+    const accessToken = sign(data);
+    const refreshToken = refresh();
+
+    // db에 refreshToken 저장
+    await execQuery(AUTH_QUERY.querySetUserToken({ id: data.id, token: refreshToken }));
+
+    res.append('Set-Cookie', `refreshToken=${refreshToken}; Path=/refresh; Path=/api; Secure; HttpOnly;`);
+    res.append('Set-Cookie', `accessToken=${accessToken}; Path=/api; Secure; HttpOnly;`);
+    res.send({
       ok: true,
       code: 1,
       message: '성공적으로 로그인 되었습니다.',
       accessToken,
-      data: {
-        id: data.id,
-        user_id: data.user_id,
-        nickname: data.nickname,
-        location: data.location_1,
-      },
+      refreshToken,
+      data: data,
     });
   } catch (err) {
     res.status(401).send({ ok: false, message: '로그인에 실패하였습니다.' });
@@ -49,10 +53,10 @@ const actionRegister = async (req: Request, res: Response) => {
       return;
     } else {
       const data = await execQuery(USER_QUERY.queryRegister({ user_id, pw, nickname, location }));
-      res.send(JSON.stringify({ message: '성공적으로 회원가입 되었습니다.', code: 1 }));
+      res.send(JSON.stringify({ ok: true, message: '성공적으로 회원가입 되었습니다.' }));
     }
   } catch (err) {
-    res.send(JSON.stringify({ message: '회원가입에 실패하였습니다.', code: 3 }));
+    res.send(JSON.stringify({ ok: false, message: '회원가입에 실패하였습니다.' }));
   }
 };
 
