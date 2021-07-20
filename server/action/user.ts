@@ -58,7 +58,20 @@ const actionRegister = async (req: Request, res: Response) => {
   }
 };
 
+const actionIsLogined = async (req: any, res: Response) => {
+  try {
+    if (req.user) {
+      res.send({ ok: true, message: req.message, user: req.user });
+    } else {
+      res.send({ ok: false, message: req.message });
+    }
+  } catch (err) {
+    res.send({ ok: false, message: '다시 로그인해야 합니다.' });
+  }
+};
+
 export default {
   actionLogin,
   actionRegister,
+  actionIsLogined,
 };

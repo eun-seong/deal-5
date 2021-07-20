@@ -4,9 +4,10 @@ const dev_baseURL = 'http://localhost:81/api/user';
 const urls: { [key: string]: string } = {
   register: '/register',
   login: '/login',
+  isLogined: '/is-logined',
 };
 
-const getURL = (url: string) => dev_baseURL + urls[url];
+const getURL = (url: string) => dev_baseURL + url;
 const fetcthTemplate = (url: string, args: { [key: string]: string }) =>
   fetch(getURL(url), {
     method: 'post',
@@ -17,8 +18,9 @@ const fetcthTemplate = (url: string, args: { [key: string]: string }) =>
     body: JSON.stringify(args),
   }).then(res => res.json());
 
-export const api_register = (args: { [key: string]: string }) => fetcthTemplate('register', args);
-export const api_login = (args: { [key: string]: string }) => fetcthTemplate('login', args);
+export const api_register = (args: { [key: string]: string }) => fetcthTemplate(urls.register, args);
+export const api_login = (args: { [key: string]: string }) => fetcthTemplate(urls.login, args);
+export const api_isLogined = (args: { [key: string]: string }) => fetcthTemplate(urls.isLogined, args);
 
 export const api_test = (url: string, args: { [key: string]: string }) =>
   fetch(getURL(url), {
