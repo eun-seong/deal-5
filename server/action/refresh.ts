@@ -8,12 +8,8 @@ const refreshVerify = async (token: string, id: number) => {
   try {
     const data = await selectQuery(AUTH_QUERY.queryGetUserToken(id));
     if (data === token) {
-      try {
-        jwt.verify(token, process.env.JWT_SECRET);
-        return true;
-      } catch (e) {
-        return false;
-      }
+      jwt.verify(token, process.env.JWT_SECRET);
+      return true;
     }
     return false;
   } catch (e) {
@@ -35,6 +31,9 @@ export const refresh = async (req: Request, res: Response) => {
     const decoded: {
       id: number;
       user_id: string;
+      nick_name: string;
+      location_1: string;
+      location_2: string;
     } = JSON.parse(jwt.decode(authToken) as string);
 
     // 디코딩 결과가 없으면 권한이 없음을 응답.
@@ -59,7 +58,7 @@ export const refresh = async (req: Request, res: Response) => {
         });
       } else {
         // 2. access token이 만료되고, refresh token은 만료되지 않은 경우 => 새로운 access token을 발급
-        const newAccessToken = sign({ id: decoded.id, user_id: decoded.user_id });
+        const newAccessToken = sign(decoded);
 
         res.status(200).send({
           // 새로 발급한 access token과 원래 있던 refresh token 모두 클라이언트에게 반환합니다.

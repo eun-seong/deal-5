@@ -11,7 +11,7 @@ const actionLogin = async (req: Request, res: Response) => {
     const data: {
       id: number;
       user_id: string;
-      nickname: string;
+      nick_name: string;
       location_1: string;
       location_2: string;
     } = JSON.parse(result)[0];
@@ -22,14 +22,12 @@ const actionLogin = async (req: Request, res: Response) => {
     // db에 refreshToken 저장
     await execQuery(AUTH_QUERY.querySetUserToken({ id: data.id, token: refreshToken }));
 
-    res.append('Set-Cookie', `refreshToken=${refreshToken}; Path=/refresh; Path=/api; Secure; HttpOnly;`);
+    res.append('Set-Cookie', `refreshToken=${refreshToken}; Path=/refresh; Secure; HttpOnly;`);
     res.append('Set-Cookie', `accessToken=${accessToken}; Path=/api; Secure; HttpOnly;`);
     res.send({
       ok: true,
       code: 1,
       message: '성공적으로 로그인 되었습니다.',
-      accessToken,
-      refreshToken,
       data: data,
     });
   } catch (err) {
