@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { verify } from './auth';
+import { verify } from '../utils/jwtAuth';
 import { execQuery, selectQuery } from '../db';
 import MAIN_QUERY from '../query/main';
 

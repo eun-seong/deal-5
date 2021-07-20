@@ -3,17 +3,14 @@ import jwt from 'jsonwebtoken';
 interface IToken {
   id: number; // user pk
   user_id: string; // user ID
+  nickname: string;
+  location_1: string;
+  location_2: string;
 }
 const EXPIRED = 'JWT expired';
 
-const sign = ({ id, user_id }: IToken) => {
+const sign = (payload: IToken) => {
   // access token 발급
-  const payload: IToken = {
-    // access token에 들어갈 payload
-    id: id,
-    user_id: user_id,
-  };
-
   return jwt.sign(payload, process.env.JWT_SECRET as string, {
     // secret으로 sign하여 발급하고 return
     algorithm: 'HS256', // 암호화 알고리즘
@@ -32,6 +29,9 @@ const verify = (token: string) => {
       ok: true,
       id: decoded.id,
       user_id: decoded.user_id,
+      nickname: decoded.nickname,
+      location_1: decoded.location_1,
+      location_2: decoded.location_2,
     };
   } catch (err) {
     return {

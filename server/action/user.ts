@@ -13,9 +13,10 @@ const actionLogin = async (req: Request, res: Response) => {
       user_id: string;
       nickname: string;
       location_1: string;
+      location_2: string;
     } = JSON.parse(result)[0];
 
-    const accessToken = sign({ id: data.id, user_id: data.user_id });
+    const accessToken = sign(data);
     const refreshToken = refresh();
 
     // db에 refreshToken 저장
@@ -29,12 +30,7 @@ const actionLogin = async (req: Request, res: Response) => {
       message: '성공적으로 로그인 되었습니다.',
       accessToken,
       refreshToken,
-      data: {
-        id: data.id,
-        user_id: data.user_id,
-        nickname: data.nickname,
-        location: data.location_1,
-      },
+      data: data,
     });
   } catch (err) {
     res.status(401).send({ ok: false, message: '로그인에 실패하였습니다.' });
