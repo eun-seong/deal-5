@@ -10,7 +10,7 @@ export default class MainHeader extends Component {
             <li data-btn='catagory-toggle'>${svgIcons.categoty}</li>
             <li data-btn="user-set-location">${svgIcons.mapPin}<div class='type-link medium'>&nbsp;${this.$props.title}</div></li>
             <li>
-              <a class="userBtn" href="#/signin">${svgIcons.user}</a>
+              <a class="userBtn" href="#/login">${svgIcons.user}</a>
               <a class="menuBtn" data-btn='menu-toggle' >${svgIcons.menu}</a>
             </li>
           </ul>
