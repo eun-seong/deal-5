@@ -1,30 +1,16 @@
-const url = 'http://localhost:81';
+import { getFetchTemplate, postFetchTemplate } from '../assets/utils/fetchTemplets';
 
-export const getItemList = ({ location, uid, limit }: { location: string; uid: number; limit: number }) => {
-  return fetch(url + '/api/main/action-get-item-list', {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      location,
-      uid,
-      limit,
-    }),
-  }).then(response => response.json());
-};
+const url = 'http://ec2-13-125-215-98.ap-northeast-2.compute.amazonaws.com:81';
+const dev_baseURL = 'http://localhost:81';
 
-export const changeBookmark = ({ uid, bookmarked, item_id }: { uid: number; bookmarked: boolean; item_id: number }) => {
-  console.log(uid, bookmarked, item_id);
-  return fetch(url + '/api/main/action-bookmark', {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      uid,
-      bookmarked,
-      item_id,
-    }),
-  }).then(response => response.json());
-};
+export const GetItemList = (args: { [key: string]: any }) => postFetchTemplate(url + '/api/main/item-list', args);
+
+export const ChangeBookmark = (args: { [key: string]: any }) => postFetchTemplate(url + '/api/main/bookmark', args);
+
+export const GetCategory = () => getFetchTemplate(url + '/api/main/category');
+
+export const GetItemListByUser = (args: { [key: string]: any }) =>
+  postFetchTemplate(url + '/api/main/item-list-user', args);
+
+export const GetBookMarkList = (args: { [key: string]: any }) =>
+  postFetchTemplate(url + '/api/main/bookmark-list', args);

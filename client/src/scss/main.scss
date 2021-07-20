@@ -34,12 +34,11 @@
 
       &[data-btn="user-set-location"]{
         position: relative;
+        div {
+          padding-top : 2px;
+        }
       }
-
-      .type-link.medium {
-        padding-top: 2px;
-      }
-
+      
       &:first-child {
         justify-self: flex-start;
       }
