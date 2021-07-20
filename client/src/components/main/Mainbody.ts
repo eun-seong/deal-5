@@ -1,6 +1,6 @@
 import Component from '@/src/interfaces/Component';
 import ItemComponent from './Item';
-import { getItemList, changeBookmark } from '@/src/apis/main';
+import { GetItemList, ChangeBookmark } from '@/src/apis/main';
 import Snackbar from '../Share/Snackbar';
 
 export default class MainBody extends Component {
@@ -16,7 +16,7 @@ export default class MainBody extends Component {
   mounted() {
     const $ul = this.$target.querySelector('[data-component=items-wrap]') as HTMLElement;
 
-    getItemList({ location: '쥄실', uid: 4, limit: 0 })
+    GetItemList({ location: '쥄실', uid: 4, limit: 0 })
       .catch(error => console.error('Error:', error))
       .then(response => {
         response.forEach((state: any) => {
@@ -35,7 +35,7 @@ export default class MainBody extends Component {
     const bookmark = e.target.closest('.bookmark');
     const item = e.target.closest('li.body-item');
     if (!!bookmark) {
-      changeBookmark({
+      ChangeBookmark({
         uid: 4,
         bookmarked: !!bookmark.classList.contains('check'),
         item_id: item.getAttribute('data-item_id'),
