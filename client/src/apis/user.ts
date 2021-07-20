@@ -10,6 +10,7 @@ const getURL = (url: string) => dev_baseURL + urls[url];
 const fetcthTemplate = (url: string, args: { [key: string]: string }) =>
   fetch(getURL(url), {
     method: 'post',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -24,7 +25,8 @@ export const api_test = (url: string, args: { [key: string]: string }) =>
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: '',
+      Authorizaiton: 'Bearer access-token',
+      Refresh: 'refresh-token',
     },
     body: JSON.stringify(args),
   }).then(res => res.json());
