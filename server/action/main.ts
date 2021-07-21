@@ -103,8 +103,18 @@ const actionGetUserLocation = async (req: any, res: Response) => {
     res.status(500).send({ ok: false, message: error.message });
   }
 };
+
+//메인화면 location 1,2 변경
 const actionChangeUserLocation = async (req: any, res: Response) => {
   try {
+    const id = req.user?.id;
+    if (!!!id) return res.status(401).send({ ok: false, message: '로그인이 필요해요!' });
+
+    const { location_1, _ } = JSON.parse(await selectQuery(MAIN_QUERY.queryGetUserLocation({ uid: id })));
+
+    await execQuery(MAIN_QUERY.queryChangeUserLocation({ uid: id, location_1 }));
+
+    res.send({ ok: true, message: '장소가 바뀌었습니다 !' });
   } catch (error) {
     res.status(500).send({ ok: false, message: error.message });
   }
