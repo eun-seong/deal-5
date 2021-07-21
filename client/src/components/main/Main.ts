@@ -4,10 +4,6 @@ import CategoryContainer from './Category';
 import MenuContainer from './Menu';
 import MainBody from './MainBody';
 import { svgIcons } from '@/src/assets/svgIcons';
-import { $router } from '../core/Router';
-import { api_isLogined } from '@/src/apis/user';
-import { ChangeLocation, GetUserLocation } from '@/src/apis/main';
-import Snackbar from '../Share/Snackbar';
 
 export default class MainContainer extends Component {
   setup() {}
@@ -25,16 +21,11 @@ export default class MainContainer extends Component {
     const $body = this.$target.querySelector('section[data-component="main-body"]') as HTMLElement;
     const $categoryContainer = this.$target.querySelector('[data-component="category"]') as HTMLElement;
     const $menuContainer = this.$target.querySelector('[data-component="menu"]') as HTMLElement;
-    const [toggleCategory, toggleMenu, clickUserLocation] = [
-      this.toggleCategory.bind(this),
-      this.toggleMenu.bind(this),
-      this.clickUserLocation.bind(this),
-    ];
+    const [toggleCategory, toggleMenu] = [this.toggleCategory.bind(this), this.toggleMenu.bind(this)];
 
     new MainHeader($header, {
       toggleCategory,
       toggleMenu,
-      onClickItem: clickUserLocation,
     });
 
     new MainBody($body);
@@ -75,23 +66,6 @@ export default class MainContainer extends Component {
     background.addEventListener('click', (e: any) => {
       sideContainers.forEach((a: any) => a.classList.remove('show'));
       background.remove();
-    });
-  }
-
-  clickUserLocation(e: any) {
-    const clickedItem = e.target.closest('.dropdown-item');
-    const type = clickedItem.getAttribute('type');
-    if (type === 'setting-location') {
-      api_isLogined({}).then((res: any) => {
-        if (res.user) $router.push('/location');
-        else $router.push('/login');
-      });
-    }
-    let current = (document.querySelector('[data-btn="user-set-location"] input') as HTMLInputElement).value.trim();
-    if (current == clickedItem.innerText) return console.log(current);
-
-    ChangeLocation({ location: clickedItem }).then(res => {
-      new Snackbar(document.body, { text: res.message });
     });
   }
 }
