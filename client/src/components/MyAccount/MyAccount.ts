@@ -8,12 +8,15 @@ export default class MyAccount extends Component {
   setup() {
     api_isLogined({}).then((res: any) => {
       if (!res.ok) {
-        $router.push(`/login`);
+        $router.push('/login');
       }
     });
   }
+
   template() {
+    console.log(this.$props);
     const { nickname } = this.$props.parsingData;
+
     return `
     <header data-component="header"></header>
     <div class="content">

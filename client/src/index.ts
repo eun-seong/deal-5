@@ -3,6 +3,7 @@ import { initRouter } from './components/core/Router';
 import Register from './components/Register';
 import Main from './components/Main';
 import LogIn from './components/LogIn';
+import CheckAccount from './components/CheckAccount';
 import Location from './components/Location';
 import ChatDetail from './components/ChatDetail';
 import NewPost from './components/NewPost';
@@ -30,6 +31,7 @@ const routes = [
   { path: '/location', component: Location },
   { path: '/chat', component: ChatDetail },
   { path: '/newpost', component: NewPost },
+  { path: '/checkaccount', component: CheckAccount },
   { path: '/myaccount', component: MyAccount },
 ];
 const $app = document.querySelector('#root') as HTMLElement;

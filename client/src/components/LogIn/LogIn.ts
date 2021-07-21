@@ -22,14 +22,6 @@ const inputList: UserInputProps[] = [
 ];
 
 export default class LogIn extends Component {
-  setup() {
-    api_isLogined({}).then((res: any) => {
-      if (res.ok && res.user) {
-        $router.push(`/myaccount?nickname=${res.user.nick_name}`);
-      }
-    });
-  }
-
   template() {
     return `
     <header data-component="header"></header>
