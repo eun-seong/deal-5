@@ -11,7 +11,6 @@ export default class CategoryBody extends Component {
     const categoryBody = this.$target.querySelector('.category-body-wrap') as HTMLElement;
     //카테고리 목록 생성
     GetCategory().then(res => {
-      console.log(res);
       if (res.ok) {
         const data = res.data;
 
