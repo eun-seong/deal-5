@@ -4,6 +4,7 @@ import UserInput, { UserInputProps } from '../Share/UserInput';
 import Button from '../Share/Button';
 import { api_register } from '@/src/apis/user';
 import { $router } from '../core/Router';
+import historyBack from '@/src/assets/utils/historyBack';
 
 const inputList: UserInputProps[] = [
   {
@@ -48,7 +49,7 @@ class Register extends Component {
     const $registerInput = this.$target.querySelector('#register-input');
     const $registerButton = this.$target.querySelector('#register-button');
 
-    new CommonHeader($header as HTMLElement, { title: '회원가입' });
+    new CommonHeader($header as HTMLElement, { title: '회원가입', leftArrowEvent: historyBack });
 
     inputList.forEach(input => {
       const $input = document.createElement('div');
