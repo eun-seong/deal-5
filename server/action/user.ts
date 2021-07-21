@@ -86,9 +86,51 @@ const actionIsLogined = async (req: any, res: Response) => {
   }
 };
 
+// 내 지역 추가
+const actionAddLocation = async (req: any, res: Response) => {
+  try {
+    if (req.user) {
+      res.send({ ok: true, message: req.message, user: req.user });
+    } else {
+      res.send({ ok: false, message: req.message });
+    }
+  } catch (err) {
+    res.send({ ok: false, message: '내 지역 추가에 실패하였습니다.' });
+  }
+};
+
+// 내 지역 삭제
+const actionDelLocation = async (req: any, res: Response) => {
+  try {
+    if (req.user) {
+      res.send({ ok: true, message: req.message, user: req.user });
+    } else {
+      res.send({ ok: false, message: req.message });
+    }
+  } catch (err) {
+    res.send({ ok: false, message: '내 지역 삭제에 실패하였습니다.' });
+  }
+};
+
+// 내 지역 가져오기
+const actionGetLocation = async (req: any, res: Response) => {
+  try {
+    if (req.user) {
+      res.send({ ok: true, message: req.message, user: req.user });
+    } else {
+      res.send({ ok: false, message: req.message });
+    }
+  } catch (err) {
+    res.send({ ok: false, message: '내 지역 가져오기에 실패하였습니다.' });
+  }
+};
+
 export default {
   actionLogin,
   actionLogout,
   actionRegister,
   actionIsLogined,
+  actionAddLocation,
+  actionDelLocation,
+  actionGetLocation,
 };

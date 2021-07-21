@@ -4,7 +4,8 @@ import CategoryContainer from './Category';
 import MenuContainer from './Menu';
 import MainBody from './MainBody';
 import { svgIcons } from '@/src/assets/svgIcons';
-import sibling from '@/src/assets/utils/sibling';
+import { $router } from '../core/Router';
+import { api_isLogined } from '@/src/apis/user';
 
 export default class MainContainer extends Component {
   setup() {
@@ -93,7 +94,11 @@ export default class MainContainer extends Component {
   clickUserLocation(e: any) {
     const clickedItem = e.target.closest('.dropdown-item');
     const type = clickedItem.getAttribute('type');
-    if (type === 'setting-location') location.href = '/#/location';
-    else console.log(clickedItem.innerText);
+    if (type === 'setting-location') {
+      api_isLogined({}).then((res: any) => {
+        if (res.user) $router.push('/location');
+        else $router.push('/login');
+      });
+    } else console.log(clickedItem.innerText);
   }
 }
