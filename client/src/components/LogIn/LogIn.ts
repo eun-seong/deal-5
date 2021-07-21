@@ -4,7 +4,8 @@ import UserInput, { UserInputProps } from '../Share/UserInput';
 import Button from '../Share/Button';
 import LinkButton from '../Share/LinkButton';
 import { $router } from '../core/Router';
-import { api_login, api_isLogined } from '@/src/apis/user';
+import { api_login } from '@/src/apis/user';
+import historyBack from '@/src/assets/utils/historyBack';
 
 const inputList: UserInputProps[] = [
   {
@@ -39,7 +40,7 @@ export default class LogIn extends Component {
     const $signinBtn = this.$target.querySelector('[data-component="signin-btn"]');
     const $registerLink = this.$target.querySelector('[data-component="register-link"]');
 
-    new CommonHeader($header as HTMLElement, { title: '로그인' });
+    new CommonHeader($header as HTMLElement, { title: '로그인', leftArrowEvent: historyBack });
     inputList.forEach(input => {
       const $input = document.createElement('div');
       $signinInput?.appendChild($input);

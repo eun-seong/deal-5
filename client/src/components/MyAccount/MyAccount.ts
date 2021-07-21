@@ -3,6 +3,7 @@ import CommonHeader from '../Share/CommonHeader';
 import Button from '../Share/Button';
 import { $router } from '../core/Router';
 import { api_isLogined, api_logout } from '@/src/apis/user';
+import historyBack from '@/src/assets/utils/historyBack';
 
 export default class MyAccount extends Component {
   setup() {
@@ -14,7 +15,6 @@ export default class MyAccount extends Component {
   }
 
   template() {
-    console.log(this.$props);
     const { nickname } = this.$props.parsingData;
 
     return `
@@ -32,7 +32,7 @@ export default class MyAccount extends Component {
     const $header = this.$target.querySelector('[data-component="header"]');
     const $logoutBtn = this.$target.querySelector('[data-component="logout-btn"]');
 
-    new CommonHeader($header as HTMLElement, { title: '내 계정' });
+    new CommonHeader($header as HTMLElement, { title: '내 계정', leftArrowEvent: historyBack });
     new Button($logoutBtn as HTMLElement, { text: '로그아웃' });
   }
 
