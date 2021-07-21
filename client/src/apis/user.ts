@@ -3,6 +3,7 @@ import { postFetchTemplate } from '../assets/utils/fetchTemplets';
 const urls: { [key: string]: string } = {
   register: '/register',
   login: '/login',
+  isLogined: '/is-logined',
 };
 
 const getURL = (url: string) => '/api/user' + url;
