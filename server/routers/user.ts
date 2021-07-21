@@ -4,7 +4,8 @@ import { authJWT } from './middlewares';
 
 const userRouter = Router();
 
-userRouter.post('/login', USER.actionLogin);
+userRouter.post('/login', authJWT, USER.actionLogin);
+userRouter.post('/logout', authJWT, USER.actionLogout);
 userRouter.post('/register', USER.actionRegister);
 userRouter.post('/is-logined', authJWT, USER.actionIsLogined);
 
