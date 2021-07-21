@@ -77,9 +77,7 @@ export default class MainBody extends Component {
         bookmarked: !!bookmark.classList.contains('check'),
         item_id: item.getAttribute('data-item_id'),
       }).then((response: any) => {
-        const snackbar_wrap = document.createElement('div');
-        snackbar_wrap.classList.add('snackbar_wrap');
-        new Snackbar(snackbar_wrap, { text: response.message });
+        new Snackbar(document.body, { text: response.message });
         if (response.ok) {
           bookmark.classList.toggle('check');
         }
