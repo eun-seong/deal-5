@@ -2,11 +2,11 @@ import mysql from 'mysql2/promise';
 
 const conn = mysql.createPool({
   connectionLimit: 10,
-  host: process.env.DEV_DB_HOST,
-  user: process.env.DEV_DB_USER,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
   port: 3306,
-  password: process.env.DEV_DB_PASSWORD,
-  database: process.env.DEV_DB_DATABASE,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
 export const selectQuery = async (query: string) => {
