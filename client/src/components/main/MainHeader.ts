@@ -1,8 +1,6 @@
 import Component from '@/src/interfaces/Component';
 import { svgIcons } from '@/src/assets/svgIcons';
 import DropDown from '../Share/DropDown';
-import { api_isLogined } from '@/src/apis/user';
-import { $router } from '../core/Router';
 
 export default class MainHeader extends Component {
   template() {
@@ -12,7 +10,7 @@ export default class MainHeader extends Component {
             <li data-btn='catagory-toggle'>${svgIcons.categoty}</li>
             <li data-btn="user-set-location">${svgIcons.mapPin}<div class='type-link medium'>&nbsp;${this.$props.title}</div></li>
             <li>
-              <a class="userBtn">${svgIcons.user}</a>
+              <a class="userBtn" href="#/login">${svgIcons.user}</a>
               <a class="menuBtn" data-btn='menu-toggle' >${svgIcons.menu}</a>
             </li>
           </ul>
@@ -33,18 +31,6 @@ export default class MainHeader extends Component {
         labels: ['역삼동'],
         onClickItem,
         specialItems: [{ name: '내 지역 설정하기', type: 'setting-location', onClickSettingLocation }],
-      });
-    });
-
-    this.addEvent('click', '.userBtn', (e: any) => {
-      e.preventDefault();
-      api_isLogined({}).then((res: any) => {
-        console.log('click', res);
-        if (res.ok && res.user) {
-          $router.push(`/myaccount?nickname=${res.user.nick_name}`);
-        } else {
-          $router.push('/login');
-        }
       });
     });
   }

@@ -4,7 +4,7 @@ import UserInput, { UserInputProps } from '../Share/UserInput';
 import Button from '../Share/Button';
 import LinkButton from '../Share/LinkButton';
 import { $router } from '../core/Router';
-import { api_login } from '@/src/apis/user';
+import { api_login, api_isLogined } from '@/src/apis/user';
 
 const inputList: UserInputProps[] = [
   {
@@ -22,6 +22,14 @@ const inputList: UserInputProps[] = [
 ];
 
 export default class LogIn extends Component {
+  setup() {
+    api_isLogined({}).then((res: any) => {
+      if (res.ok && res.user) {
+        $router.push(`/myaccount?nickname=${res.user.nick_name}`);
+      }
+    });
+  }
+
   template() {
     return `
     <header data-component="header"></header>

@@ -2,8 +2,16 @@ import Component from '@/src/interfaces/Component';
 import CommonHeader from '../Share/CommonHeader';
 import Button from '../Share/Button';
 import { $router } from '../core/Router';
+import { api_isLogined, api_logout } from '@/src/apis/user';
 
 export default class MyAccount extends Component {
+  setup() {
+    api_isLogined({}).then((res: any) => {
+      if (!res.ok) {
+        $router.push(`/login`);
+      }
+    });
+  }
   template() {
     const { nickname } = this.$props.parsingData;
     return `
@@ -28,8 +36,11 @@ export default class MyAccount extends Component {
   setEvent() {
     this.addEvent('click', '[data-component="logout-btn"]>a', (e: any) => {
       e.preventDefault();
-      // TODO 쿠키 파쇄
-      $router.push('/');
+      api_logout({}).then((res: any) => {
+        if (res.ok) {
+          $router.push('/');
+        } else console.log('로그아웃에 실패했습니다.');
+      });
     });
   }
 }
