@@ -11,18 +11,6 @@ export default class MainContainer extends Component {
   setup() {
     this.$state = {
       categoryToggle: false,
-      items: [
-        {
-          id: 0,
-          title: '상품',
-          price: 123000,
-        },
-        {
-          id: 1,
-          title: '상품',
-          price: 123000,
-        },
-      ],
     };
   }
   template() {

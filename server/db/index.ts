@@ -13,7 +13,7 @@ export const selectQuery = async (query: string) => {
   const _conn = await conn.getConnection();
   try {
     const [row, _] = await _conn.query(query);
-    return JSON.stringify(row);
+    return JSON.parse(JSON.stringify(row));
   } catch (err) {
     throw err;
   } finally {
@@ -27,7 +27,7 @@ export const execQuery = async (query: string) => {
     await _conn.beginTransaction();
     const [row, _] = await _conn.query(query);
     await _conn.commit();
-    return JSON.stringify(row);
+    return JSON.parse(JSON.stringify(row));
   } catch (err) {
     await _conn.rollback();
     throw err;

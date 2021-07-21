@@ -11,7 +11,7 @@ const port = process.env.PORT || 81;
 const app: Application = express();
 
 const options = {
-  origin: 'http://localhost:8080', // 접근 권한을 부여하는 도메인
+  origin: ['http://localhost:8080', 'http://ec2-13-125-215-98.ap-northeast-2.compute.amazonaws.com'], // 접근 권한을 부여하는 도메인
   credentials: true, // 응답 헤더에 Access-Control-Allow-Credentials 추가
   optionsSuccessStatus: 200, // 응답 상태 200으로 설정
 };
