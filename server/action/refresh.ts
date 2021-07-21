@@ -8,12 +8,8 @@ const refreshVerify = async (token: string, id: number) => {
   try {
     const data = await selectQuery(AUTH_QUERY.queryGetUserToken(id));
     if (data === token) {
-      try {
-        jwt.verify(token, process.env.JWT_SECRET);
-        return true;
-      } catch (e) {
-        return false;
-      }
+      jwt.verify(token, process.env.JWT_SECRET as string);
+      return true;
     }
     return false;
   } catch (e) {

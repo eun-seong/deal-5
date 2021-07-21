@@ -5,6 +5,7 @@ import path from 'path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import router from './routers';
+import { refresh } from './action/refresh';
 
 const port = process.env.PORT || 81;
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'src')));
 
 app.use(cors(options));
 app.use('/api', router);
+app.use('/refresh', refresh);
 
 app.listen(port, () => {
   console.log(`여기 -> http://localhost:${port}`);

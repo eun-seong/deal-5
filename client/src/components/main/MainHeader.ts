@@ -33,5 +33,17 @@ export default class MainHeader extends Component {
         specialItems: [{ name: '내 지역 설정하기', type: 'setting-location', onClickSettingLocation }],
       });
     });
+
+    this.addEvent('click', '.userBtn', (e: any) => {
+      e.preventDefault();
+      api_isLogined({}).then((res: any) => {
+        console.log('click', res);
+        if (res.ok && res.user) {
+          $router.push(`/myaccount?nickname=${res.user.nick_name}`);
+        } else {
+          $router.push('/login');
+        }
+      });
+    });
   }
 }

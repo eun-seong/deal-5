@@ -13,9 +13,10 @@ const actionLogin = async (req: Request, res: Response) => {
       user_id: string;
       nickname: string;
       location_1: string;
+      location_2: string;
     } = JSON.parse(result)[0];
 
-    const accessToken = sign({ id: data.id, user_id: data.user_id });
+    const accessToken = sign(data);
     const refreshToken = refresh();
 
     // db에 refreshToken 저장
