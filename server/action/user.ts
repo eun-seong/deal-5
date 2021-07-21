@@ -4,6 +4,7 @@ import { sign, refresh } from '../utils/jwtAuth';
 import USER_QUERY from '../query/user';
 import AUTH_QUERY from '../query/auth';
 
+// 로그인
 const actionLogin = async (req: Request, res: Response) => {
   try {
     const { user_id, pw } = req.body;
@@ -35,6 +36,20 @@ const actionLogin = async (req: Request, res: Response) => {
   }
 };
 
+// 로그아웃
+const actionLogout = async (req: any, res: Response) => {
+  try {
+    const { id } = req.user;
+    const data = await execQuery(USER_QUERY.queryLogout(id));
+    res.append('Set-Cookie', `refreshToken=''; Path=/refresh; Secure; HttpOnly;`);
+    res.append('Set-Cookie', `accessToken=''; Path=/api; Secure; HttpOnly;`);
+    res.send({ ok: true, message: '성공적으로 로그아웃 되었습니다.' });
+  } catch (err) {
+    res.status(401).send({ ok: false, message: '로그아웃에 실패하였습니다.' });
+  }
+};
+
+// 회원가입
 const actionRegister = async (req: Request, res: Response) => {
   try {
     const { user_id, pw, nickname, location } = req.body;
@@ -58,6 +73,7 @@ const actionRegister = async (req: Request, res: Response) => {
   }
 };
 
+// 로그인이 되었는지 확인
 const actionIsLogined = async (req: any, res: Response) => {
   try {
     if (req.user) {
@@ -72,6 +88,7 @@ const actionIsLogined = async (req: any, res: Response) => {
 
 export default {
   actionLogin,
+  actionLogout,
   actionRegister,
   actionIsLogined,
 };
