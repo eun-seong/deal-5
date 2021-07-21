@@ -64,10 +64,10 @@ const queryGetUserLocation = ({ uid }: { uid: number }) => `
   SELECT location_1, location_2 from user where id= ${uid};
 `;
 
-const queryUpdateUserLocation = ({ uid, location_1 }: { uid: number; location_1: string }) => `
-  UPDATE user set location_1 = location_2, location_2 = ${location_1} where id = ${uid}
+const queryChangeUserLocation = ({ uid, location_1 }: { uid: number; location_1: string }) => `
+  UPDATE user set location_1 = location_2, location_2 = '${location_1}' where id = ${uid};
 `;
-const queryChangeUserLocation = ({}) => ``;
+const queryUpdateUserLocation = ({}) => ``;
 
 export default {
   queryGetItemList,

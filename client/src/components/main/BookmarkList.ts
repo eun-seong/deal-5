@@ -40,9 +40,7 @@ export default class BookmarksList extends Component {
         bookmarked: !!bookmark.classList.contains('check'),
         item_id: item.getAttribute('data-item_id'),
       }).then((response: any) => {
-        const snackbar_wrap = document.createElement('div');
-        snackbar_wrap.classList.add('snackbar_wrap');
-        new Snackbar(snackbar_wrap, { text: response.message });
+        new Snackbar(document.body, { text: response.message });
         bookmark.classList.toggle('check');
         (document.querySelector('[data-menu-tab="bookmarks-tab"]') as HTMLElement)?.click();
       });

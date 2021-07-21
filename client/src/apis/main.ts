@@ -9,3 +9,7 @@ export const GetCategory = () => getFetchTemplate('/api/main/category');
 export const GetItemListByUser = () => getFetchTemplate('/api/main/item-list-user');
 
 export const GetBookMarkList = (args: { [key: string]: any }) => postFetchTemplate('/api/main/bookmark-list', args);
+
+export const ChangeLocation = (args: { [key: string]: any }) => postFetchTemplate('/api/main/change-location', args);
+
+export const GetUserLocation = () => getFetchTemplate('/api/main/user-location');

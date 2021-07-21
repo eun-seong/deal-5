@@ -8,7 +8,7 @@
   top: 0;
   z-index: 1;
   box-shadow: $shadow-default;
-  
+
   ul {
     height: $header-max-height;
     display: grid;
@@ -32,13 +32,21 @@
       justify-self: center;
       align-self: center;
 
-      &[data-btn="user-set-location"]{
+      &[data-btn='user-set-location'] {
         position: relative;
-        div {
-          padding-top : 2px;
+        input.header-location {
+          border: none;
+          height: auto;
+          background: transparent;
+          color: white;
+          margin: 0;
+          max-width: 80px;
+          width: auto;
+          white-space: nowrap;
+          padding: 2px 0 0 0.6rem;
         }
       }
-      
+
       &:first-child {
         justify-self: flex-start;
       }
@@ -218,7 +226,7 @@ ul.items-wrap {
   max-width: $max-common-container-width;
   transition: right 0.8s ease-in-out;
   z-index: 101;
-  
+
   &.show {
     right: 0;
   }

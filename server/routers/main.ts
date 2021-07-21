@@ -9,8 +9,7 @@ mainRouter.post('/bookmark', authJWT, MAIN.actionBookMark);
 mainRouter.get('/category', authJWT, MAIN.actionGetCategory);
 mainRouter.get('/item-list-user', authJWT, MAIN.actionGetItemListByUser);
 mainRouter.post('/bookmark-list', authJWT, MAIN.actionGetBookMarkList);
-mainRouter.post('/GetUserLocation', authJWT, MAIN.actionGetUserLocation);
-mainRouter.post('/ChangeUserLocation', authJWT, MAIN.actionChangeUserLocation);
 mainRouter.post('/change-location', authJWT, MAIN.actionChangeUserLocation);
+mainRouter.get('/user-location', authJWT, MAIN.actionGetUserLocation);
 
 export default mainRouter;

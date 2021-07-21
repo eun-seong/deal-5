@@ -6,13 +6,11 @@ import MainBody from './MainBody';
 import { svgIcons } from '@/src/assets/svgIcons';
 import { $router } from '../core/Router';
 import { api_isLogined } from '@/src/apis/user';
+import { ChangeLocation, GetUserLocation } from '@/src/apis/main';
+import Snackbar from '../Share/Snackbar';
 
 export default class MainContainer extends Component {
-  setup() {
-    this.$state = {
-      categoryToggle: false,
-    };
-  }
+  setup() {}
   template() {
     return `
         <header class='main-header' data-component='main-header'></header>
@@ -32,12 +30,13 @@ export default class MainContainer extends Component {
       this.toggleMenu.bind(this),
       this.clickUserLocation.bind(this),
     ];
+
     new MainHeader($header, {
-      title: '현재위치',
       toggleCategory,
       toggleMenu,
       onClickItem: clickUserLocation,
     });
+
     new MainBody($body);
     new CategoryContainer($categoryContainer, { title: '카테고리', toggleCategory });
     new MenuContainer($menuContainer, { title: '메뉴', toggleMenu });
@@ -87,6 +86,12 @@ export default class MainContainer extends Component {
         if (res.user) $router.push('/location');
         else $router.push('/login');
       });
-    } else console.log(clickedItem.innerText);
+    }
+    let current = (document.querySelector('[data-btn="user-set-location"] input') as HTMLInputElement).value.trim();
+    if (current == clickedItem.innerText) return console.log(current);
+
+    ChangeLocation({ location: clickedItem }).then(res => {
+      new Snackbar(document.body, { text: res.message });
+    });
   }
 }

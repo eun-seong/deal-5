@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { verify } from '../utils/jwtAuth';
 import { execQuery, selectQuery } from '../db';
 import MAIN_QUERY from '../query/main';
 
@@ -8,12 +7,11 @@ const actionGetItemList = async (req: any, res: Response) => {
   try {
     const id = req.user?.id;
     const { category, location, limit } = req.body;
-    console.log(req);
-    let rows = JSON.parse(await selectQuery(MAIN_QUERY.queryGetItemList({ category, location, limit })));
+
+    let rows = await selectQuery(MAIN_QUERY.queryGetItemList({ category, location, limit }));
     const itemIDs = rows.map((a: any) => a.id);
     if (itemIDs.length) {
       let bmList: any = await selectQuery(MAIN_QUERY.queryBookmarkChecked({ uid: id, item_id: itemIDs }));
-      bmList = JSON.parse(bmList);
       bmList.forEach((a: any) => {
         rows[itemIDs.indexOf(a.item_id)].bookmarked = 1;
       });
@@ -48,13 +46,11 @@ const actionGetItemListByUser = async (req: any, res: Response) => {
   try {
     const id = req.user?.id;
     if (!!!id) return res.status(401).send({ ok: false, message: '로그인이 필요해요!' });
-    console.log(id);
-    let rows = JSON.parse(await selectQuery(MAIN_QUERY.queryGetItemListByUser({ uid: id })));
+    let rows = await selectQuery(MAIN_QUERY.queryGetItemListByUser({ uid: id }));
 
     const itemIDs = rows.map((a: any) => a.id);
     if (itemIDs.length) {
       let bmList: any = await selectQuery(MAIN_QUERY.queryBookmarkChecked({ uid: id, item_id: itemIDs }));
-      bmList = JSON.parse(bmList);
       bmList.forEach((a: any) => {
         rows[itemIDs.indexOf(a.item_id)].bookmarked = 1;
       });
@@ -71,12 +67,11 @@ const actionGetBookMarkList = async (req: any, res: Response) => {
     const id = req.user?.id;
     if (!!!id) return res.status(401).send({ ok: false, message: '로그인이 필요해요!' });
 
-    let rows = JSON.parse(await selectQuery(MAIN_QUERY.queryGetBookMarkList({ uid: id })));
+    let rows = await selectQuery(MAIN_QUERY.queryGetBookMarkList({ uid: id }));
 
     const itemIDs = rows.map((a: any) => a.id);
     if (itemIDs.length) {
       let bmList: any = await selectQuery(MAIN_QUERY.queryBookmarkChecked({ uid: id, item_id: itemIDs }));
-      bmList = JSON.parse(bmList);
       bmList.forEach((a: any) => {
         rows[itemIDs.indexOf(a.item_id)].bookmarked = 1;
       });
@@ -92,13 +87,18 @@ const actionGetBookMarkList = async (req: any, res: Response) => {
 const actionGetCategory = async (req: any, res: Response) => {
   try {
     const rows = await selectQuery(MAIN_QUERY.queryGetCategory());
-    res.send({ ok: true, data: JSON.parse(rows) });
+    res.send({ ok: true, data: rows });
   } catch (error) {
     res.status(500).send({ ok: false, error: error, message: '카테고리 받아오기 오류' });
   }
 };
 const actionGetUserLocation = async (req: any, res: Response) => {
   try {
+    const id = req.user?.id;
+    if (!!!id) return res.status(401).send({ ok: false, message: '로그인이 필요해요!' });
+
+    const { location_1, location_2 } = await selectQuery(MAIN_QUERY.queryGetUserLocation({ uid: id }));
+    res.send({ ok: true, data: { location_1, location_2 } });
   } catch (error) {
     res.status(500).send({ ok: false, message: error.message });
   }
@@ -110,11 +110,18 @@ const actionChangeUserLocation = async (req: any, res: Response) => {
     const id = req.user?.id;
     if (!!!id) return res.status(401).send({ ok: false, message: '로그인이 필요해요!' });
 
-    const { location_1, _ } = JSON.parse(await selectQuery(MAIN_QUERY.queryGetUserLocation({ uid: id })));
+    const { location } = req.body;
+    const { location_1, location_2 } = await selectQuery(MAIN_QUERY.queryGetUserLocation({ uid: id }));
 
-    await execQuery(MAIN_QUERY.queryChangeUserLocation({ uid: id, location_1 }));
+    if (location != location_2) {
+      res.send(400).send({ ok: false, message: '위치정보가 다릅니다!' });
+    }
 
-    res.send({ ok: true, message: '장소가 바뀌었습니다 !' });
+    const a = await execQuery(MAIN_QUERY.queryChangeUserLocation({ uid: id, location_1 }));
+
+    console.log(a);
+
+    res.send({ ok: false, message: '장소가 바뀌었습니다 !' });
   } catch (error) {
     res.status(500).send({ ok: false, message: error.message });
   }
