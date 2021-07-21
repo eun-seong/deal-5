@@ -5,7 +5,8 @@ import MenuContainer from './Menu';
 import MainBody from './MainBody';
 import { svgIcons } from '@/src/assets/svgIcons';
 import { $router } from '../core/Router';
-import { api_isLogined } from '@/src/apis/user';
+import { api_isLogined, api_setLocation } from '@/src/apis/user';
+import sibling from '@/src/assets/utils/sibling';
 
 export default class MainContainer extends Component {
   setup() {
@@ -87,6 +88,21 @@ export default class MainContainer extends Component {
         if (res.user) $router.push('/location');
         else $router.push('/login');
       });
-    } else console.log(clickedItem.innerText);
+    } else {
+      const nextElement = sibling(clickedItem).filter(s => !s.getAttribute('type'))[0] as HTMLElement;
+      const secondLocation = nextElement.innerText;
+
+      // 두 번째 지역을 선택한 경우만 DB 업데이트
+      const newLocation = [clickedItem.innerText, secondLocation];
+      api_setLocation({ data: { location_1: newLocation[0], location_2: newLocation[1] } })
+        .then((res: any) => {
+          if (res.ok)
+            this.setState({
+              locations: newLocation,
+            });
+          else console.log(res.message);
+        })
+        .catch(e => console.log(e));
+    }
   }
 }
