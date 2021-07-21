@@ -22,6 +22,6 @@ const queryRegister = ({
 const queryGetLocation = (id: number) => `SELECT location_1, location_2 FROM user WHERE id=${id}`;
 // 지역 추가, 삭제, 내지역 설정
 const querySetLocation = ({ id, location_1, location_2 }: { id: number; location_1: string; location_2: string }) =>
-  `UPDATE user FROM SET location_1=${location_1}, location_2=${location_2} WHERE id=${id}`;
+  `UPDATE user SET location_1='${location_1}', location_2='${location_2}' WHERE id=${id}`;
 
 export default { queryLogin, queryLogout, queryRegister, queryCheckUser, queryGetLocation, querySetLocation };

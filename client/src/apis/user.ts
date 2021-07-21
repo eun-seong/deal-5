@@ -5,6 +5,7 @@ const urls: { [key: string]: string } = {
   login: '/login',
   logout: '/logout',
   isLogined: '/is-logined',
+  setLocation: '/set-location',
   getLocation: '/get-location',
 };
 
@@ -13,5 +14,6 @@ export const api_register = (args: { [key: string]: string }) => postFetchTempla
 export const api_login = (args: { [key: string]: string }) => postFetchTemplate(userApiUrl(urls.login), args);
 export const api_logout = (args: { [key: string]: string }) => postFetchTemplate(userApiUrl(urls.logout), args);
 export const api_isLogined = (args: { [key: string]: string }) => postFetchTemplate(userApiUrl(urls.isLogined), args);
+export const api_setLocation = (args: { [key: string]: any }) => postFetchTemplate(userApiUrl(urls.setLocation), args);
 export const api_getLocation = (args: { [key: string]: string }) =>
   postFetchTemplate(userApiUrl(urls.getLocation), args);

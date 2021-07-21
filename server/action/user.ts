@@ -15,7 +15,7 @@ const actionLogin = async (req: Request, res: Response) => {
       nick_name: string;
       location_1: string;
       location_2: string;
-    } = JSON.parse(result)[0];
+    } = result[0];
 
     const accessToken = sign(data);
     const refreshToken = refresh();
@@ -54,7 +54,7 @@ const actionRegister = async (req: Request, res: Response) => {
   try {
     const { user_id, pw, nickname, location } = req.body;
     const count = await selectQuery(USER_QUERY.queryCheckUser({ user_id }));
-    const countNum: { count: number } = JSON.parse(count)[0];
+    const countNum: { count: number } = count[0];
 
     if (!countNum) {
       res.send(
@@ -86,10 +86,19 @@ const actionIsLogined = async (req: any, res: Response) => {
   }
 };
 
-// 내 지역 추가
-const actionAddLocation = async (req: any, res: Response) => {
+// 내 지역 추가, 삭제, 설정
+const actionSetLocation = async (req: any, res: Response) => {
   try {
     if (req.user) {
+      const { location_1, location_2 } = req.body.data;
+      console.log(location_1, location_2);
+      const data = await execQuery(
+        USER_QUERY.querySetLocation({
+          id: req.user.id,
+          location_1,
+          location_2,
+        })
+      );
       res.send({ ok: true, message: req.message, user: req.user });
     } else {
       res.send({ ok: false, message: req.message });
@@ -104,7 +113,7 @@ const actionGetLocation = async (req: any, res: Response) => {
   try {
     if (req.user) {
       const result = await selectQuery(USER_QUERY.queryGetLocation(req.user.id));
-      res.send({ ok: true, message: req.message, user: req.user, data: JSON.parse(result)[0] });
+      res.send({ ok: true, message: req.message, user: req.user, data: result[0] });
     } else {
       res.send({ ok: false, message: req.message });
     }
