@@ -38,15 +38,14 @@ export default class MainHeader extends Component {
 
     this.addEvent('click', '.userBtn', (e: any) => {
       e.preventDefault();
-      api_isLogined({})
-        .then((res: any) => {
-          if (res.ok && res.user) {
-            $router.push(`/myaccount?nickname=${res.user.nick_name}`);
-          } else {
-            $router.push('/login');
-          }
-        })
-        .catch(err => console.log(err));
+      api_isLogined({}).then((res: any) => {
+        console.log('click', res);
+        if (res.ok && res.user) {
+          $router.push(`/myaccount?nickname=${res.user.nick_name}`);
+        } else {
+          $router.push('/login');
+        }
+      });
     });
   }
 }
