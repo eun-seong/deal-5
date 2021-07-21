@@ -3,7 +3,6 @@ dotenv.config();
 import express, { Application, Request, Response, NextFunction } from 'express';
 import path from 'path';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
 import router from './routers';
 import { refresh } from './action/refresh';
 
@@ -17,7 +16,6 @@ const options = {
   optionsSuccessStatus: 200, // 응답 상태 200으로 설정
 };
 
-app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'src')));

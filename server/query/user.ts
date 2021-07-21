@@ -19,4 +19,9 @@ const queryRegister = ({
 }) => `
   INSERT IGNORE INTO user(user_id, password, nick_name, location_1) VALUES('${user_id}', SHA2('${pw}', 224) , '${nickname}', '${location}');`;
 
-export default { queryLogin, queryLogout, queryRegister, queryCheckUser };
+const queryGetLocation = (id: number) => `SELECT location_1, location_2 FROM user WHERE id=${id}`;
+// 지역 추가, 삭제, 내지역 설정
+const querySetLocation = ({ id, location_1, location_2 }: { id: number; location_1: string; location_2: string }) =>
+  `UPDATE user FROM SET location_1=${location_1}, location_2=${location_2} WHERE id=${id}`;
+
+export default { queryLogin, queryLogout, queryRegister, queryCheckUser, queryGetLocation, querySetLocation };

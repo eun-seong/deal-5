@@ -8,5 +8,6 @@ userRouter.post('/login', authJWT, USER.actionLogin);
 userRouter.post('/logout', authJWT, USER.actionLogout);
 userRouter.post('/register', USER.actionRegister);
 userRouter.post('/is-logined', authJWT, USER.actionIsLogined);
+userRouter.post('/get-location', authJWT, USER.actionGetLocation);
 
 export default userRouter;

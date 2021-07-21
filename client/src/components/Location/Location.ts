@@ -2,12 +2,17 @@ import Component from '@/src/interfaces/Component';
 import CommonHeader from '../Share/CommonHeader';
 import LocationList from './LocationList';
 import InputPopup from '../Share/InputPopup';
+import historyBack from '@/src/assets/utils/historyBack';
+import { api_setLocation, api_getLocation } from '@/src/apis/user';
 
 class Location extends Component {
   setup() {
-    this.$state = {
-      locations: ['역삼동', '홍제동'],
-    };
+    api_getLocation({}).then((res: any) => {
+      const { location_1, location_2 } = res.data;
+      this.setState({
+        locations: [location_1, location_2],
+      });
+    });
   }
 
   template() {
@@ -26,9 +31,9 @@ class Location extends Component {
     const $header = this.$target.querySelector('[data-component="header"]');
     const $LocationButtons = this.$target.querySelector('[data-component="location-buttons"]');
 
-    new CommonHeader($header as HTMLElement, { title: '내 동네 설정하기' });
+    new CommonHeader($header as HTMLElement, { title: '내 동네 설정하기', leftArrowEvent: historyBack });
     new LocationList($LocationButtons as HTMLElement, {
-      locations: this.$state.locations,
+      locations: this.$state.locations.filter((location: string) => !!location),
       removeLocation: this.removeLocation.bind(this),
       clickAddLocation: this.clickAddLocation.bind(this),
     });
