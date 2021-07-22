@@ -289,7 +289,7 @@ ul.items-wrap {
 }
 
 .new-item {
-  position: sticky;
+  position: fixed;
   max-width: $pc-max-width;
   bottom: 0;
   width: 100%;
