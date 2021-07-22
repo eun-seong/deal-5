@@ -22,7 +22,7 @@ export default class BookmarksList extends Component {
           li.setAttribute('data-href', `#/item-detail?id=${state.id}`);
           li.setAttribute('data-item_id', state.id);
 
-          new ItemComponent(li, { state });
+          new ItemComponent(li, { state, imgPath: `http://${location.hostname}:81/${state.img_list[0]}` });
           $ul.appendChild(li);
         });
       } else {

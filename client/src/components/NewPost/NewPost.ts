@@ -8,7 +8,10 @@ import ItemPrice from './ItemPrice';
 import PostConent from './PostContent';
 import SaleLocation from './SaleLocation';
 import ImageButton from './ImageButton';
-import { apiImageUpload } from '@/src/apis/newpost';
+import { apiGetPost, apiImageUpload, apiNewPost } from '@/src/apis/newpost';
+import { api_isLogined } from '@/src/apis/user';
+import { $router } from '../core/Router';
+import addPriceComma from '@/src/assets/utils/addPriceComma';
 
 interface IstatusOfPostingStandard {
   image: boolean;
@@ -19,7 +22,16 @@ interface IstatusOfPostingStandard {
 interface Image {
   id: number;
   path: string;
-  file: File;
+  file?: File;
+}
+
+interface IPostingData {
+  category: number;
+  title: string;
+  discription: string;
+  price: number;
+  img_list: string[];
+  deletedList: string[];
 }
 
 export default class NewPost extends Component {
@@ -28,13 +40,34 @@ export default class NewPost extends Component {
     title: false,
     content: false,
   };
-
   images: Array<Image> = [];
-  formData: FormData = new FormData();
+  deletedExistingImages: Array<string> = [];
 
   setup() {
     this.images = new Array();
-    this.formData = new FormData();
+    this.deletedExistingImages = new Array();
+    this.$state = {
+      images: [],
+      item_id: parseInt(this.$props.parsingData.id),
+    };
+
+    if (this.$state.item_id) {
+      apiGetPost({ id: this.$state.item_id })
+        .then(
+          function (this: any, res: any) {
+            console.log(res.data);
+            this.setState({
+              ...this.$state,
+              postContents: res.data,
+              images: res.data.img_list.map((img: string, idx: number) => {
+                return { id: idx, path: img };
+              }),
+            });
+            this.images = this.$state.images;
+          }.bind(this)
+        )
+        .catch(err => console.log(err));
+    }
   }
 
   template() {
@@ -54,6 +87,7 @@ export default class NewPost extends Component {
   }
 
   mounted() {
+    const { item_id, postContents } = this.$state;
     const $header = this.$target.querySelector('[data-component="header"]');
     const $imagesHolder = this.$target.querySelector('[data-component="images-holder"]');
     const $postTitle = this.$target.querySelector('[data-component="post-title"]');
@@ -71,7 +105,7 @@ export default class NewPost extends Component {
       },
     });
     new ImagesHolder($imagesHolder as HTMLElement, {
-      images: this.images,
+      images: this.$state.images,
       selectImage: this.selectImage.bind(this),
       removeImage: this.removeImage.bind(this),
     });
@@ -79,25 +113,65 @@ export default class NewPost extends Component {
     new ItemPrice($itemPrice as HTMLElement);
     new PostConent($postContent as HTMLElement);
     new SaleLocation($saleLocation as HTMLElement);
+
+    if (!!item_id) {
+      const $title = this.$target.querySelector('.post-title') as HTMLTextAreaElement;
+      const $category = this.$target.querySelector('.category') as HTMLElement;
+      $category.removeAttribute('hidden');
+      const $selectedCategory = this.$target.querySelector(
+        `#category-list>li[category-id="${postContents.category}"]`
+      ) as HTMLElement;
+      const $price = this.$target.querySelector('.post-price') as HTMLInputElement;
+      const $content = this.$target.querySelector('.post-content') as HTMLTextAreaElement;
+
+      $title.value = postContents.title;
+      $price.value = addPriceComma(String(postContents.price));
+      $content.value = postContents.discription;
+      $selectedCategory.setAttribute('active', '');
+
+      this.statusOfPostingStandard = {
+        image: true,
+        title: true,
+        content: true,
+      };
+    }
   }
 
   setEvent() {
-    this.addEvent('ableContent', '#new-post', (e: any) => {
-      this.statusOfPostingStandard.content = true;
-      if (this.isAbleToButtonActive()) this.ableToButton();
-    });
-    this.addEvent('disableContent', '#new-post', (e: any) => {
-      this.statusOfPostingStandard.content = false;
-      this.disableToButton();
-    });
-    this.addEvent('ableTitle', '#new-post', (e: any) => {
-      this.statusOfPostingStandard.title = true;
-      if (this.isAbleToButtonActive()) this.ableToButton();
-    });
-    this.addEvent('disableTitle', '#new-post', (e: any) => {
-      this.statusOfPostingStandard.title = false;
-      this.disableToButton();
-    });
+    const $newpost = this.$target.querySelector('#new-post');
+
+    $newpost?.addEventListener(
+      'ableContent',
+      function (this: any, e: any) {
+        console.log('ableContent');
+        this.statusOfPostingStandard.content = true;
+        if (this.isAbleToButtonActive.bind(this)) this.ableToButton();
+      }.bind(this)
+    );
+    $newpost?.addEventListener(
+      'disableContent',
+      function (this: any, e: any) {
+        console.log('disableContent');
+        this.statusOfPostingStandard.content = false;
+        this.disableToButton();
+      }.bind(this)
+    );
+    $newpost?.addEventListener(
+      'ableTitle',
+      function (this: any, e: any) {
+        console.log('ableTitle');
+        this.statusOfPostingStandard.title = true;
+        if (this.isAbleToButtonActive.bind(this)) this.ableToButton();
+      }.bind(this)
+    );
+    $newpost?.addEventListener(
+      'disableTitle',
+      function (this: any, e: any) {
+        console.log('disableTitle');
+        this.statusOfPostingStandard.title = false;
+        this.disableToButton();
+      }.bind(this)
+    );
   }
 
   isAbleToButtonActive() {
@@ -117,38 +191,73 @@ export default class NewPost extends Component {
   }
 
   handlePostingButton() {
-    if (!this.isAbleToButtonActive()) return;
+    const isAbleToButtonActive = this.isAbleToButtonActive;
+    if (!isAbleToButtonActive) return;
+
+    const $title = this.$target.querySelector('.post-title') as HTMLTextAreaElement;
+    const $category = this.$target.querySelector('#category-list>li[active]') as HTMLElement;
+    const $price = this.$target.querySelector('.post-price') as HTMLInputElement;
+    const $content = this.$target.querySelector('.post-content') as HTMLTextAreaElement;
 
     // 선택된 이미지를 formData에 넣습니다.
     // 삭제 기능도 있어서 선택될 때마다 넣지 않고 리스트로 관리한 후 완료될 때 수행합니다.
-    this.images.forEach(img => {
-      this.formData.append('img', img.file);
-    });
+    const formData = new FormData();
+    this.images
+      .filter(img => !!img.file)
+      .forEach(img => {
+        formData.append('img', img.file as File);
+      });
 
     // 이미지 업로드 API 호출
-    apiImageUpload(this.formData).then((res: any) => {
-      console.log(res);
-    });
+    apiImageUpload(formData)
+      .then((res: any) => {
+        if (res.ok) {
+          const imgUrls = this.images.map(img => img.path);
+          const postingData: IPostingData = {
+            category: parseInt($category.getAttribute('category-id') as string),
+            title: $title.value,
+            discription: $content.value,
+            price: parseInt($price.value.replace(',', '')),
+            img_list: imgUrls,
+            deletedList: this.deletedExistingImages,
+          };
+          console.log(postingData);
+          return apiNewPost(postingData);
+          // return api_isLogined({}).then((res: any) => {
+          //   console.log('api islogined');
+          // });
+        } else {
+          Error(res.message);
+        }
+      })
+      .then((res: any) => {
+        console.log(res);
+        // $router.push('/'); // TODO 작성한 글로 이동
+      })
+      .catch(err => console.log(err));
   }
 
   // image Holder
-  readFile = (file: File) => {
+  readFile(file: File) {
     const $images = this.$target.querySelector('[data-component="images"]');
     const reader = new FileReader();
-    reader.addEventListener('load', (e: any) => {
-      // 사진 추가
-      const lastID = this.images.length === 0 ? 0 : this.images[this.images.length - 1].id + 1;
-      this.images = [...this.images, { id: lastID, path: e.target.result, file: file }];
-      const $li = document.createElement('li');
-      $li.setAttribute('img-id', String(lastID));
-      new ImageButton($li, { img_src: e.target.result, removeImage: this.removeImage.bind(this) });
-      $images?.appendChild($li);
+    reader.addEventListener(
+      'load',
+      function (this: any, e: any) {
+        // 사진 추가
+        const lastID = this.images.length === 0 ? 0 : this.images[this.images.length - 1].id + 1;
+        this.images = [...this.images, { id: lastID, path: e.target.result, file: file }];
+        const $li = document.createElement('li');
+        $li.setAttribute('img-id', String(lastID));
+        new ImageButton($li, { img_src: e.target.result, removeImage: this.removeImage.bind(this) });
+        $images?.appendChild($li);
 
-      // 사진 개수 update
-      this.updateNumOfImages();
-    });
+        // 사진 개수 update
+        this.updateNumOfImages();
+      }.bind(this)
+    );
     reader.readAsDataURL(file);
-  };
+  }
 
   selectImage(e: any) {
     if (this.images.length > 10) {
@@ -156,24 +265,27 @@ export default class NewPost extends Component {
       return;
     }
 
-    console.log(e.target.files);
     const selectedFiles = e.target.files;
-
-    if (selectedFiles) [].forEach.call(selectedFiles, this.readFile);
+    if (selectedFiles) [].forEach.call(selectedFiles, this.readFile.bind(this));
   }
 
   removeImage(e: any) {
     // 사진 삭제
     const imgId = parseInt(e.target.closest('li').getAttribute('img-id'));
+    const deletedImage: Image = this.images.filter(img => img.id === imgId)[0];
+
+    if (!deletedImage.file) {
+      this.deletedExistingImages.push(deletedImage.path);
+    }
     this.images = this.images.filter(img => img.id !== imgId);
     e.target.closest('li').remove();
+    console.log(this.images, this.deletedExistingImages);
 
     // 사진 개수 update
     this.updateNumOfImages();
   }
 
   updateNumOfImages() {
-    console.log(this.images);
     const $numOfImages = this.$target.querySelector('ul>li:first-child #images-num') as HTMLElement;
     $numOfImages.innerText = String(this.images.length);
 

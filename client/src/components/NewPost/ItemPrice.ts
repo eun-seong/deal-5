@@ -5,7 +5,7 @@ export default class ItemPrice extends Component {
   template() {
     return `
       <span>₩ </span>
-      <input type="text" placeholder="가격(선택사항)"></input>
+      <input type="text" placeholder="가격(선택사항)" class="post-price"></input>
     `;
   }
 
