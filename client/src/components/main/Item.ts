@@ -12,7 +12,7 @@ export default class ItemComponent extends Component {
 
     return `
     <div class='item-img-wrap'>
-      <img src='${imgPath || testimg}'/>
+      <img src='${!!imgPath ? `http://${location.hostname}:81/${imgPath}` : testimg}'/>
     </div>
     <div class='item-info'>
       <div class='type-link medium item-name'>${this.$state.title}</div>

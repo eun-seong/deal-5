@@ -56,6 +56,7 @@ export default class ItemDetail extends Component {
             bookmarks: data.bookmarks,
             views: data.view_cnt,
           },
+          imgList: data.img_list,
         };
 
         new ItemDetailSlider($slider, { state: this.$state });

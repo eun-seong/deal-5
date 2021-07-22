@@ -2,9 +2,8 @@
 // const dev_baseURL = 'http://localhost:81/api/user';
 const baseURL = `http://${location.hostname}:81`;
 
-export const postFetchTemplate = (url: string, args: { [key: string]: any }) => {
-  console.log(baseURL + url, args);
-  return fetch(baseURL + url, {
+export const postFetchTemplate = (url: string, args: { [key: string]: any }) =>
+  fetch(baseURL + url, {
     method: 'post',
     credentials: 'include',
     headers: {
@@ -12,7 +11,6 @@ export const postFetchTemplate = (url: string, args: { [key: string]: any }) => 
     },
     body: JSON.stringify(args),
   }).then(res => res.json());
-};
 
 // file 업로드 fetch template
 export const postFileFetchTemplate = (url: string, files: any) =>
