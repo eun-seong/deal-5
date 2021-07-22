@@ -2,12 +2,13 @@ import { svgIcons } from '@/src/assets/svgIcons';
 import testimg from '@/src/assets/imgs/item.jpeg';
 import Component from '@/src/interfaces/Component';
 import DropDown from '../Share/DropDown';
+import historyBack from '@/src/assets/utils/historyBack';
+import { DeleteItem } from '@/src/apis/main';
+import Snackbar from '../Share/Snackbar';
 
 export default class ItemDetailSlider extends Component {
   setup() {
-    this.$state = {
-      isSeller: true,
-    };
+    this.$state = this.$props.state;
   }
   template() {
     return `
@@ -15,13 +16,12 @@ export default class ItemDetailSlider extends Component {
         <div class="left-arrow">${svgIcons.chevronLeft}</div>
         ${
           this.$state.isSeller
-            ? `
-        <div class="setting-wrap">
-          <div class="setting">${svgIcons.moreVertical}</div>
-        </div>
-      </div>`
+            ? `<div class="setting-wrap">
+              <div class="setting">${svgIcons.moreVertical}</div>
+            </div>`
             : ''
         }
+        </div>
       <div id="slider" class="slider-wrap">
         <div class="slider-wrapper">
           <div id="slides" class="slides">
@@ -49,6 +49,8 @@ export default class ItemDetailSlider extends Component {
   settimeout 받아온 콜백함수로 slider 실행
   */
   setEvent() {
+    const { isSeller, item_id } = this.$state;
+    console.log(this.$state);
     const slider = document.getElementById('slider') as HTMLElement,
       sliderItems = document.getElementById('slides') as HTMLElement,
       pagenation = document.getElementById('slider-pagenation') as HTMLElement;
@@ -56,13 +58,14 @@ export default class ItemDetailSlider extends Component {
       this.slide(slider, sliderItems, pagenation);
     }, 50);
 
-    if (this.$state.isSeller) {
+    if (isSeller) {
       const dropdownTarget = document.querySelector('body') as HTMLElement;
       const dropdown = dropdownTarget.querySelector('.setting') as HTMLElement;
 
       dropdown.addEventListener('click', (e: any) => {
         const $dropDownDiv = document.createElement('div');
         $dropDownDiv.className = 'dropdown-container';
+        $dropDownDiv.setAttribute('data-target', item_id);
         dropdownTarget.appendChild($dropDownDiv);
 
         new DropDown($dropDownDiv, {
@@ -86,10 +89,21 @@ export default class ItemDetailSlider extends Component {
     }
   }
 
+  mounted() {
+    this.$target.querySelector('.icons-wrap .left-arrow')?.addEventListener('click', () => {
+      historyBack();
+    });
+  }
+
   dropdownClickEvent(e: any) {
     const type = e.target!.getAttribute('type');
-
-    console.log(type);
+    const dropdown = e.target!.closest('.dropdown-container');
+    if (type === 'delete') {
+      DeleteItem({ item_id: dropdown.getAttribute('data-target') }).then(res => {
+        new Snackbar(document.body, { text: res.message });
+        if (res.ok) historyBack();
+      });
+    }
   }
 
   slide(wrapper: HTMLElement, items: any, pagenation: HTMLElement) {

@@ -21,7 +21,7 @@ const queryGetItemList = ({
   location: string;
   limit: number;
 }) => `SELECT 
-i.id, i.price, u.location_1, u.nick_name, i.title, i.img_list,
+i.id, concat(FORMAT(i.price,0),'원') price, u.location_1, u.nick_name, i.title, i.img_list,
 ${getTimeDiff},
  i.sales_type, count(c.item_id) as comments, count(bm.item_id) bookmarks from item i 
 inner join user u on i.user_id = u.id
@@ -43,7 +43,7 @@ const queryDeleteBookmark = ({ uid, item_id }: { uid: number; item_id: number })
 `;
 
 const queryGetItemListByUser = ({ uid }: { uid: any }) => `
-SELECT i.id, i.price, u.location_1, i.title, i.img_list,
+SELECT i.id, concat(FORMAT(i.price,0),'원') price, u.location_1, i.title, i.img_list,
 ${getTimeDiff},
 i.sales_type, count(c.item_id) as comments, count(bm.item_id) bookmarks from item i 
 inner join user u on i.user_id = u.id
@@ -54,7 +54,7 @@ where u.id=${uid} and i.sales_type < 4 GROUP by i.id order by i.created desc`;
 const queryGetCategory = () => `SELECT id, kor from category;`;
 
 const queryGetBookMarkList = ({ uid }: { uid: number }) => `
-  SELECT i.id, i.price, u.location_1, i.title, i.img_list, ${getTimeDiff}, i.sales_type, count(c.item_id) comments, count(bm.item_id) bookmarks
+  SELECT i.id, concat(FORMAT(i.price,0),'원') price, u.location_1, i.title, i.img_list, ${getTimeDiff}, i.sales_type, count(c.item_id) comments, count(bm.item_id) bookmarks
   from item i inner join user u on i.user_id = u.id
     left join chat c on i.id = c.item_id
     left join bookmark bm on i.id = bm.item_id
@@ -68,6 +68,10 @@ const queryChangeUserLocation = ({ uid, location_1 }: { uid: number; location_1:
   UPDATE user set location_1 = location_2, location_2 = '${location_1}' where id = ${uid};
 `;
 
+const queryItemDelete = ({ uid, item_id }: { uid: number; item_id: number }) => `
+  UPDATE item set sales_type='4' where id = ${item_id} and user_id = ${uid};
+`;
+
 export default {
   queryGetItemList,
   queryBookmarkChecked,
@@ -77,5 +81,6 @@ export default {
   queryGetBookMarkList,
   queryGetCategory,
   queryGetUserLocation,
+  queryItemDelete,
   queryChangeUserLocation,
 };

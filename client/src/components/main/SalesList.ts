@@ -2,9 +2,11 @@ import Component from '@/src/interfaces/Component';
 import testimg from '@/src/assets/imgs/item.jpeg';
 import { svgIcons } from '@/src/assets/svgIcons';
 import DropDown from '../Share/DropDown';
-import { GetItemListByUser } from '@/src/apis/main';
+import { DeleteItem, GetItemListByUser } from '@/src/apis/main';
+import Snackbar from '../Share/Snackbar';
 
 interface SalesItem {
+  id: number;
   img: string;
   title: string;
   location_1: string;
@@ -30,7 +32,7 @@ export default class SalesList extends Component {
         ? data
             .map(
               (list: SalesItem) => `
-      <li class="sales-item content" data-href='#/item-detail'>
+      <li class="sales-item content" data-href='#/item-detail?id=${list.id}'>
         <div class="item-img-wrap">
           <img src="${testimg}" />
         </div>
@@ -40,7 +42,7 @@ export default class SalesList extends Component {
           <div class='type-link small item-price'>${list.price}</div>
         </div>
         <div class='item-icons'>
-          <div class='more-item-info'>${svgIcons.moreVertical}</div>
+          <div class='more-item-info' data-item-id='${list.id}'>${svgIcons.moreVertical}</div>
           <div class='item-status'>
           ${
             list.comments
@@ -65,9 +67,11 @@ export default class SalesList extends Component {
     const dropdown = this.$target.querySelector('[data-component="sales-wrap"]') as HTMLElement;
 
     dropdown.addEventListener('click', (e: any) => {
-      if (e.target.closest('.more-item-info')) {
+      const moreItemInfo = e.target.closest('.more-item-info');
+      if (moreItemInfo) {
         const $dropDownDiv = document.createElement('div');
         $dropDownDiv.className = 'dropdown-container';
+        $dropDownDiv.setAttribute('data-target', moreItemInfo.getAttribute('data-item-id'));
         this.$target.appendChild($dropDownDiv);
         new DropDown($dropDownDiv, {
           onClickItem: this.dropdownClickEvent,
@@ -96,7 +100,12 @@ export default class SalesList extends Component {
 
   dropdownClickEvent(e: any) {
     const type = e.target!.getAttribute('type');
-
-    console.log(type);
+    const dropdown = e.target!.closest('.dropdown-container');
+    if (type === 'delete') {
+      DeleteItem({ item_id: dropdown.getAttribute('data-target') }).then(res => {
+        if (res.ok) (document.querySelector('.menu-tabs-list [data-menu-tab="sales-tab"]') as HTMLElement)?.click();
+        new Snackbar(document.body, { text: res.message });
+      });
+    }
   }
 }

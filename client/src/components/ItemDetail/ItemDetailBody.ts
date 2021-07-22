@@ -1,6 +1,13 @@
+import { GetSalesType, UpdateSalesItemState } from '@/src/apis/itemdetail';
 import { svgIcons } from '@/src/assets/svgIcons';
 import Component from '@/src/interfaces/Component';
 import DropDown from '../Share/DropDown';
+import Snackbar from '../Share/Snackbar';
+
+interface SalesType {
+  id: number;
+  type: string;
+}
 
 export default class ItemDetail extends Component {
   setup() {
@@ -52,32 +59,43 @@ export default class ItemDetail extends Component {
         const currentState = this.$target.querySelector('.current-selected .selectbox') as HTMLElement;
         const type = currentState.innerText;
 
-        const itemsType = ['예약중', '판매중', '판매완료'];
-        const specialItems = itemsType
-          .filter(a => type !== a)
-          .map(type => {
-            return {
-              name: type.length == 3 ? type + '으로 변경' : type + '로 변경',
-              type,
-            };
-          });
+        GetSalesType().then(
+          function (this: any, res: any) {
+            console.log(res);
+            const itemsType = res.data as Array<SalesType>;
+            const specialItems = itemsType
+              .filter(a => type !== a.type)
+              .map((data, i) => {
+                return {
+                  name: data.type.length == 3 ? data.type + '으로 변경' : data.type + '로 변경',
+                  type: data.type,
+                  key: data.id,
+                };
+              });
 
-        new DropDown($dropDownDiv, {
-          onClickItem: this.dropdownClickEvent.bind(this),
-          specialItems,
-          pos: {
-            left: e.clientX,
-            top: e.clientY,
-          },
-        });
+            new DropDown($dropDownDiv, {
+              onClickItem: this.dropdownClickEvent.bind(this),
+              specialItems,
+              pos: {
+                left: e.clientX,
+                top: e.clientY,
+              },
+            });
+          }.bind(this)
+        );
       });
     }
   }
 
   dropdownClickEvent(e: any) {
+    const { item_id } = this.$state;
     const currentState = this.$target.querySelector('.current-selected .selectbox') as HTMLElement;
     const type = e.target!.getAttribute('type');
+    const key = e.target!.getAttribute('data-key');
 
-    currentState.innerText = type;
+    UpdateSalesItemState({ key, item_id }).then(res => {
+      if (res.ok) currentState.innerText = type;
+      new Snackbar(document.body, { text: res.message });
+    });
   }
 }

@@ -3,13 +3,8 @@ import ItemDetailFooter from './ItemDetailFooter';
 import ItemDetailBody from './ItemDetailBody';
 import ItemDetailSlider from './Slider';
 import { GetItem, UpdateViewCnt } from '@/src/apis/itemdetail';
-
-interface ItemDetailState {
-  isSeller: boolean;
-  chatsCnt: boolean;
-  price: string;
-  bookmarked: boolean;
-}
+import Snackbar from '../Share/Snackbar';
+import historyBack from '@/src/assets/utils/historyBack';
 
 export default class ItemDetail extends Component {
   //상태 변경시 변경된 ui 적용
@@ -37,11 +32,15 @@ export default class ItemDetail extends Component {
 
     GetItem({ item_id }).then(
       function (this: any, res: any) {
-        if (!res.ok) return;
+        if (!res.ok) {
+          new Snackbar(document.body, { text: res.message });
+          historyBack();
+        }
 
         const data = res.data;
 
         this.$state = {
+          ...this.$state,
           sellType: data.sales_type,
           sellerName: data.nick_name,
           itemName: data.title,
@@ -59,7 +58,7 @@ export default class ItemDetail extends Component {
           },
         };
 
-        new ItemDetailSlider($slider);
+        new ItemDetailSlider($slider, { state: this.$state });
         new ItemDetailBody($body, { state: this.$state });
         new ItemDetailFooter($footer, { state: this.$state });
       }.bind(this)

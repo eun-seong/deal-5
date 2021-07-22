@@ -14,6 +14,7 @@ export interface DropDownProps {
 interface specialItem {
   name: string;
   type: string;
+  key?: string;
 }
 
 export default class DropDown extends Component {
@@ -57,6 +58,7 @@ export default class DropDown extends Component {
       $div.innerText = item.name;
       $div.className = 'dropdown-item';
       $div.setAttribute('type', item.type);
+      item.key ? $div.setAttribute('data-key', item.key) : null;
       $dropdown?.appendChild($div);
     });
   }
