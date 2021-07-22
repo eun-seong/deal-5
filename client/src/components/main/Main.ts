@@ -13,7 +13,7 @@ export default class MainContainer extends Component {
         <section class='main-body' data-component='main-body'></section>
         <aside class='category-container side-container' data-component='category'></aside>
         <aside class='menu-container side-container' data-component='menu'></aside>
-        <div class='new-item'><a href="#" class='new-item-sale'>${svgIcons.add}</a></div>
+        <div class='new-item'><a href="#/newpost" class='new-item-sale'>${svgIcons.add}</a></div>
       `;
   }
   mounted() {

@@ -4,6 +4,7 @@ import { svgIcons } from '@/src/assets/svgIcons';
 import DropDown from '../Share/DropDown';
 import { DeleteItem, GetItemListByUser } from '@/src/apis/main';
 import Snackbar from '../Share/Snackbar';
+import { $router } from '../core/Router';
 
 interface SalesItem {
   id: number;
@@ -15,6 +16,8 @@ interface SalesItem {
   comments: Number;
   bookmarks: Number;
 }
+
+const baseURL = `http://${location.hostname}:81/`;
 
 export default class SalesList extends Component {
   setup() {}
@@ -34,7 +37,7 @@ export default class SalesList extends Component {
               (list: SalesItem) => `
       <li class="sales-item content" data-href='#/item-detail?id=${list.id}'>
         <div class="item-img-wrap">
-          <img src="${testimg}" />
+          <img src="${baseURL + data[0].img_list[0] || testimg}" />
         </div>
         <div class='item-info'>
           <div class='type-link medium item-name'>${list.title}</div>
@@ -106,6 +109,8 @@ export default class SalesList extends Component {
         if (res.ok) (document.querySelector('.menu-tabs-list [data-menu-tab="sales-tab"]') as HTMLElement)?.click();
         new Snackbar(document.body, { text: res.message });
       });
+    } else if (type === 'edit') {
+      $router.push(`/newpost?id=${dropdown.getAttribute('data-target')}`);
     }
   }
 }
