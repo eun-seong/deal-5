@@ -15,7 +15,7 @@ export default class InfoProduct extends Component {
     return `
     <div class="infoProduct">
       <a class="product" href="/#/saleproductdetail/${productId}">
-        <div class="img" style="background-image: url('${thumbnailUrl || '../main/item.jpeg'}')"></div>
+        <div class="img" style="background-image: url('http://${location.hostname}:81/${thumbnailUrl}')"></div>
         <div class="product-desc">
           <div id="title">${title}</div>
           <div id="price">${price}원</div>
