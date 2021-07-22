@@ -14,7 +14,7 @@ export const authJWT = (req: any, res: Response, next: NextFunction) => {
     } else {
       // 검증에 실패하거나 토큰이 만료되었다면 클라이언트에게 메세지를 담아서 응답합니다.
       req.user = null;
-      req.message = '토큰이 만료되었습니다';
+      req.message = '로그인이 필요한 기능입니다';
     }
   } else {
     // 쿠키가 없다면 로그인을 먼저 해야 합니다.
