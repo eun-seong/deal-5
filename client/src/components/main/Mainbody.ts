@@ -40,7 +40,7 @@ export default class MainBody extends Component {
             response.forEach((state: any) => {
               const li = document.createElement('li');
               li.className = 'body-item content';
-              li.setAttribute('data-href', '#/item-detail');
+              li.setAttribute('data-href', `#/item-detail?id=${state.id}`);
               li.setAttribute('data-item_id', state.id);
 
               new ItemComponent(li, { state });
