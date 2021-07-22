@@ -4,6 +4,7 @@ import Component from '@/src/interfaces/Component';
 export default class ChatsListItem extends Component {
   setup() {
     this.$state = { ...this.$props.state };
+    console.log(this.$state);
   }
 
   template() {
@@ -20,7 +21,7 @@ export default class ChatsListItem extends Component {
       </div>
     </div>
     <div class="chat-item-img">
-      <img src="${testimg}" style="width: 100%;" />
+      <img src="${`http://${location.hostname}:81/${this.$state.img_list[0]}` || ''}" style="width: 100%;" />
     </div>
     </a>`;
   }

@@ -12,7 +12,7 @@ export default class WebSocketServer {
     this.roomInfo = {};
     this.wws = new WebSocket.Server({
       server,
-      verifyClient: async (info: any, cb) => {
+      verifyClient: async (info: any, cb: any) => {
         const headers = await info.req.headers;
         const cookies = headers.cookie.split(';');
 
@@ -47,7 +47,7 @@ const saveMsg = async ({ user, room, data }: { user: number; room: number; data:
   try {
     await ChatAction.SaveMsg({ user, room, data });
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 };
 

@@ -11,7 +11,7 @@ export default class ChatsList extends Component {
     const $chatList = this.$target.querySelector('[data-component="chats-list"]') as HTMLElement;
 
     GetChatList().then((res: any) => {
-      if (!!!res.data.length) {
+      if (!!!res.data?.length) {
         return ($chatList.innerHTML = `<div class='empty-content'>${res.message}</div>`);
       }
       res.data.forEach((chatState: HTMLElement) => {

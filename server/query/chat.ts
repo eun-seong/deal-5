@@ -14,7 +14,7 @@ end as created`;
 
 // -- ;검색 유저가 판매자일 경우 구매자 닉네임
 const queryGetChatRoomBySeller = ({ uid }: { uid: number }) => `
-SELECT c.id cid, i.id item_id, u.id user_id, u.nick_name, c.SellerNoReadCnt noReadCnt from 
+SELECT c.id cid, i.id item_id, u.id user_id, u.nick_name, c.SellerNoReadCnt noReadCnt, i.img_list from 
 item i join chat c on i.id = c.item_id 
 left join user u on c.buyer = u.id
 where i.user_id = ${uid};
@@ -22,7 +22,7 @@ where i.user_id = ${uid};
 
 // -- ;검색 유저가 구매입장일 경우 판매자 닉네임
 const queryGetChatRoomByBuyer = ({ uid }: { uid: number }) => `
-SELECT c.id cid, i.id item_id, u.id user_id, u.nick_name, c.BuyerNoReadCnt noReadCnt from
+SELECT c.id cid, i.id item_id, u.id user_id, u.nick_name, c.BuyerNoReadCnt noReadCnt, i.img_list from
 item i join chat c on i.id = c.item_id
 left join user u on i.user_id = u.id
 where c.buyer=${uid};

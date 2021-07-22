@@ -47,8 +47,11 @@ export default class MainHeader extends Component {
     const $dropDownDiv = document.createElement('div');
     $dropDownDiv.className = 'dropdown-container';
     $dropdownTarget.appendChild($dropDownDiv);
+    const labels = [];
+    !!this.$props.location_1 ? labels.push(this.$props.location_1) : null;
+    !!this.$props.location_2 ? labels.push(this.$props.location_2) : null;
     new DropDown($dropDownDiv, {
-      labels: [this.$props.location_1, this.$props.location_2],
+      labels: labels,
       onClickItem: this.clickUserLocation.bind(this),
       specialItems: [{ name: '내 지역 설정하기', type: 'setting-location' }],
     });
