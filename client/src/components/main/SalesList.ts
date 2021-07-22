@@ -30,6 +30,7 @@ export default class SalesList extends Component {
     const salesList = document.querySelector('[data-component="sales-wrap"]') as HTMLElement;
     GetItemListByUser().then((res: any) => {
       const data = res.data;
+      const imgURL = data[0].img_list[0];
 
       salesList.innerHTML = !!data?.length
         ? data
@@ -37,7 +38,7 @@ export default class SalesList extends Component {
               (list: SalesItem) => `
       <li class="sales-item content" data-href='#/item-detail?id=${list.id}'>
         <div class="item-img-wrap">
-          <img src="${baseURL + data[0].img_list[0] || testimg}" />
+          <img src="${!!imgURL ? baseURL + imgURL : testimg}" />
         </div>
         <div class='item-info'>
           <div class='type-link medium item-name'>${list.title}</div>
