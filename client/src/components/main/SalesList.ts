@@ -4,6 +4,7 @@ import { svgIcons } from '@/src/assets/svgIcons';
 import DropDown from '../Share/DropDown';
 import { DeleteItem, GetItemListByUser } from '@/src/apis/main';
 import Snackbar from '../Share/Snackbar';
+import { $router } from '../core/Router';
 
 interface SalesItem {
   id: number;
@@ -106,6 +107,8 @@ export default class SalesList extends Component {
         if (res.ok) (document.querySelector('.menu-tabs-list [data-menu-tab="sales-tab"]') as HTMLElement)?.click();
         new Snackbar(document.body, { text: res.message });
       });
+    } else if (type === 'edit') {
+      $router.push(`/newpost?id=${dropdown.getAttribute('data-target')}`);
     }
   }
 }

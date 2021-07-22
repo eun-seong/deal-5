@@ -24,7 +24,7 @@ export default class ImagesHolder extends Component {
     images.forEach((img: { id: number; path: string }, i: number) => {
       const $li = document.createElement('li');
       $li.setAttribute('img-id', String(i));
-      new ImageButton($li, { img_src: img, removeImage: removeImage.bind(this) });
+      new ImageButton($li, { img_src: img.path, removeImage: removeImage.bind(this) });
       $images?.appendChild($li);
     });
   }

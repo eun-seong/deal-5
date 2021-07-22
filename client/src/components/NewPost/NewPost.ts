@@ -8,8 +8,9 @@ import ItemPrice from './ItemPrice';
 import PostConent from './PostContent';
 import SaleLocation from './SaleLocation';
 import ImageButton from './ImageButton';
-import { apiImageUpload, apiNewPost } from '@/src/apis/newpost';
+import { apiGetPost, apiImageUpload, apiNewPost } from '@/src/apis/newpost';
 import { $router } from '../core/Router';
+import addPriceComma from '@/src/assets/utils/addPriceComma';
 
 interface IstatusOfPostingStandard {
   image: boolean;
@@ -41,6 +42,19 @@ export default class NewPost extends Component {
 
   setup() {
     this.images = new Array();
+    this.$state = {
+      item_id: parseInt(this.$props.parsingData.id),
+    };
+
+    if (this.$state.item_id)
+      apiGetPost({ id: this.$state.item_id })
+        .then((res: any) => {
+          this.setState({
+            ...this.$state,
+            postContents: res.data,
+          });
+        })
+        .catch(err => console.log(err));
   }
 
   template() {
@@ -60,6 +74,7 @@ export default class NewPost extends Component {
   }
 
   mounted() {
+    const { item_id, postContents } = this.$state;
     const $header = this.$target.querySelector('[data-component="header"]');
     const $imagesHolder = this.$target.querySelector('[data-component="images-holder"]');
     const $postTitle = this.$target.querySelector('[data-component="post-title"]');
@@ -85,6 +100,22 @@ export default class NewPost extends Component {
     new ItemPrice($itemPrice as HTMLElement);
     new PostConent($postContent as HTMLElement);
     new SaleLocation($saleLocation as HTMLElement);
+
+    if (!!item_id) {
+      const $title = this.$target.querySelector('.post-title') as HTMLTextAreaElement;
+      const $category = this.$target.querySelector('.category') as HTMLElement;
+      $category.removeAttribute('hidden');
+      const $selectedCategory = this.$target.querySelector(
+        `#category-list>li[category-id="${postContents.category}"]`
+      ) as HTMLElement;
+      const $price = this.$target.querySelector('.post-price') as HTMLInputElement;
+      const $content = this.$target.querySelector('.post-content') as HTMLTextAreaElement;
+
+      $title.value = postContents.title;
+      $price.value = addPriceComma(String(postContents.price));
+      $content.value = postContents.discription;
+      $selectedCategory.setAttribute('active', '');
+    }
   }
 
   setEvent() {

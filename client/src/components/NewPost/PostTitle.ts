@@ -2,7 +2,7 @@ import Component from '@/src/interfaces/Component';
 import autoHeightTextarea from '@/src/assets/utils/autoHeightTextarea';
 
 export default class PostTitle extends Component {
-  clickedCategory: number = -1;
+  categoryId: number = -1;
 
   template() {
     return `
@@ -62,23 +62,23 @@ export default class PostTitle extends Component {
       const categoryId = e.target.getAttribute('category-id');
       if (!categoryId) return;
 
-      const isActive = e.target.getAttribute('active');
-      if (isActive === '') {
+      const $activeCategory = this.$target.querySelector(`li[active]`) as HTMLElement;
+      const $clickedCategory = e.target.closest('li');
+      if ($activeCategory.innerText === $clickedCategory.innerText) {
         // 이미 active된 카테고리 클릭
-        this.clickedCategory = -1;
+        this.categoryId = -1;
         e.target.removeAttribute('active');
       } else {
         // 활성화되지 않은 카테고리 클릭
-        if (this.clickedCategory !== -1) {
-          const $prevCategory = this.$target.querySelector(`li[category-id="${this.clickedCategory}"]`);
-          $prevCategory?.removeAttribute('active');
+        if ($activeCategory) {
+          $activeCategory.removeAttribute('active');
         }
-        this.clickedCategory = categoryId;
-        e.target.setAttribute('active', '');
+        this.categoryId = categoryId;
+        $clickedCategory.setAttribute('active', '');
       }
 
       // 제목 입력 기준 충족 event
-      if (this.clickedCategory === -1) {
+      if (this.categoryId === -1) {
         this.$target.dispatchEvent(new Event('disableTitle', { bubbles: true }));
       } else {
         this.$target.dispatchEvent(new Event('ableTitle', { bubbles: true }));

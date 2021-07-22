@@ -3,7 +3,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { authJWT } from './middlewares';
-import { execQuery } from '../db';
+import { execQuery, selectQuery } from '../db';
 import NEWPOST_QUERY from '../query/newpost';
 
 const router = Router();
@@ -41,7 +41,7 @@ router.post('/upload-img', authJWT, upload.array('img', 10), (req: any, res, nex
   }
 });
 
-router.post('/upload', authJWT, async (req: any, res, next) => {
+router.post('/upload', authJWT, async (req: any, res) => {
   try {
     console.log(req.user);
     if (req.user) {
@@ -71,6 +71,30 @@ router.post('/upload', authJWT, async (req: any, res, next) => {
     }
   } catch (err) {
     return res.send({ ok: false, message: '포스팅 실패' });
+  }
+});
+
+router.post('/get-post', authJWT, async (req: any, res) => {
+  try {
+    console.log(req.user);
+    if (req.user) {
+      console.log(req.body);
+      const { id } = req.body;
+      const result = await selectQuery(NEWPOST_QUERY.queryGetPostContents(id));
+      const data: {
+        user_id: number;
+        category: number;
+        title: string;
+        discription: string;
+        price: number;
+        img_list: string[];
+      } = result[0];
+      return res.send({ ok: true, data });
+    } else {
+      return res.send({ ok: false, message: '사용자 인증 실패' });
+    }
+  } catch (err) {
+    return res.send({ ok: false, message: '포스트 정보 가져오기 실패' });
   }
 });
 

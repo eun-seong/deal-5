@@ -5,6 +5,7 @@ import DropDown from '../Share/DropDown';
 import historyBack from '@/src/assets/utils/historyBack';
 import { DeleteItem } from '@/src/apis/main';
 import Snackbar from '../Share/Snackbar';
+import { $router } from '../core/Router';
 
 export default class ItemDetailSlider extends Component {
   setup() {
@@ -99,10 +100,12 @@ export default class ItemDetailSlider extends Component {
     const type = e.target!.getAttribute('type');
     const dropdown = e.target!.closest('.dropdown-container');
     if (type === 'delete') {
-      DeleteItem({ item_id: dropdown.getAttribute('data-target') }).then(res => {
+      DeleteItem({ item_id: dropdown.getAttribute('data-target') }).then((res: any) => {
         new Snackbar(document.body, { text: res.message });
         if (res.ok) historyBack();
       });
+    } else if (type === 'edit') {
+      $router.push(`/newpost?id=${dropdown.getAttribute('data-target')}`);
     }
   }
 
