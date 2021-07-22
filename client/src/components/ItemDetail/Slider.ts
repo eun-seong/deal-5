@@ -36,9 +36,13 @@ export default class ItemDetailSlider extends Component {
               .join('')}
           </div>
           <div id="slider-pagenation" class="pagenation">
-              <div class="page active" data-index=0></div>
-              <div class="page" data-index=1></div>
-              <div class="page" data-index=2></div>
+          ${imgList
+            .map(
+              (imgPath: string, i: number) => `
+              <div class="page ${!i ? 'active' : ''}" data-index=${i}></div>
+          `
+            )
+            .join('')}
           </div>
         </div>
       </div>
@@ -56,7 +60,6 @@ export default class ItemDetailSlider extends Component {
   */
   setEvent() {
     const { isSeller, item_id } = this.$state;
-    console.log(this.$state);
     const slider = document.getElementById('slider') as HTMLElement,
       sliderItems = document.getElementById('slides') as HTMLElement,
       pagenation = document.getElementById('slider-pagenation') as HTMLElement;
