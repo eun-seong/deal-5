@@ -81,8 +81,8 @@ export default class NewPost extends Component {
   template() {
     return `
     <header data-component="header"></header>
+    <div data-component="images-holder"></div>
     <div class="content" id="new-post">
-      <div data-component="images-holder"></div>
       <div class="line"></div>
       <div data-component="post-title"></div>
       <div class="line"></div>
@@ -201,7 +201,6 @@ export default class NewPost extends Component {
   handlePostingButton() {
     const isAbleToButtonActive = this.isAbleToButtonActive;
     if (!isAbleToButtonActive) return;
-
     const $title = this.$target.querySelector('.post-title') as HTMLTextAreaElement;
     const $category = this.$target.querySelector('#category-list>li[active]') as HTMLElement;
     const $price = this.$target.querySelector('.post-price') as HTMLInputElement;
@@ -230,7 +229,7 @@ export default class NewPost extends Component {
                 category: parseInt($category.getAttribute('category-id') as string),
                 title: $title.value,
                 discription: $content.value,
-                price: parseInt($price.value.replace(',', '')),
+                price: parseInt($price.value.replace(/,/g, '')),
                 img_list: res.filePath,
               };
 
