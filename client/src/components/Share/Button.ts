@@ -12,7 +12,7 @@ export default class Button extends Component {
     let { text, disabled, href }: ButtonProps = this.$props;
 
     return `
-    <a class="btn" ${!!disabled ? 'disabled' : ''} href='${href}'>${text}</a>
+    <a class="btn" ${!!disabled ? 'disabled' : ''} ${href ? `href='${href}'` : ''}>${text}</a>
     `;
   }
 }

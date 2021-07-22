@@ -3,7 +3,7 @@ import { verify } from '../utils/jwtAuth';
 
 export const authJWT = (req: any, res: Response, next: NextFunction) => {
   if (req.headers.cookie) {
-    const token = req.headers.cookie.split('accessToken=')[1]; // header에서 access token을 가져옵니다.
+    const token = req.headers.cookie.split('accessToken=')[1].split(';')[0]; // header에서 access token을 가져옵니다.
     if (!token) return next(); // 토큰이 없을 경우 다름 작업을 진행합니다.
 
     const result = verify(token); // token을 검증합니다.

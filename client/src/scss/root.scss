@@ -80,6 +80,16 @@ svg {
 a {
   text-decoration: none;
   color: inherit;
+
+  &[disabled] {
+    cursor: not-allowed;
+    background-color: $primary2;
+    border-color: $primary2;
+    &:hover {
+      background-color: $primary2;
+      border-color: $primary2;
+    }
+  }
 }
 
 textarea {
@@ -289,18 +299,22 @@ button {
       justify-content: space-between;
 
       .cancel {
+        cursor: pointer;
         color: black;
       }
 
       .okay {
+        cursor: pointer;
         color: $primary1;
 
         &[disabled] {
+          cursor: initial;
           color: $gray1;
         }
       }
 
       .leave {
+        cursor: pointer;
         color: $error;
       }
     }
