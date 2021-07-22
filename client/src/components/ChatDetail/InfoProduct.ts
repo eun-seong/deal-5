@@ -21,7 +21,7 @@ export default class InfoProduct extends Component {
           <div id="price">${price}원</div>
         </div>
       </a>
-      <div class="product-status">${status === 0 ? '판매중' : '판매완료'}</div>
+      <div class="product-status">${status === 1 ? '판매중' : status === 2 ? '판매완료' : '예약중'}</div>
     </div>
     `;
   }
