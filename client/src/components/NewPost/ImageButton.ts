@@ -26,7 +26,7 @@ export class ImageAddButton extends Component {
     return `
     <label for="img-select">
     <div class="image-button" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-      <input type="file" id="img-select" accept="image/*" style="display:none">
+      <input type="file" name="img" multiple id="img-select" accept="image/*" style="display:none">
       ${svgIcons.image}
       <div style="margin-top: 5px;"><span id="images-num">${imageNum}</span>/10</div>
     </div>
