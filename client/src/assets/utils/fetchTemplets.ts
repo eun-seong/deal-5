@@ -21,6 +21,16 @@ export const getFetchTemplate = (url: string) =>
     },
   }).then(res => res.json());
 
+export const deleteFetchTemplate = (url: string, args: { [key: string]: any }) =>
+  fetch(baseURL + url, {
+    method: 'delete',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(args),
+  }).then(res => res.json());
+
 /*
 export const postFetchTemplate = (url: string, args: { [key: string]: any }) =>
   new Promise((resolve, reject) => {
