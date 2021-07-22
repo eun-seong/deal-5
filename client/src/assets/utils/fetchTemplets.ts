@@ -12,6 +12,14 @@ export const postFetchTemplate = (url: string, args: { [key: string]: any }) =>
     body: JSON.stringify(args),
   }).then(res => res.json());
 
+// file 업로드 fetch template
+export const postFileFetchTemplate = (url: string, files: any) =>
+  fetch(baseURL + url, {
+    method: 'post',
+    credentials: 'include',
+    body: files,
+  }).then(res => res.json());
+
 export const getFetchTemplate = (url: string) =>
   fetch(baseURL + url, {
     method: 'get',
