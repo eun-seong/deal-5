@@ -8,8 +8,7 @@ import ItemPrice from './ItemPrice';
 import PostConent from './PostContent';
 import SaleLocation from './SaleLocation';
 import ImageButton from './ImageButton';
-import { apiGetPost, apiImageUpload, apiNewPost } from '@/src/apis/newpost';
-import { api_isLogined } from '@/src/apis/user';
+import { apiEditPost, apiGetPost, apiImageUpload, apiNewPost } from '@/src/apis/newpost';
 import { $router } from '../core/Router';
 import addPriceComma from '@/src/assets/utils/addPriceComma';
 
@@ -26,6 +25,15 @@ interface Image {
 }
 
 interface IPostingData {
+  category: number;
+  title: string;
+  discription: string;
+  price: number;
+  img_list: string[];
+}
+
+interface IEditData {
+  id: number;
   category: number;
   title: string;
   discription: string;
@@ -210,29 +218,45 @@ export default class NewPost extends Component {
 
     // 이미지 업로드 API 호출
     apiImageUpload(formData)
+      .then(
+        function (this: any, res: any) {
+          if (res.ok) {
+            console.log(res.filePath);
+            const item_id = this.$state.item_id;
+            if (!item_id) {
+              console.log('new');
+              // 새로운 글
+              const postingData: IPostingData = {
+                category: parseInt($category.getAttribute('category-id') as string),
+                title: $title.value,
+                discription: $content.value,
+                price: parseInt($price.value.replace(',', '')),
+                img_list: res.filePath,
+              };
+
+              return apiNewPost(postingData);
+            } else {
+              console.log('edit');
+              // 기존 글 수정하기
+              const remainImg = this.$state.images.map((img: { path: string; id: number }) => img.path);
+              const editData: IEditData = {
+                id: item_id,
+                category: parseInt($category.getAttribute('category-id') as string),
+                title: $title.value,
+                discription: $content.value,
+                price: parseInt($price.value.replace(',', '')),
+                img_list: [...res.filePath, ...remainImg],
+                deletedList: this.deletedExistingImages,
+              };
+              return apiEditPost(editData);
+            }
+          } else {
+            Error(res.message);
+          }
+        }.bind(this)
+      )
       .then((res: any) => {
-        if (res.ok) {
-          const imgUrls = this.images.map(img => img.path);
-          const postingData: IPostingData = {
-            category: parseInt($category.getAttribute('category-id') as string),
-            title: $title.value,
-            discription: $content.value,
-            price: parseInt($price.value.replace(',', '')),
-            img_list: imgUrls,
-            deletedList: this.deletedExistingImages,
-          };
-          console.log(postingData);
-          return apiNewPost(postingData);
-          // return api_isLogined({}).then((res: any) => {
-          //   console.log('api islogined');
-          // });
-        } else {
-          Error(res.message);
-        }
-      })
-      .then((res: any) => {
-        console.log(res);
-        // $router.push('/'); // TODO 작성한 글로 이동
+        $router.push(`/`); // TODO 작성한 글로 이동
       })
       .catch(err => console.log(err));
   }

@@ -8,7 +8,7 @@ import { $router } from '../core/Router';
 
 interface SalesItem {
   id: number;
-  img: string;
+  img_list: string[];
   title: string;
   location_1: string;
   price: string;
@@ -37,7 +37,7 @@ export default class SalesList extends Component {
               (list: SalesItem) => `
       <li class="sales-item content" data-href='#/item-detail?id=${list.id}'>
         <div class="item-img-wrap">
-          <img src="${baseURL + data[0].img_list[0] || testimg}" />
+          <img src="${baseURL + list.img_list[0] || testimg}" />
         </div>
         <div class='item-info'>
           <div class='type-link medium item-name'>${list.title}</div>
