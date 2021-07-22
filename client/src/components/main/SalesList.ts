@@ -17,6 +17,8 @@ interface SalesItem {
   bookmarks: Number;
 }
 
+const baseURL = `http://${location.hostname}:81/`;
+
 export default class SalesList extends Component {
   setup() {}
 
@@ -35,7 +37,7 @@ export default class SalesList extends Component {
               (list: SalesItem) => `
       <li class="sales-item content" data-href='#/item-detail?id=${list.id}'>
         <div class="item-img-wrap">
-          <img src="${testimg}" />
+          <img src="${baseURL + data[0].img_list[0] || testimg}" />
         </div>
         <div class='item-info'>
           <div class='type-link medium item-name'>${list.title}</div>

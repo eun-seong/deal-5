@@ -8,9 +8,11 @@ export default class ItemComponent extends Component {
   }
 
   template() {
+    const { imgPath } = this.$props;
+
     return `
     <div class='item-img-wrap'>
-      <img src='${testimg}'/>
+      <img src='${imgPath || testimg}'/>
     </div>
     <div class='item-info'>
       <div class='type-link medium item-name'>${this.$state.title}</div>
@@ -18,9 +20,7 @@ export default class ItemComponent extends Component {
       <div class='type-link small item-price'>${this.$state.price}</div>
     </div>
   <div class='item-icons'>
-    <div class='bookmark ${this.$state.bookmarked ? 'check' : ''}'>${
-      svgIcons.heart
-    }</div>
+    <div class='bookmark ${this.$state.bookmarked ? 'check' : ''}'>${svgIcons.heart}</div>
     <div class='item-status'>
       ${
         this.$state.comments
