@@ -35,7 +35,7 @@ const actionBookMark = async (req: any, res: Response) => {
     } else {
       await execQuery(MAIN_QUERY.queryInsertBookmark({ uid: id, item_id }));
     }
-    res.send({ ok: true, message: bookmarked ? '북마크가 삭제되었습니다.' : '북마크가 추가되었습니다' });
+    res.send({ ok: true, message: bookmarked ? '북마크가 삭제되었었어요 !' : '북마크가 추가되었어요 !' });
   } catch (error) {
     res.status(500).send({ ok: false, message: error.message });
   }
@@ -55,7 +55,8 @@ const actionGetItemListByUser = async (req: any, res: Response) => {
         rows[itemIDs.indexOf(a.item_id)].bookmarked = 1;
       });
     }
-    res.send({ ok: true, data: rows, message: '상품을 등록하여 판매를 시작해보세요!' });
+    const message = rows.length ? '조회가 완료되었습니다.' : '상품을 등록하여 판매를 시작해보세요!';
+    res.send({ ok: true, data: rows, message });
   } catch (error) {
     res.status(500).send({ ok: false, error: error, message: error.message });
   }
@@ -131,12 +132,26 @@ const actionChangeUserLocation = async (req: any, res: Response) => {
   }
 };
 
+const actionDeleteItem = async (req: any, res: Response<any, Record<string, any>>) => {
+  try {
+    const id = req.user?.id;
+    if (!!!id) return res.status(401).send({ ok: false, message: '권한이 없어요!' });
+    const { item_id } = req.body;
+    await execQuery(MAIN_QUERY.queryItemDelete({ uid: id, item_id }));
+
+    res.send({ ok: true, message: '아이템이 삭제되었어요!' });
+  } catch (error) {
+    res.status(500).send({ ok: false, message: error.message });
+  }
+};
+
 export default {
   actionGetItemList,
   actionBookMark,
   actionGetItemListByUser,
   actionGetBookMarkList,
   actionGetCategory,
+  actionDeleteItem,
   actionGetUserLocation,
   actionChangeUserLocation,
 };

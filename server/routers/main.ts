@@ -11,5 +11,6 @@ mainRouter.get('/item-list-user', authJWT, MAIN.actionGetItemListByUser);
 mainRouter.post('/bookmark-list', authJWT, MAIN.actionGetBookMarkList);
 mainRouter.post('/change-location', authJWT, MAIN.actionChangeUserLocation);
 mainRouter.get('/user-location', authJWT, MAIN.actionGetUserLocation);
+mainRouter.delete('/item', authJWT, MAIN.actionDeleteItem);
 
 export default mainRouter;
