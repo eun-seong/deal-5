@@ -38,7 +38,18 @@ where i.id = ${item_id} and i.sales_type < 4 group by i.id;`;
 const queryViewCnt = ({ item_id }: { item_id: number }) => `
   UPDATE item set view_cnt=view_cnt+1 where id = ${item_id};
 `;
+
+const queryGetSalesType = () => `
+  SELECT * from sales_type where id != 4;
+`;
+
+const queryUpdateItemSalesType = ({ uid, item_id, type_id }: { uid: number; item_id: number; type_id: number }) => `
+  UPDATE item set sales_type=${type_id} where user_id = ${uid} and id = ${item_id};
+`;
+
 export default {
   queryGetItem,
   queryViewCnt,
+  queryGetSalesType,
+  queryUpdateItemSalesType,
 };

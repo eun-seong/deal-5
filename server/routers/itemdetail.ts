@@ -6,5 +6,7 @@ const itemRouter = Router();
 
 itemRouter.post('/item', authJWT, ITEM_DETAIL.actionGetItemDetail);
 itemRouter.post('/view', ITEM_DETAIL.actionView);
+itemRouter.get('/sales-type', ITEM_DETAIL.actionSalesType);
+itemRouter.post('/item-sales-type', authJWT, ITEM_DETAIL.actionUpdateItemSalesType);
 
 export default itemRouter;
