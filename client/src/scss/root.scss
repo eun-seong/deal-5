@@ -433,6 +433,7 @@ button {
 
 .dropdown {
   display: block;
+  cursor: pointer;
   z-index: 101;
   flex-direction: column;
   position: absolute;

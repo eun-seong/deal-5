@@ -67,7 +67,6 @@ const queryGetUserLocation = ({ uid }: { uid: number }) => `
 const queryChangeUserLocation = ({ uid, location_1 }: { uid: number; location_1: string }) => `
   UPDATE user set location_1 = location_2, location_2 = '${location_1}' where id = ${uid};
 `;
-const queryUpdateUserLocation = ({}) => ``;
 
 export default {
   queryGetItemList,
@@ -78,6 +77,5 @@ export default {
   queryGetBookMarkList,
   queryGetCategory,
   queryGetUserLocation,
-  queryUpdateUserLocation,
   queryChangeUserLocation,
 };

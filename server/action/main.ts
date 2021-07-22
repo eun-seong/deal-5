@@ -97,8 +97,9 @@ const actionGetUserLocation = async (req: any, res: Response) => {
     const id = req.user?.id;
     if (!!!id) return res.status(401).send({ ok: false, message: '로그인이 필요해요!' });
 
-    const { location_1, location_2 } = await selectQuery(MAIN_QUERY.queryGetUserLocation({ uid: id }));
-    res.send({ ok: true, data: { location_1, location_2 } });
+    const data = await selectQuery(MAIN_QUERY.queryGetUserLocation({ uid: id }));
+
+    res.send({ ok: true, data: data[0] });
   } catch (error) {
     res.status(500).send({ ok: false, message: error.message });
   }
@@ -111,17 +112,20 @@ const actionChangeUserLocation = async (req: any, res: Response) => {
     if (!!!id) return res.status(401).send({ ok: false, message: '로그인이 필요해요!' });
 
     const { location } = req.body;
-    const { location_1, location_2 } = await selectQuery(MAIN_QUERY.queryGetUserLocation({ uid: id }));
+    const data = await selectQuery(MAIN_QUERY.queryGetUserLocation({ uid: id }));
+    const { location_1, location_2 } = data[0];
 
     if (location != location_2) {
-      res.send(400).send({ ok: false, message: '위치정보가 다릅니다!' });
+      return res.status(400).send({ ok: false, message: '위치정보가 다릅니다!' });
     }
 
-    const a = await execQuery(MAIN_QUERY.queryChangeUserLocation({ uid: id, location_1 }));
+    await execQuery(MAIN_QUERY.queryChangeUserLocation({ uid: id, location_1 }));
 
-    console.log(a);
-
-    res.send({ ok: false, message: '장소가 바뀌었습니다 !' });
+    res.send({
+      ok: true,
+      message: '장소가 바뀌었습니다 !',
+      location: { location_1: location_2, location_2: location_1 },
+    });
   } catch (error) {
     res.status(500).send({ ok: false, message: error.message });
   }

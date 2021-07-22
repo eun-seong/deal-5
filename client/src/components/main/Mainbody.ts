@@ -7,6 +7,7 @@ export default class MainBody extends Component {
   setup() {
     this.$state = {
       category: null,
+      location: null,
     };
   }
   template() {
@@ -34,21 +35,23 @@ export default class MainBody extends Component {
       if (entry.isIntersecting) {
         observer.unobserve(entry.target);
         console.log(_state);
-        GetItemList({ category: _state.category, limit: _state.limit }).then((response: any) => {
-          response.forEach((state: any) => {
-            const li = document.createElement('li');
-            li.className = 'body-item content';
-            li.setAttribute('data-href', '#/item-detail');
-            li.setAttribute('data-item_id', state.id);
+        GetItemList({ location: _state.location, category: _state.category, limit: _state.limit }).then(
+          (response: any) => {
+            response.forEach((state: any) => {
+              const li = document.createElement('li');
+              li.className = 'body-item content';
+              li.setAttribute('data-href', `#/item-detail?id=${state.id}`);
+              li.setAttribute('data-item_id', state.id);
 
-            new ItemComponent(li, { state });
-            $ul.appendChild(li);
-          });
-          if (response.length > 10) {
-            _state.limit += 15;
-            observer.observe($ul.lastElementChild as HTMLElement);
+              new ItemComponent(li, { state });
+              $ul.appendChild(li);
+            });
+            if (response.length > 10) {
+              _state.limit += 15;
+              observer.observe($ul.lastElementChild as HTMLElement);
+            }
           }
-        });
+        );
       }
     }, option);
 
@@ -57,14 +60,25 @@ export default class MainBody extends Component {
 
   mounted() {
     this.initIntersectionObserver.bind(this)();
+
+    const location = document.querySelector('input.header-location') as HTMLInputElement;
+    document.querySelector('[data-btn="user-set-location"] input')?.addEventListener(
+      'change',
+      function (this: any, e: any) {
+        this.setState({
+          location: location?.value,
+        });
+      }.bind(this)
+    );
   }
 
   categoryClick(this: any, e: any) {
     const categortItem = e.target.closest('.category-item');
+    const location = document.querySelector('[data-btn="user-set-location"] input') as HTMLInputElement;
     if (categortItem) {
       this.setState({
         category: categortItem.getAttribute('data-id'),
-        limit: 0,
+        location: location?.value,
       });
     }
   }
