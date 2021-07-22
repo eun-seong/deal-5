@@ -64,7 +64,7 @@ export default class PostTitle extends Component {
 
       const $activeCategory = this.$target.querySelector(`li[active]`) as HTMLElement;
       const $clickedCategory = e.target.closest('li');
-      if ($activeCategory.innerText === $clickedCategory.innerText) {
+      if (!!$activeCategory && $activeCategory.innerText === $clickedCategory.innerText) {
         // 이미 active된 카테고리 클릭
         this.categoryId = -1;
         e.target.removeAttribute('active');

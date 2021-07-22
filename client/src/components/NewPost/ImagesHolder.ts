@@ -21,10 +21,13 @@ export default class ImagesHolder extends Component {
     });
     $images?.appendChild($li);
 
-    images.forEach((img: { id: number; path: string }, i: number) => {
+    images.forEach((img: any, i: number) => {
       const $li = document.createElement('li');
       $li.setAttribute('img-id', String(i));
-      new ImageButton($li, { img_src: img.path, removeImage: removeImage.bind(this) });
+      new ImageButton($li, {
+        img_src: `http://${location.hostname}:81/${img.path}`,
+        removeImage: removeImage.bind(this),
+      });
       $images?.appendChild($li);
     });
   }
