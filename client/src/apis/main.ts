@@ -1,4 +1,4 @@
-import { getFetchTemplate, postFetchTemplate } from '../assets/utils/fetchTemplets';
+import { deleteFetchTemplate, getFetchTemplate, postFetchTemplate } from '../assets/utils/fetchTemplets';
 
 export const GetItemList = (args: { [key: string]: any }) => postFetchTemplate('/api/main/item-list', args);
 
@@ -13,3 +13,5 @@ export const GetBookMarkList = (args: { [key: string]: any }) => postFetchTempla
 export const ChangeLocation = (args: { [key: string]: any }) => postFetchTemplate('/api/main/change-location', args);
 
 export const GetUserLocation = () => getFetchTemplate('/api/main/user-location');
+
+export const DeleteItem = (args: { [key: string]: any }) => deleteFetchTemplate('/api/main/item', args);

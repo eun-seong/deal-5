@@ -19,7 +19,7 @@ export default class BookmarksList extends Component {
         data.forEach((state: any) => {
           const li = document.createElement('li');
           li.className = 'sales-item content';
-          li.setAttribute('data-href', '#/item-detail');
+          li.setAttribute('data-href', `#/item-detail?id=${state.id}`);
           li.setAttribute('data-item_id', state.id);
 
           new ItemComponent(li, { state });
