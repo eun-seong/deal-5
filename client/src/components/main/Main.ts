@@ -4,6 +4,9 @@ import CategoryContainer from './Category';
 import MenuContainer from './Menu';
 import MainBody from './MainBody';
 import { svgIcons } from '@/src/assets/svgIcons';
+import { api_isLogined } from '@/src/apis/user';
+import { $router } from '../core/Router';
+import Snackbar from '../Share/Snackbar';
 
 export default class MainContainer extends Component {
   setup() {}
@@ -13,7 +16,7 @@ export default class MainContainer extends Component {
         <section class='main-body' data-component='main-body'></section>
         <aside class='category-container side-container' data-component='category'></aside>
         <aside class='menu-container side-container' data-component='menu'></aside>
-        <div class='new-item'><a href="#/newpost" class='new-item-sale'>${svgIcons.add}</a></div>
+        <div class='new-item'><a href="" class='new-item-sale'>${svgIcons.add}</a></div>
       `;
   }
   mounted() {
@@ -31,6 +34,19 @@ export default class MainContainer extends Component {
     new MainBody($body);
     new CategoryContainer($categoryContainer, { title: '카테고리', toggleCategory });
     new MenuContainer($menuContainer, { title: '메뉴', toggleMenu });
+  }
+
+  setEvent() {
+    const $newItemSale = this.$target.querySelector('.new-item-sale');
+    $newItemSale?.addEventListener('click', (e: any) => {
+      e.preventDefault();
+      api_isLogined({}).then((res: any) => {
+        if (res.user) $router.push('/newpost');
+        else {
+          new Snackbar(document.body, { text: res.message });
+        }
+      });
+    });
   }
 
   toggleCategory(this: any) {
