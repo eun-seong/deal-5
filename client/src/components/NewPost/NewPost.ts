@@ -8,7 +8,8 @@ import ItemPrice from './ItemPrice';
 import PostConent from './PostContent';
 import SaleLocation from './SaleLocation';
 import ImageButton from './ImageButton';
-import { apiImageUpload } from '@/src/apis/newpost';
+import { apiImageUpload, apiNewPost } from '@/src/apis/newpost';
+import { $router } from '../core/Router';
 
 interface IstatusOfPostingStandard {
   image: boolean;
@@ -22,19 +23,24 @@ interface Image {
   file: File;
 }
 
+interface IPostingData {
+  category: number;
+  title: string;
+  discription: string;
+  price: number;
+  img_list: string[];
+}
+
 export default class NewPost extends Component {
   statusOfPostingStandard: IstatusOfPostingStandard = {
     image: false,
     title: false,
     content: false,
   };
-
   images: Array<Image> = [];
-  formData: FormData = new FormData();
 
   setup() {
     this.images = new Array();
-    this.formData = new FormData();
   }
 
   template() {
@@ -119,16 +125,40 @@ export default class NewPost extends Component {
   handlePostingButton() {
     if (!this.isAbleToButtonActive()) return;
 
+    const $title = this.$target.querySelector('.post-title') as HTMLTextAreaElement;
+    const $category = this.$target.querySelector('#category-list>li[active]') as HTMLElement;
+    const $price = this.$target.querySelector('.post-price') as HTMLInputElement;
+    const $content = this.$target.querySelector('.post-content') as HTMLTextAreaElement;
+
     // 선택된 이미지를 formData에 넣습니다.
     // 삭제 기능도 있어서 선택될 때마다 넣지 않고 리스트로 관리한 후 완료될 때 수행합니다.
+    const formData = new FormData();
     this.images.forEach(img => {
-      this.formData.append('img', img.file);
+      formData.append('img', img.file);
     });
 
     // 이미지 업로드 API 호출
-    apiImageUpload(this.formData).then((res: any) => {
-      console.log(res);
-    });
+    apiImageUpload(formData)
+      .then((res: any) => {
+        if (res.ok) {
+          const postingData: IPostingData = {
+            category: parseInt($category.getAttribute('category-id') as string),
+            title: $title.value,
+            discription: $content.value,
+            price: parseInt($price.value.replace(',', '')),
+            img_list: res.filePath,
+          };
+          console.log(postingData);
+          return apiNewPost(postingData);
+        } else {
+          Error(res.message);
+        }
+      })
+      .then((res: any) => {
+        console.log(res);
+        $router.push('/'); // TODO 작성한 글로 이동
+      })
+      .catch(err => console.log(err));
   }
 
   // image Holder
@@ -156,9 +186,7 @@ export default class NewPost extends Component {
       return;
     }
 
-    console.log(e.target.files);
     const selectedFiles = e.target.files;
-
     if (selectedFiles) [].forEach.call(selectedFiles, this.readFile);
   }
 
@@ -173,7 +201,6 @@ export default class NewPost extends Component {
   }
 
   updateNumOfImages() {
-    console.log(this.images);
     const $numOfImages = this.$target.querySelector('ul>li:first-child #images-num') as HTMLElement;
     $numOfImages.innerText = String(this.images.length);
 
