@@ -12,6 +12,7 @@ export default class ItemDetailSlider extends Component {
     this.$state = this.$props.state;
   }
   template() {
+    const { imgList } = this.$state;
     return `
       <div class="icons-wrap">
         <div class="left-arrow">${svgIcons.chevronLeft}</div>
@@ -26,9 +27,13 @@ export default class ItemDetailSlider extends Component {
       <div id="slider" class="slider-wrap">
         <div class="slider-wrapper">
           <div id="slides" class="slides">
-            <div class='slide'><img src="${testimg}"></div>
-            <div class='slide'><img src="${testimg}"></div>
-            <div class='slide'><img src="${testimg}"></div>
+            ${imgList
+              .map(
+                (imgPath: string) => `
+              <div class='slide'><img src="http://${location.hostname}:81/${imgPath}"></div>
+            `
+              )
+              .join('')}
           </div>
           <div id="slider-pagenation" class="pagenation">
               <div class="page active" data-index=0></div>
