@@ -91,7 +91,6 @@ const actionSetLocation = async (req: any, res: Response) => {
   try {
     if (req.user) {
       const { location_1, location_2 } = req.body.data;
-      console.log(location_1, location_2);
       const data = await execQuery(
         USER_QUERY.querySetLocation({
           id: req.user.id,

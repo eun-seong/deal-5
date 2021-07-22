@@ -37,7 +37,6 @@ const actionGetChatInfo = async (req: any, res: Response) => {
     const { chat_id } = req.body;
     const row = await selectQuery(CHAT_QUERY.queryGetRoomsUser({ cid: chat_id }));
 
-    console.log(row);
     const { buyer_id, seller_id, item_id, title, price, sales_type, buyer_nic, seller_nic, img_list } = row[0];
     if (id !== buyer_id && id !== seller_id) res.send({ ok: false, message: '권한이 없어요!' });
 
@@ -115,7 +114,6 @@ const InitNoReadCnt = async ({ type, chatId }: { type: string; chatId: number })
       _type = 'SellerNoReadCnt';
     }
     const d = await execQuery(CHAT_QUERY.queryInitNoReadCnt({ type: _type, cid: chatId }));
-    console.log(d, _type, chatId);
   } catch (error) {
     console.error(error);
   }
