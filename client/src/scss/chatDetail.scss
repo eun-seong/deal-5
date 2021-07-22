@@ -101,7 +101,7 @@
     padding: 0 1rem;
     overflow-y: auto;
     overflow-x: hidden;
-
+    min-height: calc(100vh - 198px);
     .chatBubbleBox {
         display: flex;
         width: 100%;
@@ -117,7 +117,7 @@
             max-width: 80%;
         }
 
-        &[data-type="B"] {
+        &[data-type="me"] {
             justify-content: flex-end;
 
             .chatBubble {
@@ -127,7 +127,7 @@
             }
         }
 
-        &[data-type="A"] {
+        &[data-type="yu"] {
             justify-content: flex-start;
 
             .chatBubble {

@@ -1,6 +1,7 @@
 import Component from '@/src/interfaces/Component';
 import autoHeightTextarea from '@/src/assets/utils/autoHeightTextarea';
 import { svgIcons } from '@/src/assets/svgIcons';
+import Snackbar from '../Share/Snackbar';
 
 export default class ChatBar extends Component {
   setup() {
@@ -19,8 +20,26 @@ export default class ChatBar extends Component {
   }
 
   mounted() {
+    const socket = this.$props.socket;
     const $sendBtn = this.$target.querySelector('.send-svg>svg') as HTMLElement;
+    const chatBarInput = this.$target.querySelector('#chatBar-input') as HTMLTextAreaElement;
+    const target = this.$target;
     $sendBtn.setAttribute('color', 'gray1');
+
+    chatBarInput.addEventListener('keyup', (e: any) => {
+      e.preventDefault();
+      if (e.which == 13) {
+        if (chatBarInput.value.trim() == '') {
+          new Snackbar(document.body, { text: '텍스트를 입력해주세요' });
+          chatBarInput.value = '';
+          autoHeightTextarea(target, '#chatBar-input');
+          return;
+        }
+        socket.send(chatBarInput.value);
+        chatBarInput.value = '';
+        autoHeightTextarea(target, '#chatBar-input');
+      }
+    });
   }
 
   setEvent() {

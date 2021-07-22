@@ -8,21 +8,20 @@ export default class ChatsListItem extends Component {
 
   template() {
     return `
-    <a href='#/chat/${this.$state.chatId || ':id'}'>
+    <a href='#/chat?room=${this.$state.cid}'>
     <div class="chat-info-wrap">
       <div class="chat-last-check">
-        <div class="type-link medium">${this.$state.user}</div>
-        <div>${this.$state.lastTextTime}</div>
+        <div class="type-link medium">${this.$state.nick_name}</div>
+        <div>${this.$state.created || ''}</div>
       </div>
       <div class="chat-last-talk">
-        <div class="typo medium last-text">${this.$state.lastText}</div>
-        ${this.$state.lastCheckout ? `<div class="chat-nosee-cnt"><div>${this.$state.textCnt}</div></div>` : ''}
+        <div class="typo medium last-text">${this.$state.message || ''}</div>
+        ${this.$state.noReadCnt ? `<div class="chat-nosee-cnt"><div>${this.$state.noReadCnt}</div></div>` : ''}
       </div>
     </div>
     <div class="chat-item-img">
       <img src="${testimg}" style="width: 100%;" />
     </div>
-    </a>`
-    ;
+    </a>`;
   }
 }
