@@ -4,11 +4,15 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import path from 'path';
 import cors from 'cors';
 import router from './routers';
+import * as http from 'http';
 import { refresh } from './action/refresh';
+import { initSocket } from './chat/chat';
 
 const port = process.env.PORT || 81;
 
 const app: Application = express();
+
+const httpServer = http.createServer(app);
 
 const options = {
   origin: ['http://localhost:8080', 'http://ec2-13-125-215-98.ap-northeast-2.compute.amazonaws.com'], // 접근 권한을 부여하는 도메인
@@ -26,10 +30,6 @@ app.use(cors(options));
 app.use('/api', router);
 app.use('/refresh', refresh);
 
-app.listen(port, () => {
-  console.log(`여기 -> http://localhost:${port}`);
-});
-
 app.use((req: Request, res: Response, next: NextFunction) => {
   const err = new Error('Not Found') as any;
   err.status = 404;
@@ -43,3 +43,9 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     error: err.message,
   });
 });
+
+httpServer.listen(port, () => {
+  console.log(`여기 -> http://localhost:${port}`);
+});
+
+initSocket(httpServer);

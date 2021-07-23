@@ -54,7 +54,6 @@ const actionUpload = async (req: any, res: Response) => {
 };
 
 const actionEdit = async (req: any, res: Response) => {
-  console.log(req.body);
   try {
     if (req.user) {
       const { id, category, title, discription, price, img_list, deletedList } = req.body;

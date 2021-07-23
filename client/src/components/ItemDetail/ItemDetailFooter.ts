@@ -1,6 +1,8 @@
+import { MakeChatRoom } from '@/src/apis/chat';
 import { svgIcons } from '@/src/assets/svgIcons';
 import Component from '@/src/interfaces/Component';
 import Button from '../Share/Button';
+import Snackbar from '../Share/Snackbar';
 
 export default class ItemDetailFooterComponent extends Component {
   setup() {
@@ -20,17 +22,26 @@ export default class ItemDetailFooterComponent extends Component {
 
   mounted() {
     const btn = this.$target.querySelector('[data-component="contact-btn"]') as HTMLElement;
-    const { counts } = this.$state;
+    const { counts, item_id, isSeller } = this.$state;
 
-    if (this.$state.isSeller) {
+    console.log(this.$state);
+    if (isSeller) {
       new Button(btn, {
         text: `채팅 목록 보기${counts.chats ? `(${counts.chats})` : ``}`,
         disabled: !counts.chats,
-        href: '#/chat',
       });
     } else {
-      new Button(btn, { text: `문의하기`, href: '#/chat' });
+      new Button(btn, { text: `문의하기` });
     }
+
+    btn.addEventListener('click', () => {
+      if (isSeller) return;
+      MakeChatRoom({ item_id }).then((res: any) => {
+        if (!res.ok) new Snackbar(document.body, { text: res.message });
+
+        location.href = `#/chat?room=${res.data}`;
+      });
+    });
 
     this.$target.querySelector('.bookmark')?.addEventListener('click', function (this: any, e: any) {
       this.classList.toggle('check');

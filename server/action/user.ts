@@ -24,7 +24,7 @@ const actionLogin = async (req: Request, res: Response) => {
     await execQuery(AUTH_QUERY.querySetUserToken({ id: data.id, token: refreshToken }));
 
     res.append('Set-Cookie', `refreshToken=${refreshToken}; Path=/refresh; HttpOnly;`);
-    res.append('Set-Cookie', `accessToken=${accessToken}; Path=/api; HttpOnly;`);
+    res.append('Set-Cookie', `accessToken=${accessToken}; Path=/; HttpOnly;`);
     res.send({
       ok: true,
       code: 1,
@@ -42,7 +42,7 @@ const actionLogout = async (req: any, res: Response) => {
     const { id } = req.user;
     const data = await execQuery(USER_QUERY.queryLogout(id));
     res.append('Set-Cookie', `refreshToken=''; Path=/refresh; HttpOnly;`);
-    res.append('Set-Cookie', `accessToken=''; Path=/api; HttpOnly;`);
+    res.append('Set-Cookie', `accessToken=''; Path=/; HttpOnly;`);
     res.send({ ok: true, message: '성공적으로 로그아웃 되었습니다.' });
   } catch (err) {
     res.status(401).send({ ok: false, message: '로그아웃에 실패하였습니다.' });
@@ -91,7 +91,6 @@ const actionSetLocation = async (req: any, res: Response) => {
   try {
     if (req.user) {
       const { location_1, location_2 } = req.body.data;
-      console.log(location_1, location_2);
       const data = await execQuery(
         USER_QUERY.querySetLocation({
           id: req.user.id,
