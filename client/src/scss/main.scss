@@ -215,6 +215,18 @@ ul.items-wrap {
           border: 1px solid $gray3;
           border-radius: $border-small-radius;
           background-color: $off-white;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.4);
+            transition-duration: 0.2s;
+
+            &:hover {
+              transform: scale(1.6);
+            }
+          }
         }
         .category-title {
           margin-top: 1rem;
