@@ -18,7 +18,7 @@ export default class CategoryBody extends Component {
           .map(
             (a: { id: string; kor: string }) => `
           <li class='category-item' data-id='${a.id}'>
-            <div class='category-icon'></div>
+            <div class='category-icon'><img src="http://ec2-13-125-215-98.ap-northeast-2.compute.amazonaws.com:81/uploads/icons/${a.id}.png"></div>
             <div class='category-title typo xsmall'>${a.kor}</div>
           </li>`
           )
