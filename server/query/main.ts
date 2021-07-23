@@ -27,8 +27,8 @@ ${getTimeDiff},
 inner join user u on i.user_id = u.id
 left join chat c on i.id = c.item_id
 left join bookmark bm on i.id = bm.item_id
-where u.location_1 like '${location || '쥄실'}' and ${
-  category ? `i.category=${category} and ` : ''
+where u.location_1 like '${location != null ? location : '쥄실'}' and ${
+  category != null ? `i.category=${category} and ` : ''
 } i.sales_type < 4 group by i.id order by i.created desc limit ${limit}, ${limit + 14};`;
 
 const queryBookmarkChecked = ({ uid, item_id }: { uid: any; item_id: number[] }) => `

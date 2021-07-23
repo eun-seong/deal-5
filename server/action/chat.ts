@@ -6,11 +6,39 @@ import CHAT_QUERY from '../query/chat';
 const actionGetChatList = async (req: any, res: Response) => {
   try {
     const id = req.user?.id;
-    if (!!!id) return res.status(401).send({ ok: false, message: '로그인이 팔요합니다 !' });
+    if (!!!id) return res.status(401).send({ ok: false, message: '로그인이 필요해요!' });
 
     const sellerList = await selectQuery(CHAT_QUERY.queryGetChatRoomBySeller({ uid: id }));
     const buyerList = await selectQuery(CHAT_QUERY.queryGetChatRoomByBuyer({ uid: id }));
     const chatRooms = [...sellerList, ...buyerList];
+
+    // c.id cid, i.id item_id, u.id user_id, u.nick_name, c.SellerNoReadCnt
+    // c.id, c.item_id, m.message, ${getTimeDiff}
+    const rows = [];
+    for (let data of chatRooms) {
+      const message = await selectQuery(CHAT_QUERY.queryGetChatLastMessage({ cid: data.cid }));
+      rows.push({
+        ...data,
+        ...message[0],
+      });
+    }
+
+    res.send({ ok: true, data: rows, message: rows.length ? '' : '채팅방이 없습니다' });
+  } catch (error) {
+    res.status(500).send({ ok: false, message: error.message });
+  }
+};
+
+//채팅 목록 가져오기
+const actionGetChatListByItem = async (req: any, res: Response) => {
+  try {
+    const id = req.user?.id;
+    if (!!!id) return res.status(401).send({ ok: false, message: '로그인이 필요해요!' });
+
+    const { itemId } = req.body;
+    const sellerList = await selectQuery(CHAT_QUERY.queryGetChatRoomByItem({ itemId }));
+
+    const chatRooms = [...sellerList];
 
     // c.id cid, i.id item_id, u.id user_id, u.nick_name, c.SellerNoReadCnt
     // c.id, c.item_id, m.message, ${getTimeDiff}
@@ -130,7 +158,7 @@ const SaveMsg = async ({ user, room, data }: { user: number; room: number; data:
 const DeleteChat = async (req: any, res: Response) => {
   try {
     const id = req.user?.id;
-    if (!!!id) return res.status(401).send({ ok: false, message: '로그인이 팔요합니다 !' });
+    if (!!!id) return res.status(401).send({ ok: false, message: '로그인이 필요해요!' });
     const { cid } = req.body;
     await execQuery(CHAT_QUERY.exitChatRoom({ cid: cid }));
 
@@ -143,6 +171,7 @@ const DeleteChat = async (req: any, res: Response) => {
 export default {
   actionGetChatList,
   actionGetChatInfo,
+  actionGetChatListByItem,
   AddBuyerNoReadCnt,
   AddSellerNoReadCnt,
   makeNewChatRoom,

@@ -5,3 +5,4 @@ export const GetMessage = (args: { [key: string]: any }) => postFetchTemplate('/
 export const MakeChatRoom = (args: { [key: string]: any }) => postFetchTemplate('/api/chat/new-room', args);
 export const GetChatList = () => getFetchTemplate('/api/chat/chat-list');
 export const DeleteChat = (args: { [key: string]: any }) => postFetchTemplate('/api/chat/chat-remove', args);
+export const GetItemChatList = (args: { [key: string]: any }) => postFetchTemplate('/api/chat/item-chat', args);
