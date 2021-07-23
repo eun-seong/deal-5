@@ -8,7 +8,7 @@
   top: 0;
   z-index: 1;
   box-shadow: $shadow-default;
-  
+
   ul {
     height: $header-max-height;
     display: grid;
@@ -32,12 +32,20 @@
       justify-self: center;
       align-self: center;
 
-      &[data-btn="user-set-location"]{
+      &[data-btn='user-set-location'] {
         position: relative;
-      }
-
-      .type-link.medium {
-        padding-top: 2px;
+        input.header-location {
+          border: none;
+          height: auto;
+          background: transparent;
+          cursor: pointer;
+          color: white;
+          margin: 0;
+          max-width: 100px;
+          width: auto;
+          white-space: nowrap;
+          padding: 2px 0 0 0.6rem;
+        }
       }
 
       &:first-child {
@@ -62,7 +70,10 @@ ul.items-wrap {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid $gray3;
-
+    a {
+      display: flex;
+      width: 100%;
+    }
     &.body-item {
       padding: 1rem;
       .item-img-wrap {
@@ -76,11 +87,14 @@ ul.items-wrap {
         max-width: 180px;
         max-height: 180px;
 
+        border: 1px solid $gray3;
+
         img {
           width: 100%;
           height: 100%;
           min-width: 105px;
           min-height: 105px;
+          object-fit: cover;
         }
       }
       .item-info {
@@ -89,6 +103,7 @@ ul.items-wrap {
     }
 
     &.sales-item {
+      cursor: pointer;
       padding: 1rem;
       .item-img-wrap {
         border-radius: 10px;
@@ -99,12 +114,14 @@ ul.items-wrap {
         height: 100vw;
         max-width: calc(400px / 3);
         max-height: calc(400px / 3);
+        border: 1px solid $gray3;
 
         img {
           width: 100%;
           height: 100%;
           min-width: 105px;
           min-height: 105px;
+          object-fit: cover;
         }
       }
 
@@ -133,23 +150,6 @@ ul.items-wrap {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-
-      .bookmark {
-        cursor: pointer;
-        svg {
-          stroke-width: 2px;
-          width: 30px;
-          height: 30px;
-          transition: all 0.3s;
-          stroke: $gray1;
-        }
-        &.check {
-          svg {
-            fill: $primary1;
-            stroke: $primary1;
-          }
-        }
-      }
       .item-status {
         position: absolute;
         display: flex;
@@ -178,7 +178,7 @@ ul.items-wrap {
   width: 100%;
   max-width: $max-common-container-width;
   transition: right 0.8s ease-in-out;
-  z-index: 2;
+  z-index: 101;
 
   &.show {
     right: 0;
@@ -215,6 +215,18 @@ ul.items-wrap {
           border: 1px solid $gray3;
           border-radius: $border-small-radius;
           background-color: $off-white;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.4);
+            transition-duration: 0.2s;
+
+            &:hover {
+              transform: scale(1.6);
+            }
+          }
         }
         .category-title {
           margin-top: 1rem;
@@ -231,8 +243,8 @@ ul.items-wrap {
   width: 100%;
   max-width: $max-common-container-width;
   transition: right 0.8s ease-in-out;
-  z-index: 3;
-  
+  z-index: 101;
+
   &.show {
     right: 0;
   }
@@ -294,7 +306,7 @@ ul.items-wrap {
 }
 
 .new-item {
-  position: sticky;
+  position: fixed;
   max-width: $pc-max-width;
   bottom: 0;
   width: 100%;

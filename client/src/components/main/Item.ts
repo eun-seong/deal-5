@@ -8,13 +8,15 @@ export default class ItemComponent extends Component {
   }
 
   template() {
+    const { imgPath } = this.$props;
+
     return `
     <div class='item-img-wrap'>
-      <img src='${testimg}'/>
+      <img src='${!!imgPath ? `http://${location.hostname}:81/${imgPath}` : testimg}'/>
     </div>
     <div class='item-info'>
-      <div class='type-link medium item-name'>${this.$state.name}</div>
-      <div class='typo small item-location'>${this.$state.location} • ${this.$state.createtime}</div>
+      <div class='type-link medium item-name'>${this.$state.title}</div>
+      <div class='typo small item-location'>${this.$state.location_1} • ${this.$state.created}</div>
       <div class='type-link small item-price'>${this.$state.price}</div>
     </div>
   <div class='item-icons'>

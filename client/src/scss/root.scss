@@ -20,6 +20,11 @@ $shadow-default: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0,
 $max-common-container-width: 500px;
 $pc-max-width: 1050px;
 
+#root {
+  max-width: $pc-max-width;
+  margin: 0 auto;
+}
+
 @mixin keyframes($animationName) {
   @-webkit-keyframes #{$animationName} {
     @content;
@@ -54,14 +59,64 @@ svg {
   height: 24px;
   stroke-width: 1px;
   fill: none;
+
+  &[color='error'] {
+    stroke: $error;
+  }
+
+  &[color='gray1'] {
+    stroke: $gray1;
+  }
+
+  &[color='primary1'] {
+    stroke: $primary1;
+  }
+}
+
+[type='delete'] {
+  color: $error !important;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+
+  &[disabled] {
+    cursor: not-allowed;
+    background-color: $primary2;
+    border-color: $primary2;
+    &:hover {
+      background-color: $primary2;
+      border-color: $primary2;
+    }
+  }
+}
+
+textarea {
+  display: inline-block;
+  box-sizing: border-box;
+  outline: none;
+  border: 0 none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  max-height: 57px;
+  font-size: 1em;
+  line-height: 1.33em;
+  vertical-align: top;
+  overflow-wrap: break-word; // 단어 단위 줄바꿈
+  white-space: pre-wrap; // 스페이스, 탭, 개행 문자 보존 & 자동줄바꿈
+  cursor: text; // 커서 형태
+  color: #000;
+  resize: none;
+  overflow-y: auto;
 }
 
 .body {
+  font-family: 'Noto Sans KR';
+}
+
+pre {
   font-family: 'Noto Sans KR';
 }
 
@@ -114,11 +169,13 @@ a {
 }
 
 .btn {
+  display: block;
+  text-align: center;
   background-color: $primary1;
   border: 1px solid $primary1;
   border-radius: $border-radius;
   color: $white;
-  width: 100%;
+  width: auto;
   padding: 0.8rem;
 
   &:hover {
@@ -165,6 +222,8 @@ button {
 }
 
 .common-header {
+  position: sticky;
+
   ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -184,6 +243,12 @@ button {
         justify-self: flex-start;
         margin-left: 1rem;
       }
+
+      &:last-child {
+        cursor: pointer;
+        justify-self: flex-end;
+        margin-right: 1rem;
+      }
     }
   }
 }
@@ -198,7 +263,7 @@ button {
 
 /* input popup */
 .modal {
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -207,8 +272,11 @@ button {
   width: 100vw;
   height: 100vh;
   background-color: rgba(141, 145, 144, 0.5);
-
-  .inputpopup {
+  .popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: $white;
     border-radius: 10px;
     padding: 1.5em 1.3em 1.3em 1.3em;
@@ -216,10 +284,14 @@ button {
     box-shadow: $shadow-default;
     backdrop-filter: blur(4px);
 
+    [data-text] {
+      margin-bottom: 20px;
+    }
+
     .inputpopup-input {
       box-sizing: border-box;
       width: 100%;
-      margin: 1em 0 1.3em 0;
+      margin-bottom: 1.3em;
     }
 
     .buttons {
@@ -227,15 +299,23 @@ button {
       justify-content: space-between;
 
       .cancel {
+        cursor: pointer;
         color: black;
       }
 
       .okay {
+        cursor: pointer;
         color: $primary1;
 
         &[disabled] {
+          cursor: initial;
           color: $gray1;
         }
+      }
+
+      .leave {
+        cursor: pointer;
+        color: $error;
       }
     }
   }
@@ -301,16 +381,16 @@ button {
     .chat-item-img {
       border-radius: 10px;
       overflow: hidden;
-      max-width: 105px;
-      max-height: 105px;
-      min-height: 105px;
-      min-height: 105px;
+      max-width: 80px;
+      max-height: 80px;
+      min-height: 80px;
+      min-height: 80px;
 
       img {
-        max-width: 105px;
-        max-height: 105px;
-        min-height: 105px;
-        min-height: 105px;
+        max-width: 80px;
+        max-height: 80px;
+        min-height: 80px;
+        min-height: 80px;
       }
     }
   }
@@ -319,6 +399,8 @@ button {
 .empty-content {
   color: $gray4;
   position: absolute;
+  width: 100%;
+  text-align: center;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -328,71 +410,118 @@ button {
 
 @keyframes growOut {
   0% {
-    transform: scale(0);
+    transform: scale(0) translateX(-50%);
   }
 
   80% {
-    transform: scale(1.1);
+    transform: scale(1.1) translateX(-50%);
   }
 
   100% {
-    transform: scale(1);
+    transform: scale(1) translateX(-50%);
   }
 }
 
 @keyframes growIn {
   0% {
-    transform: scale(1);
+    transform: scale(1) translateX(-50%);
   }
 
   20% {
-    transform: scale(1.1);
+    transform: scale(1.1) translateX(-50%);
   }
 
   100% {
-    transform: scale(0);
+    transform: scale(0) translateX(-50%);
   }
 }
 
 .dropdown-background {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
+  z-index: 100;
   width: 100vw;
   height: 100vh;
+}
 
-  .dropdown {
-    display: block;
-    flex-direction: column;
-    position: absolute;
-    top: 3rem;
-    left: 43%;
-    background-color: $off-white;
-    border-radius: 10px;
-    z-index: 1;
-    width: auto;
-    min-width: auto;
-    box-shadow: $shadow-default;
+.dropdown {
+  display: block;
+  cursor: pointer;
+  z-index: 101;
+  flex-direction: column;
+  position: absolute;
+  top: 3rem;
+  left: 50%;
+  background-color: $off-white;
+  border-radius: 10px;
+  width: auto;
+  min-width: auto;
+  box-shadow: $shadow-default;
 
-    $growTime: 150ms;
-    /* dropdown 클릭시 */
-    animation: growOut $growTime ease-in-out forwards;
+  $growTime: 150ms;
+  /* dropdown 클릭시 */
+  animation: growOut $growTime ease-in-out forwards;
+  transform-origin: top center;
+
+  &[clicked] {
+    /* dropdown 제거 시 */
+    animation: growIn $growTime ease-in-out forwards;
     transform-origin: top center;
+  }
 
-    &[clicked] {
-      /* dropdown 제거 시 */
-      animation: growIn $growTime ease-in-out forwards;
-      transform-origin: top center;
+  .dropdown-item {
+    white-space: nowrap;
+    color: black;
+    border-bottom: 1px solid $gray3;
+    padding: 1rem;
+
+    &:last-child {
+      border-bottom: 0;
     }
+  }
+}
 
-    .dropdown-item {
-      color: black;
-      border-bottom: 1px solid $gray3;
-      padding: 1rem;
+.line {
+  margin: 1.5rem 0;
+  height: 1px;
+  background-color: $gray3;
+}
 
-      &:last-child {
-        border-bottom: 0;
-      }
+.bookmark {
+  cursor: pointer;
+  svg {
+    stroke-width: 2px;
+    width: 30px;
+    height: 30px;
+    transition: all 0.3s;
+    stroke: $gray1;
+  }
+  &.check {
+    svg {
+      fill: $primary1;
+      stroke: $primary1;
     }
+  }
+}
+
+.snackbar {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  z-index: 999;
+  transform: translateX(-50%);
+  transition: bottom 0.5s ease-in-out;
+  background: $primary1;
+  color: $white;
+  padding: 0.8rem 1rem 0.6rem;
+  width: 50%;
+  min-width: 160px;
+  max-width: 500px;
+  text-align: center;
+  border-radius: $border-radius;
+
+  &.show {
+    bottom: 30px;
   }
 }

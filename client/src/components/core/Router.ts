@@ -58,8 +58,11 @@ class Router {
   async onHashChangeHandler() {
     this.$app.innerHTML = '';
     const hash = window.location.hash;
-    const path = hash.substr(1);
+    // const path = hash.substr(1);
+    const path = hash.substr(1).replace(/[?]([^#]*)/g, '');
+    const params = this.getURLParams(hash);
     const route = this.hasRoute(path) ? this.getRoute(path) : this.getRoute(this.fallback);
+
     if (route.redirect) {
       this.push(route.redirect);
       return;
@@ -77,13 +80,24 @@ class Router {
     } else if (component instanceof HTMLElement) {
       this.$app.appendChild(component);
     } else if (isClass(component)) {
-      new component(this.$app);
+      new component(this.$app, { parsingData: params });
     } else {
       throw new Error('invalid component');
     }
   }
   push(path: string) {
     window.location.hash = path;
+  }
+  getURLParams(url: string) {
+    let result: {
+      [key: string]: string;
+    } = {};
+    const replacer = (s: string, k: string, v: string, offset: number, str: string) => {
+      result[k] = decodeURIComponent(v);
+      return '';
+    };
+    url.replace(/[?&]{1}([^=&#]+)=([^&#]*)/g, replacer);
+    return result;
   }
 }
 /**

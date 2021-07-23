@@ -1,15 +1,18 @@
 import Component from '@/src/interfaces/Component';
+import e from 'express';
 
 interface ButtonProps {
   text: string;
+  disabled?: boolean;
+  href: string;
 }
 
 export default class Button extends Component {
   template() {
-    const { text }: ButtonProps = this.$props;
+    let { text, disabled, href }: ButtonProps = this.$props;
 
     return `
-    <button class="btn">${text}</button>
+    <a class="btn" ${!!disabled ? 'disabled' : ''} ${href ? `href='${href}'` : ''}>${text}</a>
     `;
   }
 }

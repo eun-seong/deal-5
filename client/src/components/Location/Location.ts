@@ -2,12 +2,22 @@ import Component from '@/src/interfaces/Component';
 import CommonHeader from '../Share/CommonHeader';
 import LocationList from './LocationList';
 import InputPopup from '../Share/InputPopup';
+import historyBack from '@/src/assets/utils/historyBack';
+import { api_setLocation, api_getLocation } from '@/src/apis/user';
 
 class Location extends Component {
   setup() {
     this.$state = {
-      locations: ['역삼동', '홍제동'],
+      locations: [],
     };
+    api_getLocation({})
+      .then((res: any) => {
+        const { location_1, location_2 } = res.data;
+        this.setState({
+          locations: [location_1, location_2].filter((location: string) => !!location),
+        });
+      })
+      .catch(e => console.log(e));
   }
 
   template() {
@@ -26,9 +36,9 @@ class Location extends Component {
     const $header = this.$target.querySelector('[data-component="header"]');
     const $LocationButtons = this.$target.querySelector('[data-component="location-buttons"]');
 
-    new CommonHeader($header as HTMLElement, { title: '내 동네 설정하기' });
+    new CommonHeader($header as HTMLElement, { title: '내 동네 설정하기', leftArrowEvent: historyBack });
     new LocationList($LocationButtons as HTMLElement, {
-      locations: this.$state.locations,
+      locations: this.$state.locations.filter((location: string) => !!location),
       removeLocation: this.removeLocation.bind(this),
       clickAddLocation: this.clickAddLocation.bind(this),
     });
@@ -36,9 +46,16 @@ class Location extends Component {
 
   removeLocation(location: string) {
     const { locations } = this.$state;
-    this.setState({
-      locations: locations.filter((l: string) => location !== l),
-    });
+    const lastLocation = locations.filter((l: string) => location !== l)[0];
+    api_setLocation({ data: { location_1: lastLocation ? lastLocation : '', location_2: '' } })
+      .then((res: any) => {
+        if (res.ok)
+          this.setState({
+            locations: [lastLocation].filter((location: string) => !!location),
+          });
+        else console.log(res.message);
+      })
+      .catch(e => console.log(e));
   }
 
   clickAddLocation() {
@@ -50,9 +67,16 @@ class Location extends Component {
 
   getLocation(location: string) {
     const { locations } = this.$state;
-    this.setState({
-      locations: [...locations, location],
-    });
+    const data = [...locations, location].filter((location: string) => !!location);
+    api_setLocation({ data: { location_1: data[0], location_2: data[1] ? data[1] : '' } })
+      .then((res: any) => {
+        if (res.ok)
+          this.setState({
+            locations: data,
+          });
+        else console.log(res.message);
+      })
+      .catch(e => console.log(e));
   }
 }
 
