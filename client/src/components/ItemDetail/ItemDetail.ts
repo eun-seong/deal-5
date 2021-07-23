@@ -5,6 +5,7 @@ import ItemDetailSlider from './Slider';
 import { GetItem, UpdateViewCnt } from '@/src/apis/itemdetail';
 import Snackbar from '../Share/Snackbar';
 import historyBack from '@/src/assets/utils/historyBack';
+import ItemChatList from './ItemChatList';
 
 export default class ItemDetail extends Component {
   //상태 변경시 변경된 ui 적용
@@ -21,6 +22,7 @@ export default class ItemDetail extends Component {
       <section class="item-detail-slider" data-component="item-detail-slider"></section>
       <section class="item-detail-body" data-component="item-detail-body">test</section>
       <section class="item-detail-footer type-link small" data-component="item-detail-footerer"></section>
+      <aside class="item-detail-chats" data-component="item-chat-aside"></aside>
     `;
   }
 
@@ -29,6 +31,7 @@ export default class ItemDetail extends Component {
     const $slider = document.querySelector('[data-component="item-detail-slider"]') as HTMLElement;
     const $body = document.querySelector('[data-component="item-detail-body"]') as HTMLElement;
     const $footer = document.querySelector('[data-component="item-detail-footerer"]') as HTMLElement;
+    const $aside = document.querySelector('[data-component="item-chat-aside"]') as HTMLElement;
 
     GetItem({ item_id }).then(
       function (this: any, res: any) {
@@ -57,11 +60,13 @@ export default class ItemDetail extends Component {
             views: data.view_cnt,
           },
           imgList: data.img_list,
+          item_id,
         };
 
         new ItemDetailSlider($slider, { state: this.$state });
         new ItemDetailBody($body, { state: this.$state });
         new ItemDetailFooter($footer, { state: this.$state });
+        this.$state.isSeller ? new ItemChatList($aside, { state: this.$state }) : null;
       }.bind(this)
     );
   }

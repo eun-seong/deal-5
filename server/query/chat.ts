@@ -28,6 +28,14 @@ left join user u on i.user_id = u.id
 where c.buyer=${uid};
 `;
 
+//-- ;아이템 기준으로 채팅방 조회가
+const queryGetChatRoomByItem = ({ itemId }: { itemId: number }) => `
+  SELECT c.id cid, i.id item_id, u.id user_id, u.nick_name, c.BuyerNoReadCnt noReadCnt, i.img_list from 
+  chat c join item i on i.id = c.item_id
+  left join user u on c.buyer = u.id
+  where i.id = ${itemId}
+`;
+
 // -- 채팅방 마지막 메세지 가져오기
 const queryGetChatLastMessage = ({ cid }: { cid: number }) => `
 SELECT c.id cid, c.item_id item_id, m.message, ${getTimeDiff}
@@ -95,4 +103,5 @@ export default {
   makeNewRoom,
   exitChatRoom,
   getLastMessageDataId,
+  queryGetChatRoomByItem,
 };

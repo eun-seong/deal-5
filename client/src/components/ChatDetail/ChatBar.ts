@@ -30,7 +30,7 @@ export default class ChatBar extends Component {
       e.preventDefault();
       if (e.which == 13) {
         if (chatBarInput.value.trim() == '') {
-          new Snackbar(document.body, { text: '텍스트를 입력해주세요' });
+          // new Snackbar(document.body, { text: '텍스트를 입력해주세요' });
           chatBarInput.value = '';
           autoHeightTextarea(target, '#chatBar-input');
           return;

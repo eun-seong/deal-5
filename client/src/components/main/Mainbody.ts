@@ -34,7 +34,7 @@ export default class MainBody extends Component {
     const io = new IntersectionObserver(([entry], observer) => {
       if (entry.isIntersecting) {
         observer.unobserve(entry.target);
-        console.log(_state);
+
         GetItemList({ location: _state.location, category: _state.category, limit: _state.limit }).then(
           (response: any) => {
             response.forEach((state: any) => {

@@ -47,7 +47,7 @@ export default class MenuBody extends Component {
     const underline = document.getElementById('menu-tabs-underline') as HTMLElement;
 
     underline.className = underline.className.replace(/(sales-tab)|(chats-tab)|(bookmarks-tab)/g, pos);
-    console.log(pos);
+
     this.changeTabPanal(pos);
   }
 

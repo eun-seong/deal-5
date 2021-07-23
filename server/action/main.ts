@@ -6,16 +6,19 @@ import MAIN_QUERY from '../query/main';
 const actionGetItemList = async (req: any, res: Response) => {
   try {
     const id = req.user?.id;
+
     const { category, location, limit } = req.body;
 
     let rows = await selectQuery(MAIN_QUERY.queryGetItemList({ category, location, limit }));
+
     const itemIDs = rows.map((a: any) => a.id);
-    if (itemIDs.length) {
+    if (itemIDs.length && !!id) {
       let bmList: any = await selectQuery(MAIN_QUERY.queryBookmarkChecked({ uid: id, item_id: itemIDs }));
       bmList.forEach((a: any) => {
         rows[itemIDs.indexOf(a.item_id)].bookmarked = 1;
       });
     }
+
     res.send(rows);
   } catch (error) {
     console.log(error);

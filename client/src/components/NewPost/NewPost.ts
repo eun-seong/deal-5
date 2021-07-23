@@ -302,8 +302,7 @@ export default class NewPost extends Component {
     }
     this.images = this.images.filter(img => img.id !== imgId);
     e.target.closest('li').remove();
-    console.log(this.images, this.deletedExistingImages);
-
+    
     // 사진 개수 update
     this.updateNumOfImages();
   }

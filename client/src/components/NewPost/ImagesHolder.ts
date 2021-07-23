@@ -1,6 +1,5 @@
 import Component from '@/src/interfaces/Component';
 import ImageButton, { ImageAddButton } from './ImageButton';
-// import testimg from '@/src/assets/tmpimgs/test_img_8.png';
 
 export default class ImagesHolder extends Component {
   template() {

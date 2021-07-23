@@ -190,3 +190,24 @@
     }
   }
 }
+
+.item-detail-chats {
+  position: fixed;
+  top: 0;
+  max-width: 1050px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
+  min-height: 100vh;
+  right: -500px;
+  transition: right 0.8s ease-in-out;
+  z-index: 999999;
+  background-color: $white;
+
+  &.show {
+    right: 0;
+  }
+  .item-chat-list {
+    height: 100%;
+  }
+}

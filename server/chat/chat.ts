@@ -54,14 +54,14 @@ const saveMsg = async ({ user, room, data }: { user: number; room: number; data:
 const sendMsg = (UserMapData: any, type: string, message: string) => {
   return new Promise((resolve, reject) => {
     let count = 0;
-
+    
+    UserMapData.ws.send('me' + message);
     for (let target of rooms.entries()) {
       if (UserMapData.room === target[1].room) {
         if (UserMapData.ws !== target[1].ws) {
           count += 1;
           target[1].ws.send('yu' + message);
         }
-        UserMapData.ws.send('me' + message);
       }
     }
     if (count !== 0) return;

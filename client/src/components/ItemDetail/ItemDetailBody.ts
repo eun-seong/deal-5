@@ -33,16 +33,14 @@ export default class ItemDetail extends Component {
       <div class="item-detail-name">${itemName}</div>
       <div class="item-detail-category">${category}•${createtime}</div>
       <div class="item-detail-description">
-  <pre>${discription}</pre>
+        <pre>${discription}</pre>
       </div>
       <div class="item-detail-counts">채팅 ${counts.chats}•관심 ${counts.bookmarks}•조회 ${counts.views}</div>
-      <div class="item-detail-seller typo medium">
-        <div>판매자 정보</div>
-        <div> ${sellerName} <span class="location">${location}</span></div>
+        <div class="item-detail-seller typo medium">
+          <div>판매자 정보</div>
+          <div> ${sellerName} <span class="location">${location}</span></div>
+        </div>
       </div>
-    </div>
-    
-    
     </div>`;
   }
 
@@ -61,7 +59,6 @@ export default class ItemDetail extends Component {
 
         GetSalesType().then(
           function (this: any, res: any) {
-            console.log(res);
             const itemsType = res.data as Array<SalesType>;
             const specialItems = itemsType
               .filter(a => type !== a.type)

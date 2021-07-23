@@ -49,7 +49,7 @@ export default class ChatDetail extends Component {
         for (let [key, value] of Object.entries(this.roomInfo)) {
           document.cookie = `${key}=${value};max-age=30`;
         }
-        const socket = new WebSocket('ws://localhost:81');
+        const socket = new WebSocket(`ws://${location.hostname}:81`);
         const $header = this.$target.querySelector('[data-component="header"]');
         const $infoProduct = this.$target.querySelector('[data-component="infoProduct"]');
         const $chatting = this.$target.querySelector('[data-component="chatting"]');
@@ -69,7 +69,7 @@ export default class ChatDetail extends Component {
           price: res.data.price,
           status: res.data.salse_states,
           productId: res.data.item_id,
-          img: res.data.img_list.length ? res.data.img_list[0] : '',
+          thumbnailUrl: res.data.img_list.length ? res.data.img_list[0] : '',
         });
         new Chatting($chatting as HTMLElement, { socket, roomInfo });
         new ChatBar($chatbar as HTMLElement, { socket, roomInfo });
