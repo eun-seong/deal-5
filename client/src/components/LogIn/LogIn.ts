@@ -6,6 +6,7 @@ import LinkButton from '../Share/LinkButton';
 import { $router } from '../core/Router';
 import { api_login } from '@/src/apis/user';
 import historyBack from '@/src/assets/utils/historyBack';
+import Snackbar from '../Share/Snackbar';
 
 const inputList: UserInputProps[] = [
   {
@@ -59,7 +60,7 @@ export default class LogIn extends Component {
         .then((res: any) => {
           if (res.ok) {
             $router.push('/');
-          } else console.log('로그인에 실패했습니다.');
+          } else new Snackbar(document.body, { text: '정보를 다시 확인해주세요!' });
         })
         .catch(err => console.log('error: ', err));
     });
